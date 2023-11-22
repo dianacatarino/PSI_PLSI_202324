@@ -7,6 +7,9 @@ $this->title = 'Detalhes da Reserva';
 ?>
 
 <div class="detalhes-reserva">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['reservas/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="card">
@@ -42,9 +45,6 @@ $this->title = 'Detalhes da Reserva';
                 </tbody>
             </table>
 
-            <!-- Adicione mais detalhes ou botões conforme necessário -->
-
-            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?>
         </div>
     </div>
 </div>

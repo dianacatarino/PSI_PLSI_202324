@@ -18,7 +18,7 @@ $this->title = 'Conta';
                 echo '<p>' . Html::label('Nome:') . ' ' . Html::encode($utilizadorAtual->name) . '</p>';
                 echo '<p>' . Html::label('E-mail:') . ' ' . Html::encode($utilizadorAtual->email) . '</p>';
                 echo '<p>' . Html::label('Telefone:') . ' ' . Html::encode($utilizadorAtual->mobile) . '</p>';
-                echo '<p>' . Html::label('Rua:') . ' ' . Html::encode($utilizadorAtual->street) . '</p>';
+                echo '<p>' . Html::label('Morada:') . ' ' . Html::encode($utilizadorAtual->street) . '</p>';
                 echo '<p>' . Html::label('Localidade:') . ' ' . Html::encode($utilizadorAtual->locale) . '</p>';
                 echo '<p>' . Html::label('Código Postal:') . ' ' . Html::encode($utilizadorAtual->postalCode) . '</p>';
             }

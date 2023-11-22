@@ -7,6 +7,9 @@ $this->title = 'Detalhes do Comentário';
 ?>
 
 <div class="detalhes-comentario">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['comentarios/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="card">
@@ -29,10 +32,6 @@ $this->title = 'Detalhes do Comentário';
                 </tr>
                 </tbody>
             </table>
-
-            <!-- Adicione mais detalhes ou botões conforme necessário -->
-
-            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?>
         </div>
     </div>
 </div>

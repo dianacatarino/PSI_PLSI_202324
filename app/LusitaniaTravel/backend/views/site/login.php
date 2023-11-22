@@ -38,7 +38,7 @@ $this->title = 'Login';
             <?php ActiveForm::end(); ?>
 
             <p class="mb-1">
-                <a href="forgot-password.html">I forgot my password</a>
+                <a href="site/forgot-password.php">I forgot my password</a>
             </p>
             <p class="mb-0">
                 <a href="<?= Yii::$app->urlManager->createUrl(['site/register']) ?>" class="text-center">Register a new membership</a>

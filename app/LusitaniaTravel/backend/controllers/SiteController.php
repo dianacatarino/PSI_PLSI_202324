@@ -28,17 +28,12 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'error', 'contact','register','perfil','definicoes'],
+                        'actions' => ['login', 'error', 'contact','register','perfil','definicoes','forgot-password'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['logout', 'index'],
                         'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['admin', 'funcionario', 'fornecedor'],
-                        'allow' => true,
-                        'roles' => ['admin', 'funcionario', 'fornecedor'],
                     ],
                 ],
             ],
@@ -128,7 +123,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             // Verificar se o usuário já está registrado
             if ($model->isRegistered()) {
-                Yii::$app->session->setFlash('error', 'Este usuário já está registrado.');
+                Yii::$app->session->setFlash('error', 'Este utilizador já está registrado.');
             } elseif ($model->register()) {
                 // Antes de atribuir a função, verifique se ela existe
                 $auth = Yii::$app->authManager;
@@ -143,7 +138,7 @@ class SiteController extends Controller
                         // Atribuindo a função ao usuário
                         $auth->assign($role, $user->id);
                     } else {
-                        Yii::warning('O usuário já tem a função atribuída.');
+                        Yii::warning('O utilizador já tem a função atribuída.');
                     }
                 }
 
@@ -152,6 +147,11 @@ class SiteController extends Controller
         }
 
         return $this->render('register', ['model' => $model]);
+    }
+
+    public function actionForgotPassowrd()
+    {
+        return $this->render('forgotpassword');
     }
 
     public function actionPerfil()

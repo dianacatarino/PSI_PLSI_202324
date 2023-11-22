@@ -6,6 +6,9 @@ $this->title = 'Comentários';
 ?>
 
 <div class="comentarios">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1>Comentários</h1>
 
     <div class="card">
@@ -26,7 +29,6 @@ $this->title = 'Comentários';
             </table>
 
             <?= Html::a('Detalhes', ['comentarios/view'], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
         </div>
     </div>
 </div>

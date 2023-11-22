@@ -6,6 +6,9 @@ $this->title = 'Definições';
 ?>
 
 <div class="definicoes">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1>Definições</h1>
 
     <div class="card">
@@ -64,10 +67,11 @@ $this->title = 'Definições';
                 </div>
 
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                <?= Html::a('Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
             </form>
+
         </div>
     </div>
+    <div style="height: 20px;"></div>
 </div>
 
 

@@ -6,7 +6,11 @@ $this->title = 'Faturas';
 ?>
 
 <div class="faturas">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1>Faturas</h1>
+
 
     <div class="card">
         <div class="card-body">
@@ -36,7 +40,6 @@ $this->title = 'Faturas';
             </table>
 
             <?= Html::a('Detalhes', ['faturas/view'], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Voltar', ['user/index'], ['class' => 'btn btn-secondary']) ?>
         </div>
     </div>
 </div>

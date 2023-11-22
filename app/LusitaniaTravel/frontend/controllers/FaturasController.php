@@ -14,4 +14,9 @@ class FaturasController extends \yii\web\Controller
         return $this->render('view');
     }
 
+    public function actionCreate()
+    {
+        return $this->render('create');
+    }
+
 }

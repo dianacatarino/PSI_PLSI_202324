@@ -7,6 +7,9 @@ $this->title = 'Detalhes do Favorito';
 ?>
 
 <div class="detalhes-favorito">
+    <div class="mb-3">
+        <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['favoritos/index'], ['class' => 'btn btn-secondary']) ?>
+    </div>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="card">
@@ -29,8 +32,6 @@ $this->title = 'Detalhes do Favorito';
                 </tr>
                 </tbody>
             </table>
-
-            <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-secondary']) ?>
         </div>
     </div>
 </div>
