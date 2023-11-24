@@ -114,10 +114,33 @@ CREATE TABLE Avaliacoes (
     CONSTRAINT fk_avaliacoes_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE Profile (
+	id INT AUTO_INCREMENT,
+	name VARCHAR(25) NOT NULL,
+	mobile VARCHAR(9) NOT NULL,
+	street VARCHAR(30) NOT NULL,
+	locale VARCHAR(20) NOT NULL,
+	postalCode VARCHAR(10) NOT NULL,
+    role ENUM('admin', 'funcionario', 'fornecedor','cliente') DEFAULT NULL,
+    user_id INT NOT NULL,
+    CONSTRAINT pk_profile_id PRIMARY KEY (id),
+    CONSTRAINT pk_profile_user_id FOREIGN KEY (user_id) REFERENCES User(id)
+) ENGINE=InnoDB;
+
 ALTER TABLE user
-ADD COLUMN name VARCHAR(25) NOT NULL,
-ADD COLUMN mobile VARCHAR(9) NOT NULL,
-ADD COLUMN street VARCHAR(30) NOT NULL,
-ADD COLUMN locale VARCHAR(20) NOT NULL,
-ADD COLUMN postalCode VARCHAR(10) NOT NULL,
-ADD COLUMN role ENUM('admin', 'funcionario', 'fornecedor','cliente') DEFAULT NULL;
+DROP COLUMN name,
+DROP COLUMN mobile,
+DROP COLUMN street,
+DROP COLUMN locale,
+DROP COLUMN postalCode,
+DROP COLUMN role;
+
+ALTER TABLE User
+ADD COLUMN profile_id INT,
+ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id);
+
+DELETE FROM User;
+
+ALTER TABLE User AUTO_INCREMENT = 1;
+
+

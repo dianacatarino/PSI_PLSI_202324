@@ -1,5 +1,6 @@
 <?php
 
+use common\models\User;
 use yii\helpers\Html;
 
 $this->title = 'Conta';
@@ -13,14 +14,20 @@ $this->title = 'Conta';
             echo '<img src="/LusitaniaTravel/frontend/public/img/logo_icon.png" alt="Foto de Perfil">';
 
             if (!Yii::$app->user->isGuest) {
-                $username = ($utilizadorAtual->username);
-                echo '<h2>' . Html::label('Username:')  . ' ' . Html::encode($username) . '</h2>';
-                echo '<p>' . Html::label('Nome:') . ' ' . Html::encode($utilizadorAtual->name) . '</p>';
-                echo '<p>' . Html::label('E-mail:') . ' ' . Html::encode($utilizadorAtual->email) . '</p>';
-                echo '<p>' . Html::label('Telefone:') . ' ' . Html::encode($utilizadorAtual->mobile) . '</p>';
-                echo '<p>' . Html::label('Morada:') . ' ' . Html::encode($utilizadorAtual->street) . '</p>';
-                echo '<p>' . Html::label('Localidade:') . ' ' . Html::encode($utilizadorAtual->locale) . '</p>';
-                echo '<p>' . Html::label('Código Postal:') . ' ' . Html::encode($utilizadorAtual->postalCode) . '</p>';
+                // Obtém o modelo User associado ao utilizador atual
+                $userModel = User::findOne($utilizadorAtual->id);
+
+                // Obtém o perfil associado ao utilizador atual
+                $profileModel = $userModel->getProfile()->one();
+
+                // Exibir informações obtidas
+                echo '<h2>' . Html::label('Username:')  . ' ' . Html::encode($userModel->username) . '</h2>';
+                echo '<p>' . Html::label('Nome:') . ' ' . Html::encode($profileModel->name) . '</p>';
+                echo '<p>' . Html::label('E-mail:') . ' ' . Html::encode($userModel->email) . '</p>';
+                echo '<p>' . Html::label('Telefone:') . ' ' . Html::encode($profileModel->mobile) . '</p>';
+                echo '<p>' . Html::label('Morada:') . ' ' . Html::encode($profileModel->street) . '</p>';
+                echo '<p>' . Html::label('Localidade:') . ' ' . Html::encode($profileModel->locale) . '</p>';
+                echo '<p>' . Html::label('Código Postal:') . ' ' . Html::encode($profileModel->postalCode) . '</p>';
             }
             ?>
         </div>

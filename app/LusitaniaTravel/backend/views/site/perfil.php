@@ -24,29 +24,30 @@ $this->title = 'Conta';
 
                         <?php
                         $utilizadorAtual = Yii::$app->user->identity;
+                        $utilizadorAtual->load('profile');
                         ?>
 
-                        <h3 class="profile-username text-center"><?= Html::encode($utilizadorAtual->name) ?></h3>
-                        <p class="text-muted text-center"><?= Html::encode($utilizadorAtual->role) ?></p>
+                        <h3 class="profile-username text-center"><?= Html::encode($utilizadorAtual->username) ?></h3>
+                        <p class="text-muted text-center"><?= Html::encode($utilizadorAtual->profile->role) ?></p>
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Nome</b> <a class="float-right"><?= Html::encode($utilizadorAtual->name) ?></a>
+                                <b>Nome</b> <a class="float-right"><?= Html::encode($utilizadorAtual->profile->name) ?></a>
                             </li>
                             <li class="list-group-item">
                                 <b>Email</b> <a class="float-right"><?= Html::encode($utilizadorAtual->email) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Telefone</b> <a class="float-right"><?= Html::encode($utilizadorAtual->mobile) ?></a>
+                                <b>Telefone</b> <a class="float-right"><?= Html::encode($utilizadorAtual->profile->mobile) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Morada</b> <a class="float-right"><?= Html::encode($utilizadorAtual->street) ?></a>
+                                <b>Morada</b> <a class="float-right"><?= Html::encode($utilizadorAtual->profile->street) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Localidade</b> <a class="float-right"><?= Html::encode($utilizadorAtual->locale) ?></a>
+                                <b>Localidade</b> <a class="float-right"><?= Html::encode($utilizadorAtual->profile->locale) ?></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Código Postal</b> <a class="float-right"><?= Html::encode($utilizadorAtual->postalCode) ?></a>
+                                <b>Código Postal</b> <a class="float-right"><?= Html::encode($utilizadorAtual->profile->postalCode) ?></a>
                             </li>
                         </ul>
 

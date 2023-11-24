@@ -58,7 +58,7 @@ $this->title = 'Sobre';
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary py-3 px-5 mt-2" href="">Explore More</a>
+                <a class="btn btn-primary py-3 px-5 mt-2" href="">Explore Mais</a>
             </div>
             <div class="col-lg-6">
                 <div class="row g-3">

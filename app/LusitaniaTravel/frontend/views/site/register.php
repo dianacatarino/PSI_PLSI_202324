@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control rounded-0', 'placeholder' => 'Password']) ?>
 
-                <?= $form->field($model, 'repeatpassword')->passwordInput(['class' => 'form-control rounded-0', 'placeholder' => 'Repeat Password']) ?>
+                <?= $form->field($model, 'repeatPassword')->passwordInput(['class' => 'form-control rounded-0', 'placeholder' => 'Repeat Password']) ?>
 
                 <?= $form->field($model, 'name')->textInput(['class' => 'form-control rounded-0', 'placeholder' => 'Name']) ?>
 
@@ -37,6 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'locale')->textInput(['class' => 'form-control rounded-0', 'placeholder' => 'Locale']) ?>
 
                 <?= $form->field($model, 'postalCode')->textInput(['class' => 'form-control rounded-0', 'placeholder' => 'Postal Code']) ?>
+
+                <?= $form->field($model, 'terms')->checkbox([
+                    'label' => 'Eu aceito os termos e condições',
+                    'class' => 'form-check-input',
+                ]) ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Register', ['class' => 'btn btn-primary rounded-0 w-100', 'name' => 'register-button']) ?>

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use console\controllers\RbacController;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -15,7 +16,7 @@ use common\models\LoginForm;
 use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
+use common\models\SignupForm;
 use frontend\models\ContactForm;
 
 /**
@@ -119,17 +120,15 @@ class SiteController extends Controller
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->register()) {
-            $auth = Yii::$app->authManager;
-            $clienteRole = $auth->getRole('cliente');
-
-            $user = User::findByUsername($model->username);
-
-            $auth->assign($clienteRole, $user->getId());
-
             return $this->redirect(['site/login']);
         }
 
         return $this->render('register', ['model' => $model]);
+    }
+
+    public function actionCarrinho()
+    {
+        return $this->render('carrinho');
     }
 
     public function actionReservas()

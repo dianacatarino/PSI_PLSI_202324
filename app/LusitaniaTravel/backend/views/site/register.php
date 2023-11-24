@@ -38,8 +38,6 @@ $this->title = 'Register';
 
             <?= $form->field($model, 'postalCode')->textInput(['placeholder' => 'Postal Code'])->label('<i class="fas fa-envelope"></i> Postal Code') ?>
 
-            <?= $form->field($model, 'userType')->dropDownList(['administrador' => 'Administrador', 'funcionario' => 'Funcionário', 'fornecedor' => 'Fornecedor'], ['prompt' => 'Role'])->label('<i class="fas fa-user"></i> Role') ?>
-
             <div class="row">
                 <div class="col-8">
                     <?= $form->field($model, 'terms')->checkbox(['id' => 'agreeTerms'])->label('Accept Terms') ?>

@@ -2,6 +2,7 @@
 
 namespace console\controllers;
 
+use common\models\User;
 use Yii;
 use yii\console\Controller;
 
@@ -10,110 +11,97 @@ class RbacController extends Controller
     public function actionInit()
     {
         $auth = Yii::$app->authManager;
+        $auth->removeAll();
 
-        // Criar os roles
-        $adminRole = $auth->createRole('administrador');
-        $funcionarioRole = $auth->createRole('funcionario');
-        $fornecedorRole = $auth->createRole('fornecedor');
-        $clienteRole = $auth->createRole('cliente');
+        $roles = [
+            'administrador' => 'Admin',
+            'funcionario' => 'Funcionário',
+            'fornecedor' => 'Fornecedor',
+            'cliente' => 'Cliente',
+        ];
 
-        // Adicionar os roles ao authManager
-        $auth->add($adminRole);
-        $auth->add($funcionarioRole);
-        $auth->add($fornecedorRole);
-        $auth->add($clienteRole);
+        $permissions = [
+            'criarAlojamentos' => 'Criar Alojamentos',
+            'editarAlojamentos' => 'Editar Alojamentos',
+            'verAlojamentos' => 'Ver Alojamentos',
+            'eliminarAlojamentos' => 'Eliminar Alojamentos',
+            'criarReservas' => 'Criar Reservas',
+            'editarReservas' => 'Editar Reservas',
+            'verReservas' => 'Ver Reservas',
+            'eliminarReservas' => 'Eliminar Reservas',
+            'confirmarReserva' => 'Confirmar Reserva',
+            'reservarOnline' => 'Reservar Online',
+            'adicionarcarrinhoCompras' => 'Adicionar ao Carrinho de Compras',
+            'consultarFaturas' => 'Consultar Faturas',
+            'adicionarFavoritos' => 'Adicionar aos Favoritos',
+            'classificarecomentarAlojamentos' => 'Classificar e Comentar Alojamentos',
+            'pagarReserva' => 'Pagar Reserva',
+            'reservarPresencial' => 'Reservar Presencialmente',
+            'emitirFaturas' => 'Emitir Faturas',
+            'calcularValoresIva' => 'Calcular Valores do IVA',
+            'gerarRelatorios' => 'Gerar Relatórios',
+            'visualizarRelatorios' => 'Visualizar Relatórios',
+            'criarClientes' => 'Criar Clientes',
+            'editarClientes' => 'Editar Clientes',
+            'verClientes' => 'Ver Clientes',
+            'eliminarClientes' => 'Eliminar Clientes',
+        ];
 
-        // Criar as permissões
-        $criarAlojamentos = $auth->createPermission('criarAlojamentos');
-        $editarAlojamentos = $auth->createPermission('editarAlojamentos');
-        $detalhesAlojamentos = $auth->createPermission('verAlojamentos');
-        $eliminarAlojamentos = $auth->createPermission('eliminarAlojamentos');
-        $criarReservas = $auth->createPermission('criarReservas');
-        $editarReservas = $auth->createPermission('editarReservas');
-        $verReservas = $auth->createPermission('verReservas');
-        $eliminarReservas = $auth->createPermission('eliminarReservas');
-        $confirmarReserva = $auth->createPermission('confirmarReserva');
-        $reservarOnline = $auth->createPermission('reservarOnline');
-        $adicionarcarrinhoCompras = $auth->createPermission('adicionarcarrinhoCompras');
-        $consultarFaturas = $auth->createPermission('consultarFaturas');
-        $adicionarFavoritos = $auth->createPermission('adicionarFavoritos');
-        $classificarecomentarAlojamentos = $auth->createPermission('classificarecomentarAlojamentos');
-        $pagarReserva = $auth->createPermission('pagarReserva');
-        $reservarPresencial = $auth->createPermission('reservarPresencial');
-        $emitirFaturas = $auth->createPermission('emitirFaturas');
-        $calcularValoresIva = $auth->createPermission('calcularValoresIva');
-        $gerarRelatorios = $auth->createPermission('gerarRelatorios');
-        $visualizarRelatorios = $auth->createPermission('visualizarRelatorios');
-        $criarClientes = $auth->createPermission('criarClientes');
-        $editarClientes = $auth->createPermission('editarClientes');
-        $verClientes = $auth->createPermission('verClientes');
-        $eliminarClientes = $auth->createPermission('eliminarClientes');
-
-
-        // Adicionar as permissões ao authManager
-        $auth->add($criarAlojamentos);
-        $auth->add($editarAlojamentos);
-        $auth->add($detalhesAlojamentos);
-        $auth->add($eliminarAlojamentos);
-        $auth->add($criarReservas);
-        $auth->add($editarReservas);
-        $auth->add($verReservas);
-        $auth->add($eliminarReservas);
-        $auth->add($confirmarReserva);
-        $auth->add($reservarOnline);
-        $auth->add($adicionarcarrinhoCompras);
-        $auth->add($adicionarFavoritos);
-        $auth->add($consultarFaturas);
-        $auth->add($classificarecomentarAlojamentos);
-        $auth->add($pagarReserva);
-        $auth->add($reservarPresencial);
-        $auth->add($emitirFaturas);
-        $auth->add($calcularValoresIva);
-        $auth->add($gerarRelatorios);
-        $auth->add($visualizarRelatorios);
-        $auth->add($criarClientes);
-        $auth->add($editarClientes);
-        $auth->add($verClientes);
-        $auth->add($eliminarClientes);
-
-        // Associar as permissões aos roles apropriados
-        $auth->addChild($clienteRole, $reservarOnline);
-        $auth->addChild($clienteRole, $adicionarcarrinhoCompras);
-        $auth->addChild($clienteRole, $consultarFaturas);
-        $auth->addChild($clienteRole, $classificarecomentarAlojamentos);
-        $auth->addChild($clienteRole, $pagarReserva);
-
-        $auth->addChild($funcionarioRole, $reservarPresencial);
-        $auth->addChild($funcionarioRole, $criarReservas);
-        $auth->addChild($funcionarioRole, $editarReservas);
-        $auth->addChild($funcionarioRole, $verReservas);
-        $auth->addChild($funcionarioRole, $eliminarReservas);
-        $auth->addChild($funcionarioRole, $visualizarRelatorios);
-        $auth->addChild($funcionarioRole, $criarClientes);
-        $auth->addChild($funcionarioRole, $editarClientes);
-        $auth->addChild($funcionarioRole, $verClientes);
-        $auth->addChild($funcionarioRole, $eliminarClientes);
-        $auth->addChild($funcionarioRole, $calcularValoresIva);
-
-        $auth->addChild($fornecedorRole, $confirmarReserva);
-        $auth->addChild($fornecedorRole, $criarAlojamentos);
-        $auth->addChild($fornecedorRole, $editarAlojamentos);
-        $auth->addChild($fornecedorRole, $eliminarAlojamentos);
-        $auth->addChild($fornecedorRole, $detalhesAlojamentos);
-
-        $auth->addChild($adminRole, $emitirFaturas);
-        $auth->addChild($adminRole, $gerarRelatorios);
-        $auth->addChild($adminRole, $criarAlojamentos);
-        $auth->addChild($adminRole, $editarAlojamentos);
-        $auth->addChild($adminRole, $detalhesAlojamentos);
-        $auth->addChild($adminRole, $eliminarAlojamentos);
-        $auth->addChild($adminRole, $criarReservas);
-        $auth->addChild($adminRole, $editarReservas);
-        $auth->addChild($adminRole, $verReservas);
-        $auth->addChild($adminRole, $eliminarReservas);
-        $auth->addChild($adminRole, $calcularValoresIva);
+        $this->createRoles($auth, $roles);
+        $this->createPermissions($auth, $permissions);
+        $this->assignPermissionsToRoles($auth);
 
         echo "RBAC configuration completed.\n";
+    }
+
+    private function createRoles($auth, $roles)
+    {
+        foreach ($roles as $roleName => $roleDescription) {
+            $role = $auth->createRole($roleName);
+            $auth->add($role);
+        }
+    }
+
+    private function createPermissions($auth, $permissions)
+    {
+        foreach ($permissions as $permissionName => $permissionDescription) {
+            $permission = $auth->createPermission($permissionName);
+            $permission->description = $permissionDescription;
+            $auth->add($permission);
+        }
+    }
+
+    private function assignPermissionsToRoles($auth)
+    {
+        $rolePermissions = [
+            'cliente' => ['reservarOnline', 'adicionarcarrinhoCompras', 'consultarFaturas', 'classificarecomentarAlojamentos', 'pagarReserva'],
+            'funcionario' => ['reservarPresencial', 'criarReservas', 'editarReservas', 'verReservas', 'eliminarReservas', 'visualizarRelatorios', 'criarClientes', 'editarClientes', 'verClientes', 'eliminarClientes', 'calcularValoresIva'],
+            'fornecedor' => ['confirmarReserva', 'criarAlojamentos', 'editarAlojamentos', 'eliminarAlojamentos', 'verAlojamentos'],
+            'administrador' => ['emitirFaturas', 'gerarRelatorios', 'criarAlojamentos', 'editarAlojamentos', 'verAlojamentos', 'eliminarAlojamentos', 'criarReservas', 'editarReservas', 'verReservas', 'eliminarReservas', 'calcularValoresIva'],
+        ];
+
+        foreach ($rolePermissions as $roleName => $permissionNames) {
+            $role = $auth->getRole($roleName);
+            foreach ($permissionNames as $permissionName) {
+                $permission = $auth->getPermission($permissionName);
+                $auth->addChild($role, $permission);
+            }
+        }
+    }
+
+    public function actionAssignClienteRole($userId)
+    {
+        $auth = Yii::$app->authManager;
+        $clienteRole = $auth->getRole('cliente');
+
+        $user = User::findOne($userId);
+
+        if ($clienteRole !== null && $user !== null && !$auth->checkAccess($user->id, $clienteRole->name)) {
+            $auth->assign($clienteRole, $user->id);
+            Yii::$app->session->setFlash('success', 'Papel de Cliente atribuído com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Falha ao atribuir o papel de Cliente.');
+        }
     }
 }
 

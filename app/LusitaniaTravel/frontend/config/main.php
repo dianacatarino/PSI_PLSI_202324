@@ -51,7 +51,14 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-
+                'index' => 'site/index',
+                'login' => 'site/login',
+                'logout' => 'site/logout',
+                'signup' => 'site/signup',
+                'about' => 'site/about',
+                'contact' => 'site/contact',
+                'pesquisa' => 'site/pesquisa',
+                'alojamentos' => 'site/alojamentos',
             ],
         ],*/
     ],

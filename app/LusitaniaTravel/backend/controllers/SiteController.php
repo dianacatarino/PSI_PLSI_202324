@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\PasswordResetForm;
 use common\models\LoginForm;
 use common\models\SignupForm;
 use common\models\User;
@@ -52,36 +53,6 @@ class SiteController extends Controller
         ];
     }
 
-    /*public function beforeAction($action)
-    {
-        // Verifique se o usuário está autenticado
-        if (!Yii::$app->user->isGuest) {
-            // Obtenha a ID do usuário atualmente autenticado
-            $userId = Yii::$app->user->getId();
-
-            // Consulte o banco de dados para obter a role do usuário
-            $userRole = User::find()->select('role')->where(['id' => $userId])->scalar();
-
-            // Defina o layout com base na role do usuário
-            switch ($userRole) {
-                case 'admin':
-                    $this->layout = 'main';
-                    break;
-                case 'funcionario':
-                    $this->layout = 'funcionario';
-                    break;
-                case 'fornecedor':
-                    $this->layout = 'fornecedor';
-                    break;
-                default:
-                    $this->layout = 'defaultLayout';
-                    break;
-            }
-        }
-
-        return parent::beforeAction($action);
-    }*/
-
     /**
      * Displays homepage.
      *
@@ -125,23 +96,7 @@ class SiteController extends Controller
             if ($model->isRegistered()) {
                 Yii::$app->session->setFlash('error', 'Este utilizador já está registrado.');
             } elseif ($model->register()) {
-                // Antes de atribuir a função, verifique se ela existe
-                $auth = Yii::$app->authManager;
-                $role = $auth->getRole($model->userType);
-
-                if ($role !== null) {
-                    // Obtendo o usuário recém-criado
-                    $user = User::findByUsername($model->username);
-
-                    // Verificar se o usuário já tem essa atribuição
-                    if (!$auth->checkAccess($user->id, $role->name)) {
-                        // Atribuindo a função ao usuário
-                        $auth->assign($role, $user->id);
-                    } else {
-                        Yii::warning('O utilizador já tem a função atribuída.');
-                    }
-                }
-
+                // Redirecionar para a página de login após o registro bem-sucedido
                 return $this->redirect(['login']);
             }
         }
@@ -149,9 +104,20 @@ class SiteController extends Controller
         return $this->render('register', ['model' => $model]);
     }
 
-    public function actionForgotPassowrd()
+    public function actionForgotPassword()
     {
-        return $this->render('forgotpassword');
+        $this->layout = 'blank';
+
+        $model = new PasswordResetForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            Yii::$app->session->setFlash('success', 'Link para redefinição de senha gerado. Verifique seu e-mail para obter mais instruções.');
+            return $this->goHome(); // Redirect to home or another page
+        }
+
+        return $this->render('forgotpassword', [
+            'model' => $model,
+        ]);
     }
 
     public function actionPerfil()

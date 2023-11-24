@@ -45,15 +45,15 @@ class SignupForm extends Model
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
 
-            ['repeatPassword', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match'],
+            ['repeatPassword', 'required'],
+            ['repeatPassword', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
 
             [['name', 'mobile', 'street', 'locale', 'postalCode'], 'string'],
+            [['name', 'street', 'locale'], 'string', 'max' => 255],
+            ['mobile', 'string', 'length' => [9, 9]],
+            ['postalCode', 'string', 'length' => [8, 10]],
 
-            [['userType'], 'required'],
-            [['userType'], 'in', 'range' => ['administrador', 'funcionario', 'fornecedor']],
-
-            [['terms'], 'required'],
-            [['terms'], 'boolean', 'trueValue' => true, 'falseValue' => false, 'strict' => false],
+            ['terms', 'required', 'requiredValue' => 1, 'message' => 'É necessário aceitar os termos e condições.'],
         ];
     }
 
@@ -68,45 +68,53 @@ class SignupForm extends Model
             return null;
         }
 
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        $user->name = $this->name;
-        $user->mobile = $this->mobile;
-        $user->street = $this->street;
-        $user->locale = $this->locale;
-        $user->postalCode = $this->postalCode;
-        $user->status = 10;
+        $transaction = Yii::$app->db->beginTransaction();
 
-        $auth = Yii::$app->authManager;
-        $role = null;
+        try {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+            $user->status = 10;
 
-        switch ($this->userType) {
-            case 'administrador':
-                $role = $auth->getRole('administrador');
-                $user->role = 'administrador';
-                break;
-            case 'funcionario':
-                $role = $auth->getRole('funcionario');
-                $user->role = 'funcionario';
-                break;
-            case 'fornecedor':
-                $role = $auth->getRole('fornecedor');
-                $user->role = 'fornecedor';
-                break;
-            default:
-                Yii::warning('Tipo de usuário desconhecido: ' . $this->userType);
-        }
+            if (!$user->save()) {
+                $transaction->rollBack();
+            }
 
-        if ($user->save() && $role !== null) {
-            $auth->assign($role, $user->getId());
+            // Criação do perfil associado ao utilizador
+            $profile = new Profile();
+            $profile->name = $this->name;
+            $profile->mobile = $this->mobile;
+            $profile->street = $this->street;
+            $profile->locale = $this->locale;
+            $profile->postalCode = $this->postalCode;
+            $profile->user_id = $user->id;
+
+            if (!$profile->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            // Adiciona a atribuição de função ao Profile
+            $auth = Yii::$app->authManager;
+            $clienteRole = $auth->getRole('cliente');
+
+            if ($clienteRole !== null) {
+                $auth->assign($clienteRole, $user->getId());
+
+                // Adiciona o papel (role) ao Profile
+                $profile->role = 'cliente';
+                $profile->save();
+            }
+
+            $transaction->commit();
             return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            Yii::error($e->getMessage());
         }
-
-        return false;
     }
 
     /**

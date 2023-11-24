@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Profile;
 use common\models\User;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -18,33 +19,40 @@ class UserController extends \yii\web\Controller
     public function actionCreate()
     {
         $model = new User();
+        $profile = new Profile();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
             // Defina a senha, gere a chave de autenticação e o token de verificação de e-mail
-            $model->setPassword($model->password); // Supondo que o campo de senha seja chamado 'password'
+            $model->setPassword('user1234');
             $model->generateAuthKey();
             $model->generateEmailVerificationToken();
 
-            // Salve o modelo
+            // Salve o modelo User
             if ($model->save()) {
+                // Associe o perfil ao utilizador recém-criado
+                $profile->user_id = $model->id;
+                $profile->save();
+
                 return $this->redirect(['index']);
             }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'profile' => $profile,
         ]);
     }
 
     public function actionStore()
     {
-        $postData = Yii::$app->request->post('User');
+        $userData = Yii::$app->request->post('User');
+        $profileData = Yii::$app->request->post('Profile');
 
         // Defina a senha fixa desejada
         $fixedPassword = 'user1234';
 
         // Crie uma nova instância do modelo User
-        $user = new User($postData);
+        $user = new User($userData);
 
         // Atribua a senha fixa
         $user->setPassword($fixedPassword);
@@ -53,12 +61,19 @@ class UserController extends \yii\web\Controller
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
 
-        // Salve o modelo
+        // Salve o modelo User
         if ($user->save()) {
-            return $this->redirect(['user/index']);
-        } else {
-            return $this->renderView('user', 'create', ['user' => $user]);
+            // Associe o perfil ao utilizador recém-criado
+            $profile = new Profile();
+            $profile->user_id = $user->id;
+
+            // Carregue os dados do perfil a partir do formulário
+            if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
+                return $this->redirect(['user/index']);
+            }
         }
+
+        return $this->renderView('user', 'create', ['user' => $user, 'profile' => $profile]);
     }
 
     public function actionEdit($id)
@@ -104,8 +119,11 @@ class UserController extends \yii\web\Controller
             throw new NotFoundHttpException('O user não foi encontrado.');
         }
 
+        $profile = $user->profile;
+
         return $this->render('show', [
             'user' => $user,
+            'profile' => $profile,
         ]);
     }
 
@@ -114,9 +132,16 @@ class UserController extends \yii\web\Controller
         $user = User::findOne($id);
 
         if (!$user) {
-            throw new NotFoundHttpException('O usuário não foi encontrado.');
+            throw new NotFoundHttpException('O user não foi encontrado.');
         }
 
+        // Encontrar e excluir o perfil associado ao usuário
+        $profile = Profile::findOne(['user_id' => $user->id]);
+        if ($profile) {
+            $profile->delete();
+        }
+
+        // Excluir o usuário
         $user->delete();
 
         return $this->redirect(['index']);

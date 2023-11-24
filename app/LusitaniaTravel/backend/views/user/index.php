@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Gestão dos Users';
+$this->title = 'Gestão dos Utilizadores';
 ?>
 <section class="content-header">
     <div class="container-fluid">
@@ -16,14 +16,14 @@ $this->title = 'Gestão dos Users';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Criar novo user', ['user/create'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Criar novo utilizador', ['user/create'], ['class' => 'btn btn-info']) ?>
     </p>
 </div>
 
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">User </h3>
+            <h3 class="card-title">Utilizadores </h3>
         </div>
         <div class="card-body p-0">
             <table class="table table-striped projects">
@@ -44,17 +44,21 @@ $this->title = 'Gestão dos Users';
                 </thead>
                 <tbody>
                 <?php foreach ($users as $user): ?>
+                    <?php
+                    // Certifique-se de que o perfil está carregado
+                    $user->load('profile');
+                    ?>
                     <tr>
                         <td><?= $user->id ?></td>
                         <td><?= Html::encode($user->username) ?></td>
-                        <td><?= Html::encode($user->name) ?></td>
+                        <td><?= Html::encode($user->profile->name) ?></td>
                         <td><?= Html::encode($user->email) ?></td>
-                        <td><?= Html::encode($user->mobile) ?></td>
-                        <td><?= Html::encode($user->street) ?></td>
-                        <td><?= Html::encode($user->locale) ?></td>
-                        <td><?= Html::encode($user->postalCode) ?></td>
+                        <td><?= Html::encode($user->profile->mobile) ?></td>
+                        <td><?= Html::encode($user->profile->street) ?></td>
+                        <td><?= Html::encode($user->profile->locale) ?></td>
+                        <td><?= Html::encode($user->profile->postalCode) ?></td>
                         <td><?= Html::encode($user->status) ?></td>
-                        <td><?= Html::encode($user->role) ?></td>
+                        <td><?= Html::encode($user->profile->role) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
                                 <?= Html::a('<i class="fas fa-folder"></i>', ['user/show', 'id' => $user->id], ['class' => 'btn btn-primary btn-sm']) ?>

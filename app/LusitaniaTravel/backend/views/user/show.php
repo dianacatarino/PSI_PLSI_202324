@@ -42,7 +42,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Nome</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->name) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->name) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Telefone</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->mobile) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->mobile) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +66,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Telefone</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->mobile) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->mobile) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Morada</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->street) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->street) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Localidade</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->locale) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->locale) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Código Postal</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->postalCode) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->postalCode) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +106,7 @@ $this->title = 'Detalhes do User';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Role</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($user->role) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($profile->role) ?></span>
                                 </div>
                             </div>
                         </div>
