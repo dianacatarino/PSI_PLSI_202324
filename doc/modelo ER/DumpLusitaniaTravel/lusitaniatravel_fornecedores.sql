@@ -16,23 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `fornecedores`
---
-
-DROP TABLE IF EXISTS `fornecedores`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `fornecedores` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `responsavel` varchar(30) NOT NULL,
-  `tipo` varchar(20) NOT NULL,
-  `nome_alojamento` varchar(30) NOT NULL,
-  `localizacao_alojamento` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `fornecedores`
 --
 
@@ -50,4 +33,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 15:37:35
+-- Dump completed on 2023-11-25 12:27:26

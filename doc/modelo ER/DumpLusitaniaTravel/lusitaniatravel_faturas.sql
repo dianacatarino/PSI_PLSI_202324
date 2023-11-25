@@ -16,28 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `faturas`
---
-
-DROP TABLE IF EXISTS `faturas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `faturas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `totalf` decimal(10,2) NOT NULL,
-  `totalsi` decimal(10,2) NOT NULL,
-  `iva` decimal(4,2) NOT NULL,
-  `empresa_id` int NOT NULL,
-  `reserva_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_faturas_empresas` (`empresa_id`),
-  KEY `fk_faturas_reservas` (`reserva_id`),
-  CONSTRAINT `fk_faturas_empresas` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`),
-  CONSTRAINT `fk_faturas_reservas` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `faturas`
 --
 
@@ -55,4 +33,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 15:37:34
+-- Dump completed on 2023-11-25 12:27:26

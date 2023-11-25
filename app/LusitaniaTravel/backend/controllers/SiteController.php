@@ -36,6 +36,12 @@ class SiteController extends Controller
                         'actions' => ['logout', 'index'],
                         'roles' => ['@'],
                     ],
+                    [
+                    'allow' => false, // Negar acesso a tudo
+                    'roles' => ['cliente'],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new ForbiddenHttpException('Não tem permissões para aceder a esta página.');
+                    },],
                 ],
             ],
         ];
@@ -60,6 +66,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        Yii::info('Verifying access to actionIndex', 'rbac-debug');
         return $this->render('index');
     }
 

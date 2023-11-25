@@ -17,22 +17,22 @@ $this->title = 'Editar User';
             <?= $form->field($user, 'username')->textInput(['class' => 'form-control'])->label('Username') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'name')->textInput(['class' => 'form-control'])->label('Nome') ?>
+            <?= $form->field($profile, 'name')->textInput(['class' => 'form-control'])->label('Nome') ?>
         </div>
         <div class="form-group">
             <?= $form->field($user, 'email')->textInput(['class' => 'form-control'])->label('Email') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'mobile')->textInput(['class' => 'form-control'])->label('Telefone') ?>
+            <?= $form->field($profile, 'mobile')->textInput(['class' => 'form-control'])->label('Telefone') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'street')->textInput(['class' => 'form-control'])->label('Morada') ?>
+            <?= $form->field($profile, 'street')->textInput(['class' => 'form-control'])->label('Morada') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'locale')->textInput(['class' => 'form-control'])->label('Localidade') ?>
+            <?= $form->field($profile, 'locale')->textInput(['class' => 'form-control'])->label('Localidade') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'postalCode')->textInput(['class' => 'form-control'])->label('Código Postal') ?>
+            <?= $form->field($profile, 'postalCode')->textInput(['class' => 'form-control'])->label('Código Postal') ?>
         </div>
         <div class="form-group">
             <?= $form->field($user, 'status')->dropDownList(
@@ -45,7 +45,7 @@ $this->title = 'Editar User';
             )->label('Status') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($user, 'role')->dropDownList(['admin' => 'Admin', 'funcionario' => 'Funcionario', 'fornecedor' => 'Fornecedor', 'cliente' => 'Cliente'], ['prompt' => 'Seleciona um', 'class' => 'form-control custom-select'])->label('Role') ?>
+            <?= $form->field($profile, 'role')->dropDownList(['admin' => 'Admin', 'funcionario' => 'Funcionario', 'fornecedor' => 'Fornecedor', 'cliente' => 'Cliente'], ['prompt' => 'Seleciona um', 'class' => 'form-control custom-select'])->label('Role') ?>
         </div>
     </div>
     <div class="card-footer">

@@ -16,34 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `auth_item`
---
-
-DROP TABLE IF EXISTS `auth_item`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_item` (
-  `name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `type` smallint NOT NULL,
-  `description` text COLLATE utf8mb3_unicode_ci,
-  `rule_name` varchar(64) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `data` blob,
-  `created_at` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  PRIMARY KEY (`name`),
-  KEY `rule_name` (`rule_name`),
-  KEY `idx-auth_item-type` (`type`),
-  CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `auth_item`
 --
 
 LOCK TABLES `auth_item` WRITE;
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
-INSERT INTO `auth_item` VALUES ('adicionarcarrinhoCompras',2,NULL,NULL,NULL,1699557407,1699557407),('adicionarFavoritos',2,NULL,NULL,NULL,1699557407,1699557407),('administrador',1,NULL,NULL,NULL,1699557407,1699557407),('calcularValoresIva',2,NULL,NULL,NULL,1699557407,1699557407),('classificarecomentarAlojamentos',2,NULL,NULL,NULL,1699557407,1699557407),('cliente',1,NULL,NULL,NULL,1699557407,1699557407),('confirmarReserva',2,NULL,NULL,NULL,1699557407,1699557407),('consultarFaturas',2,NULL,NULL,NULL,1699557407,1699557407),('criarAlojamentos',2,NULL,NULL,NULL,1699557407,1699557407),('criarClientes',2,NULL,NULL,NULL,1699557407,1699557407),('criarReservas',2,NULL,NULL,NULL,1699557407,1699557407),('editarAlojamentos',2,NULL,NULL,NULL,1699557407,1699557407),('editarClientes',2,NULL,NULL,NULL,1699557407,1699557407),('editarReservas',2,NULL,NULL,NULL,1699557407,1699557407),('eliminarAlojamentos',2,NULL,NULL,NULL,1699557407,1699557407),('eliminarClientes',2,NULL,NULL,NULL,1699557407,1699557407),('eliminarReservas',2,NULL,NULL,NULL,1699557407,1699557407),('emitirFaturas',2,NULL,NULL,NULL,1699557407,1699557407),('fornecedor',1,NULL,NULL,NULL,1699557407,1699557407),('funcionario',1,NULL,NULL,NULL,1699557407,1699557407),('gerarRelatorios',2,NULL,NULL,NULL,1699557407,1699557407),('pagarReserva',2,NULL,NULL,NULL,1699557407,1699557407),('reservarOnline',2,NULL,NULL,NULL,1699557407,1699557407),('reservarPresencial',2,NULL,NULL,NULL,1699557407,1699557407),('verAlojamentos',2,NULL,NULL,NULL,1699557407,1699557407),('verClientes',2,NULL,NULL,NULL,1699557407,1699557407),('verReservas',2,NULL,NULL,NULL,1699557407,1699557407),('visualizarRelatorios',2,NULL,NULL,NULL,1699557407,1699557407);
+INSERT INTO `auth_item` VALUES ('adicionarcarrinhoCompras',2,'Adicionar ao Carrinho de Compras',NULL,NULL,1700914132,1700914132),('adicionarFavoritos',2,'Adicionar aos Favoritos',NULL,NULL,1700914132,1700914132),('administrador',1,NULL,NULL,NULL,1700914132,1700914132),('calcularValoresIva',2,'Calcular Valores do IVA',NULL,NULL,1700914132,1700914132),('classificarecomentarAlojamentos',2,'Classificar e Comentar Alojamentos',NULL,NULL,1700914132,1700914132),('cliente',1,NULL,NULL,NULL,1700914132,1700914132),('confirmarReserva',2,'Confirmar Reserva',NULL,NULL,1700914132,1700914132),('consultarFaturas',2,'Consultar Faturas',NULL,NULL,1700914132,1700914132),('criarAlojamentos',2,'Criar Alojamentos',NULL,NULL,1700914132,1700914132),('criarClientes',2,'Criar Clientes',NULL,NULL,1700914132,1700914132),('criarReservas',2,'Criar Reservas',NULL,NULL,1700914132,1700914132),('editarAlojamentos',2,'Editar Alojamentos',NULL,NULL,1700914132,1700914132),('editarClientes',2,'Editar Clientes',NULL,NULL,1700914132,1700914132),('editarReservas',2,'Editar Reservas',NULL,NULL,1700914132,1700914132),('eliminarAlojamentos',2,'Eliminar Alojamentos',NULL,NULL,1700914132,1700914132),('eliminarClientes',2,'Eliminar Clientes',NULL,NULL,1700914132,1700914132),('eliminarReservas',2,'Eliminar Reservas',NULL,NULL,1700914132,1700914132),('emitirFaturas',2,'Emitir Faturas',NULL,NULL,1700914132,1700914132),('fornecedor',1,NULL,NULL,NULL,1700914132,1700914132),('funcionario',1,NULL,NULL,NULL,1700914132,1700914132),('gerarRelatorios',2,'Gerar Relatórios',NULL,NULL,1700914132,1700914132),('pagarReserva',2,'Pagar Reserva',NULL,NULL,1700914132,1700914132),('reservarOnline',2,'Reservar Online',NULL,NULL,1700914132,1700914132),('reservarPresencial',2,'Reservar Presencialmente',NULL,NULL,1700914132,1700914132),('verAlojamentos',2,'Ver Alojamentos',NULL,NULL,1700914132,1700914132),('verClientes',2,'Ver Clientes',NULL,NULL,1700914132,1700914132),('verReservas',2,'Ver Reservas',NULL,NULL,1700914132,1700914132),('visualizarRelatorios',2,'Visualizar Relatórios',NULL,NULL,1700914132,1700914132);
 /*!40000 ALTER TABLE `auth_item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 15:37:35
+-- Dump completed on 2023-11-25 12:27:25

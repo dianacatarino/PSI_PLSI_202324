@@ -18,19 +18,19 @@ class UserController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        $model = new User();
+        $user = new User();
         $profile = new Profile();
 
-        if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
+        if ($user->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
             // Defina a senha, gere a chave de autenticação e o token de verificação de e-mail
-            $model->setPassword('user1234');
-            $model->generateAuthKey();
-            $model->generateEmailVerificationToken();
+            $user->setPassword('user1234');
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
 
             // Salve o modelo User
-            if ($model->save()) {
+            if ($user->save()) {
                 // Associe o perfil ao utilizador recém-criado
-                $profile->user_id = $model->id;
+                $profile->user_id = $user->id;
                 $profile->save();
 
                 return $this->redirect(['index']);
@@ -38,7 +38,7 @@ class UserController extends \yii\web\Controller
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'user' => $user,
             'profile' => $profile,
         ]);
     }
@@ -79,36 +79,39 @@ class UserController extends \yii\web\Controller
     public function actionEdit($id)
     {
         $user = User::findOne($id);
+        $profile = $user->profile;
 
         if (!$user) {
-            throw new NotFoundHttpException('O user não foi encontrado.');
-        }
-
-        if ($user->load(Yii::$app->request->post()) && $user->save()) {
-            return $this->redirect(['user/index']);
+            throw new NotFoundHttpException('O utilizador não foi encontrado.');
         }
 
         return $this->render('edit', [
             'user' => $user,
+            'profile' => $profile,
         ]);
     }
 
     public function actionUpdate($id)
     {
-        // Recupera os dados do formulário
-        $postData = Yii::$app->request->post('User');
+        $user = User::findOne($id);
 
-        // Realiza a atualização no banco de dados
-        $updatedRows = User::updateAll($postData, ['id' => $id]);
-
-        if ($updatedRows > 0) {
-            // Redireciona para a página de índice se pelo menos um registro for atualizado
-            return $this->redirect(['index']);
-        } else {
-            // Caso contrário, renderiza novamente a página de edição com os dados existentes
-            $user = User::findOne($id);
-            return $this->render('edit', ['user' => $user]);
+        if (!$user) {
+            throw new NotFoundHttpException('O utilizador não foi encontrado.');
         }
+
+        $profile = $user->profile;
+
+        if ($user->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
+            // Validate and save the user and profile models
+            if ($user->save() && $profile->save()) {
+                return $this->redirect(['user/index']);
+            }
+        }
+
+        return $this->render('update', [
+            'user' => $user,
+            'profile' => $profile,
+        ]);
     }
 
     public function actionShow($id)
@@ -135,13 +138,13 @@ class UserController extends \yii\web\Controller
             throw new NotFoundHttpException('O user não foi encontrado.');
         }
 
-        // Encontrar e excluir o perfil associado ao usuário
+        // Encontrar e excluir o perfil associado ao utilizador
         $profile = Profile::findOne(['user_id' => $user->id]);
         if ($profile) {
             $profile->delete();
         }
 
-        // Excluir o usuário
+        // Excluir o utilizador
         $user->delete();
 
         return $this->redirect(['index']);

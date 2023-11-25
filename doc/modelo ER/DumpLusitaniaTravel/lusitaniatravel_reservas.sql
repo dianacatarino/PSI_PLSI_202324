@@ -16,31 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `reservas`
---
-
-DROP TABLE IF EXISTS `reservas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `reservas` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tipo` enum('Online','Presencial') DEFAULT NULL,
-  `checkin` date NOT NULL,
-  `checkout` date NOT NULL,
-  `numeroquartos` int NOT NULL,
-  `numeroclientes` int NOT NULL,
-  `valor` decimal(10,2) NOT NULL,
-  `cliente_id` int NOT NULL,
-  `funcionario_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_reservas_cliente` (`cliente_id`),
-  KEY `fk_reservas_funcionario` (`funcionario_id`),
-  CONSTRAINT `fk_reservas_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `fk_reservas_funcionario` FOREIGN KEY (`funcionario_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `reservas`
 --
 
@@ -58,4 +33,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 15:37:35
+-- Dump completed on 2023-11-25 12:27:25

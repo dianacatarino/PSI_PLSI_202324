@@ -14,13 +14,13 @@ $this->title = 'Criar novo User';
     <?php $form = ActiveForm::begin(['action' => ['user/store'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
         <div class="form-group">
-            <?= $form->field($model, 'username')->textInput(['class' => 'form-control'])->label('Username') ?>
+            <?= $form->field($user, 'username')->textInput(['class' => 'form-control'])->label('Username') ?>
         </div>
         <div class="form-group">
             <?= $form->field($profile, 'name')->textInput(['class' => 'form-control'])->label('Nome') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($model, 'email')->textInput(['class' => 'form-control'])->label('Email') ?>
+            <?= $form->field($user, 'email')->textInput(['class' => 'form-control'])->label('Email') ?>
         </div>
         <div class="form-group">
             <?= $form->field($profile, 'mobile')->textInput(['class' => 'form-control'])->label('Telefone') ?>
@@ -35,7 +35,7 @@ $this->title = 'Criar novo User';
             <?= $form->field($profile, 'postalCode')->textInput(['class' => 'form-control'])->label('Código Postal') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($model, 'status')->dropDownList(
+            <?= $form->field($user, 'status')->dropDownList(
                 [
                     1 => '1 - Apagado',
                     9 => '9 - Desativado',

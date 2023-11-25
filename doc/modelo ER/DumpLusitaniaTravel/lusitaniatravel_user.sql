@@ -16,43 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `auth_key` varchar(32) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `password_hash` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `password_reset_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `status` smallint NOT NULL DEFAULT '10',
-  `created_at` int NOT NULL,
-  `updated_at` int NOT NULL,
-  `verification_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `name` varchar(25) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `mobile` varchar(9) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `street` varchar(30) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `locale` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `postalCode` varchar(10) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `role` enum('admin','funcionario','fornecedor','cliente') COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `user`
 --
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'diana','KdN1on0b7oub3XVnPJkobFBttMJDy5rM','$2y$13$kseq4Us4OHodgflS/yKdv.o4SsSx4FDv0MK3uyOyZq4CP0q5OoJ6y',NULL,'diana@email.com',10,1699555248,1699555248,'40bVOA_wrNnH6cwJyi4RyNpRRVHXxwdB_1699555248','Diana','963921497','Rua dos Combatentes','Leiria','2491-012','cliente'),(2,'cliente','bWMGEOYpNMPHI-HsAYMtrT3QKjFkgPmi','$2y$13$krGMPl4bBalP8lmAYcft5eMdAPrNGX66PGnTX1P2OH4s9RhblzNqO',NULL,'cliente@email.com',10,1699557971,1699557971,'LfwD2l-3yPxUepn6y74F8VK9MsJwaf6K_1699557971','Cliente','987654321','Rua do Cliente','Leiria','2431-012','cliente'),(3,'cliente1','Mic3ntV_bzUvmGr3epH0VxOeX4o4d3iL','$2y$13$zIg1jG/cNqGfrcSDoIDReOJr98AcEnjVRxpfGvvoH.WEqUgdh.GEK',NULL,'cliente1@email.com',10,1699558324,1699558324,'UAHTj0yzd2vmsKlxfbyLH-E-6clJJ55C_1699558324','Cliente1','987654321','Rua do Cliente','Leiria','2431-012','cliente'),(4,'maria','28RIw1wpP2dJOwWY4XGQJRmbu8XdNfPH','$2y$13$zZOY4RjfUaP1usfio0AhlezdwZOSB2c6ztIhe3z9ypb701EqX6X6e',NULL,'maria@email.com',10,1699559501,1699559501,'-R_ugebyNxn1grUPL7ub3nrZYKhJVLN4_1699559501','Maria','912123123','Rua da Flor','Leiria','2431-012','cliente'),(5,'admin','eA6lBCVVVG6ozeMU-FDwOW9Auc26v_C7','$2y$13$gd8041oPnNYJy89zURMbW.eIRDpSi87MGLQHDI8MnE5cEYccqo56y',NULL,'admin@gmail.com',10,1699711168,1699711168,'jdkHu2Q44PnCiXQZAPxzFdaj2ogShriM_1699711168','Admin','987654321','Rua do Admin','Leiria','2431-012','admin'),(6,'funcionario','N36CMVIeEhr8W4ubrKFcUCOwm_EYaUvl','$2y$13$Sg3m9gHoo9cCWYpWWcoq.OkSw2XEMVFfwbKephYcrZqUKwxvyPfJy',NULL,'funcionario@gmail.com',10,1699711352,1699711352,'GJzLqAY063p3jUUxaPa1nhXjSxpmYG6P_1699711352','Funcionario','908765123','Rua do Funcionario','Leiria','2312-012','funcionario'),(19,'fornecedor','Im_upcn8ZZSgT-YLn8hwjVegfUVfR38Z','$2y$13$CnkmiYol4VsA96xTulTexei74YONIEvbbbvL59z8Bl1xYDKnrXIk6',NULL,'fornecedor@gmail.com',10,1699961050,1699971926,'qcTgILpUIawPuB_O8_Ro5cmWuFoY-0GT_1699961050','Fornecedor','987123456','Rua do Fornecedor','Leiria','2301-021','fornecedor'),(29,'fornecedor2','83lOWwarokQGtvS8HLs9S0774AO2wb3j','$2y$13$IxS9yomQfxoJxq6qKp2Xpur41Jo8vDZOQhCf1vKMtJ8Ekug.Ij9bK',NULL,'fornecedor2@gmail.com',9,1700327976,1700327976,'7459AWOzJPJLovyRAOgkYNsOAj_UetUN_1700327976','Fornecedor2','982123912','Rua do Fornecedor2','Leiria','2312-012','fornecedor');
+INSERT INTO `user` VALUES (44,'diana','kTRSNq4btLX--mJAUwY4cobS2zz5-ws4','$2y$13$x6xXmJJoaFkJTksrZDa0Vut1hRWrkdFTFpiHVyyWcxqiZZgRn9oy2',NULL,'diana@email.com',10,1700844249,1700844249,'aJV4_YiSwqy1euXQW6Zk0OzD5t-4JaNx_1700844249',1),(45,'admin','j8th_N_UlbaTSb2sCmagTNTP-lD28syt','$2y$13$Zt7D0j.6ICKw.y7RVma.keG76lY81LlZHoylPbPi3E3saF7IFLKnW',NULL,'admin@gmail.com',10,1700844756,1700844756,'wgK_mozZMjlFv5yVdT8HMgSIsl9OUogh_1700844756',2),(46,'maria','zcMk0Wvq4hmFnHvyhz7X3uO4M4qlcpcK','$2y$13$udifYaxHJRVMBQBwtcEUXO/k2B4oXRPTVhb0fQBFy2mRh1pHHVNsK',NULL,'maria@email.com',10,1700845149,1700845149,'__cHy5CbrUFKXs677bahNFCLNfdSuR8n_1700845149',3),(47,'user','ZGsbGTXuN9XUd2osoyxpJ-JGEAvhuha6','$2y$13$vFIlglQ0ceeiCke4GTwZ/uIEBUVvLmUJQ6AcZ6ZS5zLTlSa/Jfk.K',NULL,'user@email.com',10,1700845212,1700845212,'C20sUi268gPpjuKZ4Dtwi1dW8dl7Dok-_1700845212',4),(48,'funcionario','eJySesDKGMHwveb5d9gZhG8_vwe11cYP','$2y$13$l1djLGT0FfPjOlIvUcnVxuylBs88Wlb65hSoWiy2n7BDSTL.KIWdG',NULL,'funcionario@gmail.com',10,1700845412,1700845412,'MvMq44ws3EIvRVMtMmZdJMaTdr_jUO2d_1700845412',5),(49,'funcionario1','6ZhsrBLlYKJKMJatCVBHOAffYOaOvVwC','$2y$13$8nx4EjK/S3L6Ytll4JxK5.l4P5jC0uztfW6fzXOQru.lD9T9a5Tiq',NULL,'funcionario1@gmail.com',10,1700845627,1700845627,'LjaR8p68SUG5H5HnfJvSvrdD58ueWNU3_1700845627',6),(52,'fornecedor','H3JhQvKMvRmG8zCjtEUJlSe-swxVxsa2','$2y$13$UYmBy6lmkpF3qJbPgbTw3.DYDFNJoXUkRebBWmvJpLnn6Ed4W7atG',NULL,'fornecedor@gmail.com',10,1700846214,1700846214,'DzEfxC6YfSb31y6_k7joyOtyU4lUHx9h_1700846214',9),(54,'funcionario2','RihxTQWdjp9R9GysqCKAkcLgXshYoiZ7','$2y$13$78Z43XRjZ3HMiv7wCUgo1.Jug5Ji9PqrNON298uGDMPhPTO0LuMN.',NULL,'funcionario2@email.com',10,1700909043,1700912297,'8sLrcjA2XB6jF5FVtT0-Y7AluS9B3yrs_1700909043',10),(55,'user1','OW7THDof2QcAYS1Y_BPEMsJAqk9f0U6C','$2y$13$F6AyNsg/21AJzgjqjAa5QeEC7lbgaH03C8wsdkR6s0bM8XBu1juUu',NULL,'user1@email.com',10,1700913488,1700913488,'JYOaY5FKSE1zSIv3qqIZ5VbHEskbA55A_1700913488',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -65,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-20 15:37:34
+-- Dump completed on 2023-11-25 12:27:25
