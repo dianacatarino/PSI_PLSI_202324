@@ -16,6 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `empresas`
+--
+
+DROP TABLE IF EXISTS `empresas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `empresas` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sede` varchar(50) NOT NULL,
+  `capitalsocial` decimal(10,2) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `localidade` varchar(50) DEFAULT NULL,
+  `nif` varchar(15) DEFAULT NULL,
+  `morada` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `empresas`
 --
 
@@ -33,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-25 12:27:24
+-- Dump completed on 2023-11-28 11:20:03

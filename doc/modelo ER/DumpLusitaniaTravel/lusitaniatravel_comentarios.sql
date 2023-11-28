@@ -16,6 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `comentarios`
+--
+
+DROP TABLE IF EXISTS `comentarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comentarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(100) NOT NULL,
+  `descricao` text NOT NULL,
+  `data_comentario` date NOT NULL,
+  `cliente_id` int NOT NULL,
+  `fornecedor_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_comentarios_cliente` (`cliente_id`),
+  KEY `fk_comentarios_fornecedor` (`fornecedor_id`),
+  CONSTRAINT `fk_comentarios_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_comentarios_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `comentarios`
 --
 
@@ -33,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-25 12:27:25
+-- Dump completed on 2023-11-28 11:20:03

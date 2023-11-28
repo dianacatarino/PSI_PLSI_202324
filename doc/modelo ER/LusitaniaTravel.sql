@@ -39,9 +39,9 @@ CREATE TABLE Reservas (
 CREATE TABLE Imagens (
     id INT AUTO_INCREMENT,
     filename VARCHAR(255) NOT NULL,
-    reserva_id INT NOT NULL,
+    fornecedor_id INT NOT NULL,
     CONSTRAINT pk_imagens_id PRIMARY KEY (id),
-    CONSTRAINT fk_imagens_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
+	CONSTRAINT fk_imagens_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE LinhasReservas (
@@ -97,10 +97,10 @@ CREATE TABLE Comentarios (
     descricao TEXT NOT NULL,
     data_comentario DATE NOT NULL,
     cliente_id INT NOT NULL,
-    reserva_id INT NOT NULL,
+    fornecedor_id INT NOT NULL,
     CONSTRAINT pk_comentarios_id PRIMARY KEY (id),
     CONSTRAINT fk_comentarios_cliente FOREIGN KEY (cliente_id) REFERENCES User(id),
-    CONSTRAINT fk_comentarios_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
+	CONSTRAINT fk_comentarios_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Avaliacoes (
@@ -108,10 +108,10 @@ CREATE TABLE Avaliacoes (
     classificacao INT NOT NULL,
     data_avaliacao DATE NOT NULL,
     cliente_id INT NOT NULL,
-    reserva_id INT NOT NULL,
+    fornecedor_id INT NOT NULL,
     CONSTRAINT pk_avaliacoes_id PRIMARY KEY (id),
     CONSTRAINT fk_avaliacoes_cliente FOREIGN KEY (cliente_id) REFERENCES User(id),
-    CONSTRAINT fk_avaliacoes_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
+    CONSTRAINT fk_avaliacoes_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Profile (
@@ -139,8 +139,9 @@ ALTER TABLE User
 ADD COLUMN profile_id INT,
 ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id);
 
-DELETE FROM User;
+DROP TABLE IF EXISTS Imagens;
+DROP TABLE IF EXISTS Avaliacoes;
+DROP TABLE IF EXISTS Comentarios;
 
-ALTER TABLE User AUTO_INCREMENT = 1;
 
 

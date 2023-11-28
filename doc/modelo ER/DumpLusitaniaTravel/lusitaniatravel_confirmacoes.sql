@@ -16,6 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `confirmacoes`
+--
+
+DROP TABLE IF EXISTS `confirmacoes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `confirmacoes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `estado` enum('Pendente','Confirmado','Cancelado') DEFAULT NULL,
+  `dataconfirmacao` date DEFAULT NULL,
+  `reserva_id` int NOT NULL,
+  `fornecedor_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_confirmacoes_reservas` (`reserva_id`),
+  KEY `fk_confirmacoes_fornecedor` (`fornecedor_id`),
+  CONSTRAINT `fk_confirmacoes_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
+  CONSTRAINT `fk_confirmacoes_reservas` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `confirmacoes`
 --
 
@@ -33,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-25 12:27:26
+-- Dump completed on 2023-11-28 11:20:02

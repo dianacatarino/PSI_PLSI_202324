@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `auth_key` varchar(32) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `password_reset_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `status` smallint NOT NULL DEFAULT '10',
+  `created_at` int NOT NULL,
+  `updated_at` int NOT NULL,
+  `verification_token` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `profile_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `password_reset_token` (`password_reset_token`),
+  KEY `fk_user_profile_id` (`profile_id`),
+  CONSTRAINT `fk_user_profile_id` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `user`
 --
 
@@ -34,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-25 12:27:25
+-- Dump completed on 2023-11-28 11:20:03

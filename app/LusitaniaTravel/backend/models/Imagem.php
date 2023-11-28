@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $filename
- * @property int $reserva_id
+ * @property int $fornecedor_id
  *
- * @property Reserva $reserva
+ * @property Fornecedor $fornecedor
  */
 class Imagem extends \yii\db\ActiveRecord
 {
@@ -29,10 +29,10 @@ class Imagem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['filename', 'reserva_id'], 'required'],
-            [['reserva_id'], 'integer'],
+            [['filename', 'fornecedor_id'], 'required'],
+            [['fornecedor_id'], 'integer'],
             [['filename'], 'string', 'max' => 255],
-            [['reserva_id'], 'exist', 'skipOnError' => true, 'targetClass' => Reserva::class, 'targetAttribute' => ['reserva_id' => 'id']],
+            [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
         ];
     }
 
@@ -44,17 +44,17 @@ class Imagem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'filename' => 'Filename',
-            'reserva_id' => 'Reserva ID',
+            'fornecedor_id' => 'Fornecedor ID',
         ];
     }
 
     /**
-     * Gets query for [[Reserva]].
+     * Gets query for [[Fornecedor]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReserva()
+    public function getFornecedor()
     {
-        return $this->hasOne(Reserva::class, ['id' => 'reserva_id']);
+        return $this->hasOne(Fornecedor::class, ['id' => 'fornecedor_id']);
     }
 }

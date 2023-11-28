@@ -14,7 +14,10 @@ use Yii;
  * @property string $nome_alojamento
  * @property string $localizacao_alojamento
  *
- * @property Confirmacao[] $confirmacoes
+ * @property Avaliacao[] $avaliacoes
+ * @property Comentario[] $comentarios
+ * @property Confirmacao[] $confirmacos
+ * @property Imagem[] $imagens
  */
 class Fornecedor extends \yii\db\ActiveRecord
 {
@@ -54,6 +57,26 @@ class Fornecedor extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Avaliacos]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAvaliacos()
+    {
+        return $this->hasMany(Avaliacao::class, ['fornecedor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Comentarios]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentario::class, ['fornecedor_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[Confirmacos]].
      *
      * @return \yii\db\ActiveQuery
@@ -61,5 +84,15 @@ class Fornecedor extends \yii\db\ActiveRecord
     public function getConfirmacos()
     {
         return $this->hasMany(Confirmacao::class, ['fornecedor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Imagens]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImagens()
+    {
+        return $this->hasMany(Imagem::class, ['fornecedor_id' => 'id']);
     }
 }

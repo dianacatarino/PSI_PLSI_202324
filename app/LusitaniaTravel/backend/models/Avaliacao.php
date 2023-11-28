@@ -2,7 +2,6 @@
 
 namespace backend\models;
 
-use app\models\Reserva;
 use common\models\User;
 use Yii;
 
@@ -13,10 +12,10 @@ use Yii;
  * @property int $classificacao
  * @property string $data_avaliacao
  * @property int $cliente_id
- * @property int $reserva_id
+ * @property int $fornecedor_id
  *
  * @property User $cliente
- * @property Reserva $reserva
+ * @property Fornecedor $fornecedor
  */
 class Avaliacao extends \yii\db\ActiveRecord
 {
@@ -34,11 +33,11 @@ class Avaliacao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['classificacao', 'data_avaliacao', 'cliente_id', 'reserva_id'], 'required'],
-            [['classificacao', 'cliente_id', 'reserva_id'], 'integer'],
+            [['classificacao', 'data_avaliacao', 'cliente_id', 'fornecedor_id'], 'required'],
+            [['classificacao', 'cliente_id', 'fornecedor_id'], 'integer'],
             [['data_avaliacao'], 'safe'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['cliente_id' => 'id']],
-            [['reserva_id'], 'exist', 'skipOnError' => true, 'targetClass' => Reserva::class, 'targetAttribute' => ['reserva_id' => 'id']],
+            [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
         ];
     }
 
@@ -52,7 +51,7 @@ class Avaliacao extends \yii\db\ActiveRecord
             'classificacao' => 'Classificacao',
             'data_avaliacao' => 'Data Avaliacao',
             'cliente_id' => 'Cliente ID',
-            'reserva_id' => 'Reserva ID',
+            'fornecedor_id' => 'Fornecedor ID',
         ];
     }
 
@@ -67,12 +66,12 @@ class Avaliacao extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reserva]].
+     * Gets query for [[Fornecedor]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReserva()
+    public function getFornecedor()
     {
-        return $this->hasOne(Reserva::class, ['id' => 'reserva_id']);
+        return $this->hasOne(Fornecedor::class, ['id' => 'fornecedor_id']);
     }
 }
