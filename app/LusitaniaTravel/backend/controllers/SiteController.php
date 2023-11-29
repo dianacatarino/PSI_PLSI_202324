@@ -59,6 +59,29 @@ class SiteController extends Controller
         ];
     }
 
+    private function configureLayout()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $userRole = Yii::$app->user->identity->profile->role;
+
+            switch ($userRole) {
+                case 'admin':
+                    $this->layout = 'main';
+                    break;
+                case 'fornecedor':
+                    $this->layout = 'fornecedor';
+                    break;
+                case 'funcionario':
+                    $this->layout = 'funcionario';
+                    break;
+                default:
+                    $this->layout = 'blank';
+                    break;
+            }
+        }
+    }
+
+
     /**
      * Displays homepage.
      *
@@ -66,7 +89,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        Yii::info('Verifying access to actionIndex', 'rbac-debug');
+        $this->configureLayout();
         return $this->render('index');
     }
 
@@ -86,6 +109,10 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
+        }
+
+        if ($model->hasErrors() && $model->getFirstError('password') !== null) {
+            Yii::$app->session->setFlash('error', 'Senha incorreta. Por favor, tente novamente.');
         }
 
         $model->password = '';

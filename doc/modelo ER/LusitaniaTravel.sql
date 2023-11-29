@@ -18,6 +18,7 @@ CREATE TABLE Fornecedores (
     tipo VARCHAR(20) NOT NULL,
     nome_alojamento VARCHAR(30) NOT NULL,
     localizacao_alojamento VARCHAR(50) NOT NULL,
+    acomodacoes_alojamento VARCHAR(50) NOT NULL,
     CONSTRAINT pk_fornecedores_id PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -142,6 +143,9 @@ ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id
 DROP TABLE IF EXISTS Imagens;
 DROP TABLE IF EXISTS Avaliacoes;
 DROP TABLE IF EXISTS Comentarios;
+
+ALTER TABLE Fornecedores
+ADD COLUMN acomodacoes_alojamento VARCHAR(50);
 
 
 

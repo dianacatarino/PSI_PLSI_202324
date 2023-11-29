@@ -40,7 +40,7 @@ AppAsset::register($this);
                     <a href="index.php" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contacto</a>
+                    <a href="<?= Url::to(['site/contact']) ?>" class="nav-link">Contacto</a>
                 </li>
             </ul>
 
@@ -115,7 +115,7 @@ AppAsset::register($this);
                     </div>
                     <div class="info">
                         <?php if (!Yii::$app->user->isGuest): ?>
-                            <a href="#" class="d-block"><?= Yii::$app->user->identity->username ?></a>
+                            <a href="<?= Url::to(['site/perfil']) ?>" class="d-block"><?= Yii::$app->user->identity->username ?></a>
                         <?php endif; ?>
                     </div>
                 </div>

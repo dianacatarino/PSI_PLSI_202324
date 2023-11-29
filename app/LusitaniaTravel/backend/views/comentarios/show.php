@@ -2,7 +2,7 @@
 
 use yii\bootstrap5\Html;
 
-$this->title = 'Detalhes da Empresa';
+$this->title = 'Detalhes do Comentário';
 ?>
 <section class="content-header">
     <div class="container-fluid">
@@ -16,7 +16,7 @@ $this->title = 'Detalhes da Empresa';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Voltar', ['empresa/index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('Voltar', ['comentarios/index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 </div>
 
@@ -24,7 +24,7 @@ $this->title = 'Detalhes da Empresa';
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Detalhes da Empresa <?= $empresa->id ?></h3>
+            <h3 class="card-title">Detalhes do Comentário <?= $comentario->id ?></h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -33,56 +33,46 @@ $this->title = 'Detalhes da Empresa';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Sede</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->sede) ?></span>
+                                    <span class="info-box-text text-center text-muted">ID do Alojamento</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->fornecedor_id) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Capital Social</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->capitalsocial) ?></span>
+                                    <span class="info-box-text text-center text-muted">Título</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->titulo) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Email</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->email) ?></span>
+                                    <span class="info-box-text text-center text-muted">Comentário da estadia</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->descricao) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Morada</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->morada) ?></span>
+                                    <span class="info-box-text text-center text-muted">ID do Cliente</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->cliente_id) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Localidade</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->localidade) ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <div class="info-box bg-light">
-                                <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">NIF</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($empresa->nif) ?></span>
+                                    <span class="info-box-text text-center text-muted">Data do Comentário</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->data_comentario) ?></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /.card-body -->
             </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </div>
+            <!-- /.card -->
 </section>

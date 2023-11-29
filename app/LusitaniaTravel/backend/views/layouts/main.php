@@ -215,14 +215,12 @@ AppAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <?php if (Yii::$app->user->can('fornecedor')): ?>
                     <li class="nav-item">
                         <a href="<?= Url::to(['confirmacoes/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-check"></i>
                             <p>Confirmações</p>
                         </a>
                     </li>
-                    <?php endif; ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-file-invoice"></i>

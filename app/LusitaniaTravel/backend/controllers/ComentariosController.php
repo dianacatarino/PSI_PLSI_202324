@@ -10,36 +10,32 @@ class ComentariosController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $comentarios = Comentario::find()->all();
+
+        return $this->render('index', ['comentarios' => $comentarios]);
     }
 
-    public function actionCreate()
+    public function actionShow($id)
     {
-        return $this->render('create');
+        $comentario = Comentario::findOne($id);
+
+        if (!$comentario) {
+            throw new NotFoundHttpException('O comentário não foi encontrado.');
+        }
+        return $this->render('show', ['comentario' => $comentario]);
     }
 
-    public function actionStore()
+    public function actionDelete($id)
     {
-        return $this->render('store');
-    }
+        $comentario = Comentario::findOne($id);
 
-    public function actionEdit()
-    {
-        return $this->render('edit');
-    }
+        if (!$comentario) {
+            throw new NotFoundHttpException('O comentário não foi encontrado.');
+        }
 
-    public function actionUpdate()
-    {
-        return $this->render('update');
-    }
+        $comentario->delete();
 
-    public function actionShow()
-    {
-        return $this->render('show');
-    }
-
-    public function actionDelete()
-    {
-        return $this->render('delete');
+        return $this->redirect(['index'], ['comentario' => $comentario]);
     }
 }

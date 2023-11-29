@@ -10,7 +10,10 @@ class LinhasfaturasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $linhasfaturas = Linhasfatura::find()->all();
+
+        return $this->render('index', ['linhasfaturas' => $linhasfaturas]);
+
     }
 
     public function actionCreate()
@@ -33,7 +36,7 @@ class LinhasfaturasController extends \yii\web\Controller
         return $this->render('update');
     }
 
-    public function actionShow()
+    public function actionShow($id)
     {
         return $this->render('show');
     }

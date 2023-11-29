@@ -2,9 +2,9 @@
 
 namespace backend\models;
 
-use app\models\Confirmacao;
-use app\models\Imagem;
-use app\models\Linhasreserva;
+use backend\models\Confirmacao;
+use backend\models\Imagem;
+use backend\models\Linhasreserva;
 use common\models\User;
 use Yii;
 
@@ -81,7 +81,7 @@ class Reserva extends \yii\db\ActiveRecord
      */
     public function getAvaliacos()
     {
-        return $this->hasMany(Avaliaco::class, ['reserva_id' => 'id']);
+        return $this->hasMany(Avaliacao::class, ['reserva_id' => 'id']);
     }
 
     /**
@@ -111,7 +111,7 @@ class Reserva extends \yii\db\ActiveRecord
      */
     public function getConfirmacos()
     {
-        return $this->hasMany(Confirmaco::class, ['reserva_id' => 'id']);
+        return $this->hasMany(Confirmacao::class, ['reserva_id' => 'id']);
     }
 
     /**
@@ -141,7 +141,7 @@ class Reserva extends \yii\db\ActiveRecord
      */
     public function getImagens()
     {
-        return $this->hasMany(Imagen::class, ['reserva_id' => 'id']);
+        return $this->hasMany(Imagem::class, ['reserva_id' => 'id']);
     }
 
     /**

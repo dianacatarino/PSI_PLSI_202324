@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Gestão das Avaliações';
+$this->title = 'Gestão dos Avaliações';
 ?>
 <section class="content-header">
     <div class="container-fluid">
@@ -24,29 +24,34 @@ $this->title = 'Gestão das Avaliações';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 20%">Id do Alojamento</th>
-                    <th style="width: 20%">Avaliação Geral (0-10)</th>
-                    <th style="width: 20%">Data da Avaliação</th>
-                    <th style="width: 1%">Ações</th>
+                    <th style="width: 1%">ID do Alojamento</th>
+                    <th style="width: 5%">Avaliação Geral (0-10)</th>
+                    <th style="width: 5%">ID do Cliente</th>
+                    <th style="width: 5%">Data da Avaliação</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>13</td>
-                    <td>8</td>
-                    <td>29-04-2024</td>
-                    <td class="project-actions text-right">
-                        <div class="btn-group">
-                            <?= Html::a('<i class="fas fa-trash"></i>', ['avaliacoes/delete'], [
-                                'class' => 'btn btn-danger btn-sm',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
-                    </td>
-                </tr>
+                <?php foreach ($avaliacoes as $avaliacao): ?>
+                    <tr>
+                        <td><?= $avaliacao->id ?></td>
+                        <td><?= Html::encode($avaliacao->fornecedor_id) ?></td>
+                        <td><?= Html::encode($avaliacao->classificacao) ?></td>
+                        <td><?= Html::encode($avaliacao->cliente_id) ?></td>
+                        <td><?= Html::encode($avaliacao->data_avaliacao) ?></td>
+                        <td class="project-actions text-right">
+                            <div class="btn-group">
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['avaliacoes/show', 'id' => $avaliacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['avaliacoes/delete', 'id' => $avaliacao->id], [
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

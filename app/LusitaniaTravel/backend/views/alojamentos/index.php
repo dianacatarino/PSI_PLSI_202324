@@ -34,30 +34,44 @@ $this->title = 'Gestão dos Alojamentos';
                     <th style="width: 5%">Tipo</th>
                     <th style="width: 5%">Nome</th>
                     <th style="width: 5%">Localização</th>
+                    <th style="width: 5%">Acomodações</th>
+                    <th style="width: 5%">Imagem</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Nome do Fornecedor</td>
-                    <td>Hotel</td>
-                    <td>Hotel Lusitânia</td>
-                    <td>Rua do Alojamento</td>
-                    <td class="project-actions text-right">
-                        <div class="btn-group">
-                            <?= Html::a('<i class="fas fa-folder"></i>', ['alojamentos/show'], ['class' => 'btn btn-primary btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['alojamentos/edit'], ['class' => 'btn btn-info btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-trash"></i>', ['alojamentos/delete'], [
-                                'class' => 'btn btn-danger btn-sm',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
-                    </td>
-                </tr>
+                <?php foreach ($fornecedores as $fornecedor): ?>
+                    <tr>
+                        <td><?= $fornecedor->id ?></td>
+                        <td><?= Html::encode($fornecedor->responsavel) ?></td>
+                        <td><?= Html::encode($fornecedor->tipo) ?></td>
+                        <td><?= Html::encode($fornecedor->nome_alojamento) ?></td>
+                        <td><?= Html::encode($fornecedor->localizacao_alojamento) ?></td>
+                        <td><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></td>
+                        <td>
+                            <?php
+                            $imagens = $fornecedor->imagens;
+                            if (!empty($imagens)) {
+                                $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
+                                echo Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100px;']);
+                            }
+                            ?>
+                        </td>
+                        <td class="project-actions text-right">
+                            <div class="btn-group">
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['alojamentos/edit', 'id' => $fornecedor->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['alojamentos/delete', 'id' => $fornecedor->id], [
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

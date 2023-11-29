@@ -2,40 +2,97 @@
 
 namespace backend\controllers;
 
+use backend\models\Empresa;
+use yii\web\NotFoundHttpException;
+use Yii;
+
 class EmpresaController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $empresas = Empresa::find()->all();
+
+        return $this->render('index', ['empresas' => $empresas]);
     }
 
     public function actionCreate()
     {
-        return $this->render('create');
+        // Verificar se já existe uma empresa
+        $existingEmpresa = Empresa::find()->one();
+
+        // Se já existe uma empresa, adicionar mensagem flash e redirecionar para o índice
+        if ($existingEmpresa !== null) {
+            Yii::$app->session->setFlash('error', 'Já existe uma empresa criada.');
+            return $this->redirect(['index']);
+        }
+
+        $empresa = new Empresa();
+
+        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
+            Yii::$app->session->setFlash('success', 'Empresa criada com sucesso.');
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('create', ['empresa' => $empresa]);
     }
 
     public function actionStore()
     {
-        return $this->render('store');
+        $empresa = new Empresa();
+
+        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
+            return $this->redirect(['index']);
+        }
+        return $this->render('create', ['empresa' => $empresa]);
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
-        return $this->render('edit');
+        $empresa = Empresa::findOne($id);
+
+        if (!$empresa) {
+            throw new NotFoundHttpException('A empresa não foi encontrada.');
+        }
+
+        return $this->render('edit', ['empresa' => $empresa]);
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
+        $empresa = Empresa::findOne($id);
+
+        if (!$empresa) {
+            throw new NotFoundHttpException('A empresa não foi encontrada.');
+        }
+
+        if ($empresa->load(Yii::$app->request->post()) && $empresa->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('update', ['empresa' => $empresa]);
     }
 
-    public function actionShow()
+    public function actionShow($id)
     {
-        return $this->render('show');
+        $empresa = Empresa::findOne($id);
+
+        if (!$empresa) {
+            throw new NotFoundHttpException('A empresa não foi encontrada.');
+        }
+
+        return $this->render('show', ['empresa' => $empresa]);
     }
 
-    public function actionDelete()
+    public function actionDelete($id)
     {
-        return $this->render('delete');
+        $empresa = Empresa::findOne($id);
+
+        if (!$empresa) {
+            throw new NotFoundHttpException('A empresa não foi encontrada.');
+        }
+
+        $empresa->delete();
+
+        return $this->redirect(['index']);
     }
 }

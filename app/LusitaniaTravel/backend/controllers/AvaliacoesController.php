@@ -10,36 +10,31 @@ class AvaliacoesController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $avaliacoes = Avaliacao::find()->all();
+
+        return $this->render('index', ['avaliacoes' => $avaliacoes]);
     }
 
-    public function actionCreate()
+    public function actionShow($id)
     {
-        return $this->render('create');
+        $avaliacao = Avaliacao::findOne($id);
+
+        if (!$avaliacao) {
+            throw new NotFoundHttpException('A avaliação não foi encontrada.');
+        }
+        return $this->render('show', ['avaliacao' => $avaliacao]);
     }
 
-    public function actionStore()
+    public function actionDelete($id)
     {
-        return $this->render('store');
-    }
+        $avaliacao = Avaliacao::findOne($id);
 
-    public function actionEdit()
-    {
-        return $this->render('edit');
-    }
+        if (!$avaliacao) {
+            throw new NotFoundHttpException('O comentário não foi encontrado.');
+        }
 
-    public function actionUpdate()
-    {
-        return $this->render('update');
-    }
+        $avaliacao->delete();
 
-    public function actionShow()
-    {
-        return $this->render('show');
-    }
-
-    public function actionDelete()
-    {
-        return $this->render('delete');
+        return $this->redirect(['index'], ['avaliacao' => $avaliacao]);
     }
 }

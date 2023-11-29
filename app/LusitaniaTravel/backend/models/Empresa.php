@@ -2,7 +2,7 @@
 
 namespace backend\models;
 
-use app\models\Fatura;
+use backend\models\Fatura;
 use Yii;
 
 /**

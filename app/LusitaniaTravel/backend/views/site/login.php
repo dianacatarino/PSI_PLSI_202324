@@ -15,6 +15,10 @@ $this->title = 'Login';
     </div>
     <!-- /.login-logo -->
     <div class="card">
+        <?php $error = Yii::$app->session->getFlash('error');
+        if ($error !== null) {
+            echo '<div class="alert alert-danger">' . $error . '</div>';
+        } ?>
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 

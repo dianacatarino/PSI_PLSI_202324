@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 $this->title = 'Gestão da Empresa';
 ?>
+
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -19,6 +20,14 @@ $this->title = 'Gestão da Empresa';
         <?= Html::a('Criar nova empresa', ['empresa/create'], ['class' => 'btn btn-info']) ?>
     </p>
 </div>
+<?php $error = Yii::$app->session->getFlash('error');
+if ($error !== null) {
+    echo '<div class="alert alert-danger">' . $error . '</div>';
+}
+$success = Yii::$app->session->getFlash('success');
+if ($success !== null) {
+    echo '<div class="alert alert-success">' . $success . '</div>';
+} ?>
 
 <section class="content">
     <div class="card">
@@ -33,35 +42,37 @@ $this->title = 'Gestão da Empresa';
                     <th style="width: 5%">Sede</th>
                     <th style="width: 5%">Capital Social</th>
                     <th style="width: 1%">Email</th>
-                    <th style="width: 5%">Morada</th>
+                    <th style="width: 10%">Morada</th>
                     <th style="width: 1%">Localidade</th>
-                    <th style="width: 1%">Nif</th>
+                    <th style="width: 1%">NIF</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Lusitânia Travel</td>
-                    <td>1.000.000€</td>
-                    <td>lusitaniatravel@email.com</td>
-                    <td>Rua da Lusitânia Travel</td>
-                    <td>Leiria</td>
-                    <td>123456789</td>
-                    <td class="project-actions text-right">
-                        <div class="btn-group">
-                            <?= Html::a('<i class="fas fa-folder"></i>', ['empresa/show'], ['class' => 'btn btn-primary btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['empresa/edit'], ['class' => 'btn btn-info btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-trash"></i>', ['empresa/delete'], [
-                                'class' => 'btn btn-danger btn-sm',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
-                    </td>
-                </tr>
+                <?php foreach ($empresas as $empresa): ?>
+                    <tr>
+                        <td><?= $empresa->id ?></td>
+                        <td><?= Html::encode($empresa->sede) ?></td>
+                        <td><?= Html::encode($empresa->capitalsocial) ?></td>
+                        <td><?= Html::encode($empresa->email) ?></td>
+                        <td><?= Html::encode($empresa->morada) ?></td>
+                        <td><?= Html::encode($empresa->localidade) ?></td>
+                        <td><?= Html::encode($empresa->nif) ?></td>
+                        <td class="project-actions text-right">
+                            <div class="btn-group">
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['empresa/show', 'id' => $empresa->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['empresa/edit', 'id' => $empresa->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['empresa/delete', 'id' => $empresa->id], [
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

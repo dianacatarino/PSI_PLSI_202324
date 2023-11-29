@@ -32,13 +32,6 @@ $this->title = 'Contactos';
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="text-right">
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-user"></i> View Profile
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
@@ -49,13 +42,6 @@ $this->title = 'Contactos';
                                         <h2 class="lead"><b>Maria Jesus</b></h2>
                                         <p class="text-muted text-sm"><b>About: </b> 2211923 </p>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="text-right">
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-user"></i> View Profile
-                                    </a>
                                 </div>
                             </div>
                         </div>

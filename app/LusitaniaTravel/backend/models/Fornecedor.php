@@ -13,10 +13,11 @@ use Yii;
  * @property string $tipo
  * @property string $nome_alojamento
  * @property string $localizacao_alojamento
+ * @property string|null $acomodacoes_alojamento
  *
  * @property Avaliacao[] $avaliacoes
  * @property Comentario[] $comentarios
- * @property Confirmacao[] $confirmacos
+ * @property Confirmacao[] $confirmacoes
  * @property Imagem[] $imagens
  */
 class Fornecedor extends \yii\db\ActiveRecord
@@ -38,7 +39,7 @@ class Fornecedor extends \yii\db\ActiveRecord
             [['responsavel', 'tipo', 'nome_alojamento', 'localizacao_alojamento'], 'required'],
             [['responsavel', 'nome_alojamento'], 'string', 'max' => 30],
             [['tipo'], 'string', 'max' => 20],
-            [['localizacao_alojamento'], 'string', 'max' => 50],
+            [['localizacao_alojamento', 'acomodacoes_alojamento'], 'string', 'max' => 50],
         ];
     }
 
@@ -53,15 +54,16 @@ class Fornecedor extends \yii\db\ActiveRecord
             'tipo' => 'Tipo',
             'nome_alojamento' => 'Nome Alojamento',
             'localizacao_alojamento' => 'Localizacao Alojamento',
+            'acomodacoes_alojamento' => 'Acomodacoes Alojamento',
         ];
     }
 
     /**
-     * Gets query for [[Avaliacos]].
+     * Gets query for [[Avaliacoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAvaliacos()
+    public function getAvaliacoes()
     {
         return $this->hasMany(Avaliacao::class, ['fornecedor_id' => 'id']);
     }
@@ -77,11 +79,11 @@ class Fornecedor extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Confirmacos]].
+     * Gets query for [[Confirmacoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getConfirmacos()
+    public function getConfirmacoes()
     {
         return $this->hasMany(Confirmacao::class, ['fornecedor_id' => 'id']);
     }

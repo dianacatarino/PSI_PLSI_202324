@@ -24,31 +24,36 @@ $this->title = 'Gestão dos Comentários';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 20%">Id do Alojamento</th>
-                    <th style="width: 20%">Título</th>
-                    <th style="width: 15%">Comentário da estadia</th>
-                    <th style="width: 10%">Data</th>
-                    <th style="width: 1%">Ações</th>
+                    <th style="width: 1%">ID do Alojamento</th>
+                    <th style="width: 1%">Título</th>
+                    <th style="width: 5%">Comentário da estadia</th>
+                    <th style="width: 5%">ID do Cliente</th>
+                    <th style="width: 1%">Data do Comentário</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>13</td>
-                    <td>Título do Comentário da Estadia</td>
-                    <td>Comentário do Cliente</td>
-                    <td>29-04-2024</td>
-                    <td class="project-actions text-right">
-                        <div class="btn-group">
-                            <?= Html::a('<i class="fas fa-trash"></i>', ['comentarios/delete'], [
-                                'class' => 'btn btn-danger btn-sm',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
-                    </td>
-                </tr>
+                <?php foreach ($comentarios as $comentario): ?>
+                    <tr>
+                        <td><?= $comentario->id ?></td>
+                        <td><?= Html::encode($comentario->fornecedor_id) ?></td>
+                        <td><?= Html::encode($comentario->titulo) ?></td>
+                        <td><?= Html::encode($comentario->descricao) ?></td>
+                        <td><?= Html::encode($comentario->cliente_id) ?></td>
+                        <td><?= Html::encode($comentario->data_comentario)?></td>
+                        <td class="project-actions text-right">
+                            <div class="btn-group">
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['alojamentos/show', 'id' => $comentario->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['alojamentos/delete', 'id' => $comentario->id], [
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

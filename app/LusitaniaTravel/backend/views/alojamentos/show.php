@@ -21,9 +21,10 @@ $this->title = 'Detalhes do Alojamento';
 </div>
 
 <section class="content">
+    <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Alojamento</h3>
+            <h3 class="card-title">Detalhes do Alojamento <?= $fornecedor->id ?></h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -33,7 +34,7 @@ $this->title = 'Detalhes do Alojamento';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Responsável</span>
-                                    <span class="info-box-number text-center text-muted mb-0">Nome do Fornecedor</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->responsavel) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +42,7 @@ $this->title = 'Detalhes do Alojamento';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Tipo</span>
-                                    <span class="info-box-number text-center text-muted mb-0">Hotel</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->tipo) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +50,7 @@ $this->title = 'Detalhes do Alojamento';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Nome</span>
-                                    <span class="info-box-number text-center text-muted mb-0">Hotel Lusitânia</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->nome_alojamento) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -57,14 +58,27 @@ $this->title = 'Detalhes do Alojamento';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Localização</span>
-                                    <span class="info-box-number text-center text-muted mb-0">Rua do Alojamento</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->localizacao_alojamento) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Imagens</span>
+                                    <div class="row justify-content-center align-items-center">
+                                        <?php foreach ($fornecedor->imagens as $imagem): ?>
+                                            <div class="col-6 col-md-4">
+                                                <?= Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100%; margin-bottom:10px;']); ?>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
+            <!-- /.card-body -->
         </div>
-    </div>
+        <!-- /.card -->
 </section>
-
