@@ -38,13 +38,12 @@ $this->title = 'Emitir Fatura';
                             From
                             <address>
                                 <tr>
-                                    <strong><td> Sede </td></strong><br>
-                                    <td> Capital Social </td>
-                                    <td> Email </td>
-                                    <td> Morada </td><br>
-                                    <td> Localidade </td><br>
-                                    Nif: <td> </td><br>
-                                    Email: <td> </td>
+                                    <strong><td><?=$empresa->sede?></td></strong><br>
+                                    <td><?=$empresa->capitalsocial?></td>
+                                    <td><?=$empresa->email?></td>
+                                    <td><?=$empresa->morada?></td><br>
+                                    <td><?=$empresa->localidade?></td><br>
+                                    <td><?=$empresa->nif?></td><br>
                                 </tr>
                             </address>
                         </div>
@@ -73,20 +72,20 @@ $this->title = 'Emitir Fatura';
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Referência</th>
+                                    <th>ID da Fatura</th>
                                     <th>Quantidade</th>
                                     <th>Preço Unitário</th>
-                                    <th>Valor Iva</th>
-                                    <th>Sub Total</th>
+                                    <th>Percentagem de Iva</th>
+                                    <th>Subtotal</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>60€</td>
-                                    <td>10%</td>
-                                    <td>100€</td>
+                                    <th><?=$faturas->id?></th>
+                                    <th><?=$linhasfaturas->quantidade?></th>
+                                    <th><?=$linhasfaturas->precounitario?></th>
+                                    <th><?=$linhasfaturas->iva?></th>
+                                    <th><?=$linhasfaturas->subtotal?></th>
                                 </tr>
                                 </tbody>
                             </table>
@@ -109,16 +108,16 @@ $this->title = 'Emitir Fatura';
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
-                                        <th>Iva Total:</th>
-                                        <td>90€</td>
+                                        <th>Valor do Iva</th>
+                                        <td>Variável tem de ser adicionada na BD</td>
                                     </tr>
                                     <tr>
-                                        <th>Valor Total:</th>
-                                        <td>100€</td>
+                                        <th>Valor total sem IVA:</th>
+                                        <td><?=$faturas->totalsi?></td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td>200€</td>
+                                        <td><?=$faturas->totalf?></td>
                                     </tr>
                                 </table>
                             </div>
@@ -142,7 +141,7 @@ $this->title = 'Emitir Fatura';
                     <footer class="invoice-footer">
                         <div class="row">
                             <div class="col-12">
-                                <p>Emissão realizada por: <strong> Nome do Funcionário </strong></p>
+                                <p>Emissão realizada por: <strong><?=$profile->name?></strong></p>
                             </div>
                         </div>
                     </footer>
