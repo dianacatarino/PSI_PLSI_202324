@@ -28,8 +28,9 @@ CREATE TABLE `fornecedores` (
   `tipo` varchar(20) NOT NULL,
   `nome_alojamento` varchar(30) NOT NULL,
   `localizacao_alojamento` varchar(50) NOT NULL,
+  `acomodacoes_alojamento` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +39,7 @@ CREATE TABLE `fornecedores` (
 
 LOCK TABLES `fornecedores` WRITE;
 /*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
+INSERT INTO `fornecedores` VALUES (1,'Fornecedor','Alojamento Local','Casa Mar','Algarve','Cama de Solteiro;WC Privativa;Pequeno Almoço'),(2,'Fornecedor1','Hotel','Hotel Arizona','Lisboa','Cama de Solteiro;Wi-Fi;TV;Quartos Familiares;Piscina'),(3,'Fornecedor1','Alojamento Local','Casa Rosa','Lisboa',NULL),(4,'Fornecedor','Alojamento Local','Casa Rosa','Lisboa','Cama de Casal;TV;AC;Estacionamento'),(8,'Fornecedor1','Hotel','Hotel Arizona','Porto','Wi-Fi;TV;Quartos Familiares'),(9,'Fornecedor1','Resort','Hotel Arizona','Porto','Cama de Casal;Cama de Solteiro');
 /*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-28 11:20:03
+-- Dump completed on 2023-11-30  9:40:35

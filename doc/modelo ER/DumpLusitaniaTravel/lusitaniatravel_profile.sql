@@ -43,7 +43,7 @@ CREATE TABLE `profile` (
 
 LOCK TABLES `profile` WRITE;
 /*!40000 ALTER TABLE `profile` DISABLE KEYS */;
-INSERT INTO `profile` VALUES (1,'Diana','912123123','Rua','Leiria','2101-021','cliente',44),(2,'Admin','912123123','Rua','Leiria','2132-012','admin',45),(3,'Maria','912301123','Rua','Leiria','2301-021','cliente',46),(4,'User','912301123','Rua','Leiria','2301-021','cliente',47),(5,'Funcionario','912301123','Rua','Leiria','2312-012','cliente',48),(6,'Funcionario1','912301123','Rua','Leiria','2312-012','cliente',49),(9,'Fornecedor','912301123','Rua do Fornecedor','Leiria','2101-012','cliente',52),(10,'Funcionario2','912342123','Rua do Funcionario','Leiria','2123-012','funcionario',54),(11,'User1','912301123','Rua do User1','Leiria','2101-021','cliente',55);
+INSERT INTO `profile` VALUES (1,'Diana','912123123','Rua','Leiria','2101-021','cliente',44),(2,'Admin','912123123','Rua','Leiria','2132-012','admin',45),(3,'Maria','912301123','Rua','Leiria','2301-021','cliente',46),(4,'User','912301123','Rua','Leiria','2301-021','cliente',47),(5,'Funcionario','912301123','Rua','Leiria','2312-012','funcionario',48),(6,'Funcionario1','912301123','Rua','Leiria','2312-012','funcionario',49),(9,'Fornecedor','912301123','Rua do Fornecedor','Leiria','2101-012','fornecedor',52),(10,'Funcionario2','912342123','Rua do Funcionario','Leiria','2123-012','funcionario',54),(11,'User1','912301123','Rua do User1','Leiria','2101-021','cliente',55);
 /*!40000 ALTER TABLE `profile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-28 11:20:03
+-- Dump completed on 2023-11-30  9:40:33

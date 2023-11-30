@@ -18,7 +18,7 @@ CREATE TABLE Fornecedores (
     tipo VARCHAR(20) NOT NULL,
     nome_alojamento VARCHAR(30) NOT NULL,
     localizacao_alojamento VARCHAR(50) NOT NULL,
-    acomodacoes_alojamento VARCHAR(50) NOT NULL,
+    acomodacoes_alojamento VARCHAR(100) NOT NULL,
     CONSTRAINT pk_fornecedores_id PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -128,24 +128,10 @@ CREATE TABLE Profile (
     CONSTRAINT pk_profile_user_id FOREIGN KEY (user_id) REFERENCES User(id)
 ) ENGINE=InnoDB;
 
-ALTER TABLE user
-DROP COLUMN name,
-DROP COLUMN mobile,
-DROP COLUMN street,
-DROP COLUMN locale,
-DROP COLUMN postalCode,
-DROP COLUMN role;
-
 ALTER TABLE User
 ADD COLUMN profile_id INT,
 ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id);
 
-DROP TABLE IF EXISTS Imagens;
-DROP TABLE IF EXISTS Avaliacoes;
-DROP TABLE IF EXISTS Comentarios;
-
-ALTER TABLE Fornecedores
-ADD COLUMN acomodacoes_alojamento VARCHAR(50);
 
 
 

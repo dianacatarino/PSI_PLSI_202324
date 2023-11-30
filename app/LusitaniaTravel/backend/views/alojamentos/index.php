@@ -34,7 +34,7 @@ $this->title = 'Gestão dos Alojamentos';
                     <th style="width: 5%">Tipo</th>
                     <th style="width: 5%">Nome</th>
                     <th style="width: 5%">Localização</th>
-                    <th style="width: 5%">Acomodações</th>
+                    <th style="width: 10%">Acomodações</th>
                     <th style="width: 5%">Imagem</th>
                     <th style="width: 1%">Ações</th>
                 </tr>

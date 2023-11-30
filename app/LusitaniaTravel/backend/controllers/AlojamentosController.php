@@ -79,7 +79,9 @@ class AlojamentosController extends \yii\web\Controller
             $this->enviarImagens($fornecedor);
 
 
-            $fornecedor->acomodacoes_alojamento = Yii::$app->request->post('Fornecedor')['acomodacoes_alojamento'];
+            if (!empty($fornecedor->acomodacoes_alojamento)) {
+                $fornecedor->acomodacoes_alojamento = implode(';', $fornecedor->acomodacoes_alojamento);
+            }
 
             if ($fornecedor->save()) {
                 return $this->redirect(['alojamentos/index']);

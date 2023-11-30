@@ -62,6 +62,14 @@ $this->title = 'Detalhes do Alojamento';
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Acomodações</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">

@@ -39,7 +39,8 @@ class Fornecedor extends \yii\db\ActiveRecord
             [['responsavel', 'tipo', 'nome_alojamento', 'localizacao_alojamento'], 'required'],
             [['responsavel', 'nome_alojamento'], 'string', 'max' => 30],
             [['tipo'], 'string', 'max' => 20],
-            [['localizacao_alojamento', 'acomodacoes_alojamento'], 'string', 'max' => 50],
+            [['localizacao_alojamento'], 'string', 'max' => 50],
+            [['acomodacoes_alojamento'], 'string', 'max' => 100],
         ];
     }
 
