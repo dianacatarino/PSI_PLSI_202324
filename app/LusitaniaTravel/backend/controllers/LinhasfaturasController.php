@@ -93,4 +93,14 @@ class LinhasfaturasController extends \yii\web\Controller
 
         return $this->redirect(['index'], ['linhasfatura' => $linhasfatura]);
     }
+
+    /*public function selectfatura($reserva_id) , TODO: função a implmentar para seleção
+    {
+        $reservas = Reserva::all();
+        $fatura = Fatura::find($reserva_id);
+        $cliente_id = $fatura->$cliente_id;
+
+        $this->renderView('linhasfatura', 'selectreserva', ['reservas' => $reservas, 'fatura_id' => $reserva_id, '$cliente_id' => $cliente_id]);
+    }*/
+
 }

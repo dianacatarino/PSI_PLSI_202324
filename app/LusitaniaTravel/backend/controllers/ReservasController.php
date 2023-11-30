@@ -10,36 +10,86 @@ class ReservasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $reservas = Reserva::find()->all();
+
+        return $this->render('index', ['reservas' => $reservas]);
     }
 
     public function actionCreate()
     {
-        return $this->render('create');
+        $reserva = new Reserva();
+
+        if ($reserva->load(Yii::$app->request->post()) && $reserva->save()) {
+
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('create', ['reserva' => $reserva]);
     }
 
     public function actionStore()
     {
-        return $this->render('store');
+        $reserva = new Reserva();
+
+        if ($reserva->load(Yii::$app->request->post()) && $reserva->save()) {
+            return $this->redirect(['index']);
+        }
+        return $this->render('create', ['reserva' => $reserva]);
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
-        return $this->render('edit');
+        $reserva = Reserva::findOne($id);
+
+        if (!$reserva) {
+            throw new NotFoundHttpException('A reserva não foi encontrada!');
+        }
+
+        if ($reserva->load(Yii::$app->request->post()) && $reserva->save()) {
+            return $this->redirect(['reserva/index']);
+        }
+
+        return $this->render('edit', [
+            'reserva' => $reserva,
+        ]);
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
-        return $this->render('update');
+        $reserva = Reserva::findOne($id);
+
+        if (!$reserva) {
+            throw new NotFoundHttpException('A reserva não foi encontrada!');
+        }
+
+        if ($reserva->load(Yii::$app->request->post()) && $reserva->save()) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('update', ['reserva' => $reserva]);
     }
 
-    public function actionShow()
+    public function actionShow($id)
     {
-        return $this->render('show');
+        $reserva = Reserva::findOne($id);
+
+        if (!$reserva) {
+            throw new NotFoundHttpException('A reserva não foi encontrada!');
+        }
+        return $this->render('show', ['reserva' => $reserva]);
     }
 
-    public function actionDelete()
+
+    public function actionDelete($id)
     {
-        return $this->render('delete');
+        $reserva = Reserva::findOne($id);
+
+        if (!$reserva) {
+            throw new NotFoundHttpException('A reserva não foi encontrada!');
+        }
+
+        $reserva->delete();
+
+        return $this->redirect(['index'], ['reserva' => $reserva]);
     }
 }

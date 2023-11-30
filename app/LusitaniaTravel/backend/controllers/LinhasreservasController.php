@@ -92,7 +92,7 @@ class LinhasreservasController extends \yii\web\Controller
         return $this->redirect(['index'], ['linhasreserva' => $linhasreserva]);
     }
 
-    /*public function selectreserva($reserva_id)
+    /*public function selectreserva($reserva_id) , TODO: função a implmentar para seleção
     {
         $reservas = Reserva::all();
         $fatura = Fatura::find($reserva_id);
