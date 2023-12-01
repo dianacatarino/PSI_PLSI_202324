@@ -32,10 +32,13 @@ CREATE TABLE `reservas` (
   `valor` decimal(10,2) NOT NULL,
   `cliente_id` int NOT NULL,
   `funcionario_id` int NOT NULL,
+  `fornecedor_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_reservas_cliente` (`cliente_id`),
   KEY `fk_reservas_funcionario` (`funcionario_id`),
+  KEY `fk_reservas_fornecedor` (`fornecedor_id`),
   CONSTRAINT `fk_reservas_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_reservas_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_reservas_funcionario` FOREIGN KEY (`funcionario_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -58,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-30  9:40:34
+-- Dump completed on 2023-12-01 13:44:30

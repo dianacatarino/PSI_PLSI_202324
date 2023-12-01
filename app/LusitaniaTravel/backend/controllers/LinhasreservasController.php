@@ -10,94 +10,36 @@ class LinhasreservasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $linhasreservas = Linhasreserva::find()->all();
-
-        return $this->render('index', ['linhasreservas' => $linhasreservas]);
+        return $this->render('index');
     }
 
     public function actionCreate()
     {
-        $linhasreserva = new Linhasreserva();
-
-        if ($linhasreserva->load(Yii::$app->request->post()) && $linhasreserva->save()) {
-
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', ['linhasreserva' => $linhasreserva]);
+        return $this->render('create');
     }
 
     public function actionStore()
     {
-        $linhasreserva = new Linhasreserva();
-
-        if ($linhasreserva->load(Yii::$app->request->post()) && $linhasreserva->save()) {
-            return $this->redirect(['index']);
-        }
-        return $this->render('create', ['linhasreserva' => $linhasreserva]);
+        return $this->render('store');
     }
 
-    public function actionEdit($id)
+    public function actionEdit()
     {
-        $linhasreserva = Linhasreserva::findOne($id);
-
-        if (!$linhasreserva) {
-            throw new NotFoundHttpException('A reserva não foi encontrada!');
-        }
-
-        if ($linhasreserva->load(Yii::$app->request->post()) && $linhasreserva->save()) {
-            return $this->redirect(['linhasreserva/index']);
-        }
-
-        return $this->render('edit', [
-            'linhasreserva' => $linhasreserva,
-        ]);
+        return $this->render('edit');
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $linhasreserva = Linhasreserva::findOne($id);
-
-        if (!$linhasreserva) {
-            throw new NotFoundHttpException('A reserva não foi encontrada!');
-        }
-
-        if ($linhasreserva->load(Yii::$app->request->post()) && $linhasreserva->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('update', ['linhasreserva' => $linhasreserva]);
+        return $this->render('update');
     }
 
-    public function actionShow($id)
+    public function actionShow()
     {
-        $linhasreserva = Linhasreserva::findOne($id);
-
-        if (!$linhasreserva) {
-            throw new NotFoundHttpException('A reserva não foi encontrada!');
-        }
-        return $this->render('show', ['linhasreserva' => $linhasreserva]);
+        return $this->render('show');
     }
 
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $linhasreserva = Linhasreserva::findOne($id);
-
-        if (!$linhasreserva) {
-            throw new NotFoundHttpException('A reserva não foi encontrada!');
-        }
-
-        $linhasreserva->delete();
-
-        return $this->redirect(['index'], ['linhasreserva' => $linhasreserva]);
+        return $this->render('delete');
     }
-
-    /*public function selectreserva($reserva_id) , TODO: função a implmentar para seleção
-    {
-        $reservas = Reserva::all();
-        $fatura = Fatura::find($reserva_id);
-        $cliente_id = $fatura->$cliente_id;
-
-        $this->renderView('linhasfatura', 'selectreserva', ['reservas' => $reservas, 'fatura_id' => $reserva_id, '$cliente_id' => $cliente_id]);
-    }*/
 }
