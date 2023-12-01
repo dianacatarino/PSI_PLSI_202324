@@ -66,6 +66,26 @@ class AlojamentosController extends \yii\web\Controller
         ]);
     }
 
+    public function actionRemoverImagem($id, $key)
+    {
+        $fornecedor = Fornecedor::findOne($id);
+
+        if (!$fornecedor) {
+            throw new NotFoundHttpException('O alojamento não foi encontrado.');
+        }
+
+        // Remova a imagem pelo índice
+        $imagem = $fornecedor->imagens[$key];
+
+        // Remova o arquivo físico usando o caminho relativo
+        unlink(Yii::getAlias('@common/public' . $imagem->filename));
+
+        // Remova a referência no banco de dados
+        $imagem->delete();
+
+        return $this->redirect(['alojamentos/edit', 'id' => $fornecedor->id]);
+    }
+
     public function actionEdit($id)
     {
         $fornecedor = Fornecedor::findOne($id);

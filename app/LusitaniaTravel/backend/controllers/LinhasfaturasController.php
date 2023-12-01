@@ -18,80 +18,32 @@ class LinhasfaturasController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        $linhasfatura = new Linhasfatura();
-
-        if ($linhasfatura->load(Yii::$app->request->post()) && $linhasfatura->save()) {
-
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', ['linhasfatura' => $linhasfatura]);
+        return $this->render('create');
     }
 
     public function actionStore()
     {
-        $linhasfatura = new Linhasfatura();
-
-        if ($linhasfatura->load(Yii::$app->request->post()) && $linhasfatura->save()) {
-            return $this->redirect(['index']);
-        }
-        return $this->render('create', ['linhasfatura' => $linhasfatura]);
-
+        return $this->render('store');
     }
 
-    public function actionEdit($id)
+    public function actionEdit()
     {
-        $linhasfatura = Linhasfatura::findOne($id);
-
-        if (!$linhasfatura) {
-            throw new NotFoundHttpException('A fatura não foi encontrada!');
-        }
-
-        if ($linhasfatura->load(Yii::$app->request->post()) && $linhasfatura->save()) {
-            return $this->redirect(['linhasfatura/index']);
-        }
-
-        return $this->render('edit', [
-            'linhasfatura' => $linhasfatura,
-        ]);
+        return $this->render('edit');
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $linhasfatura = Linhasfatura::findOne($id);
-
-        if (!$linhasfatura) {
-            throw new NotFoundHttpException('A fatura não foi encontrada!');
-        }
-
-        if ($linhasfatura->load(Yii::$app->request->post()) && $linhasfatura->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('update', ['linhasfatura' => $linhasfatura]);
+        return $this->render('update');
     }
 
     public function actionShow($id)
     {
-        $linhasfatura = Linhasfatura::findOne($id);
-
-        if (!$linhasfatura) {
-            throw new NotFoundHttpException('A fatura não foi encontrada!');
-        }
-        return $this->render('show', ['linhasfatura' => $linhasfatura]);
+        return $this->render('show');
     }
 
     public function actionDelete()
     {
-        $linhasfatura = Linhasfatura::findOne($id);
-
-        if (!$linhasfatura) {
-            throw new NotFoundHttpException('A fatura não foi encontrada!');
-        }
-
-        $linhasfatura->delete();
-
-        return $this->redirect(['index'], ['linhasfatura' => $linhasfatura]);
+        return $this->render('delete');
     }
 
     /*public function selectfatura($reserva_id) , TODO: função a implmentar para seleção

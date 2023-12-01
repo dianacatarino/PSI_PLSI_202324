@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use backend\models\Fornecedor;
 use console\controllers\RbacController;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -78,7 +79,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $fornecedores = Fornecedor::find()->all();
+
+        return $this->render('index', [
+            'fornecedores' => $fornecedores,
+        ]);
     }
 
     /**

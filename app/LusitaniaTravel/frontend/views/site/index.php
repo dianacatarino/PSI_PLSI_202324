@@ -65,96 +65,56 @@ $this->title = 'Lusitânia Travel';
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-1.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">100€ por noite</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Junior Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
+                    <?php foreach ($fornecedores as $fornecedor): ?>
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="room-item shadow rounded overflow-hidden">
+                                <div class="position-relative">
+                                    <?php
+                                    $imagens = $fornecedor->imagens;
+
+                                    if (!empty($imagens)) {
+                                        $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
+
+                                        if ($imagem->filename) {
+                                            echo Html::img($imagem->filename, ['class' => 'img-thumbnail']);
+                                        } else {
+                                            echo 'Imagem não encontrada';
+                                        }
+                                    } else {
+                                        echo 'Nenhuma imagem disponível';
+                                    }
+                                    ?>
+                                    <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">€ por noite</small>
+                                </div>
+                                <div class="p-4 mt-2">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <h5 class="mb-0"><?= Html::encode($fornecedor->nome_alojamento) ?></h5>
+                                        <div class="ps-2">
+                                            <!-- <div class="ps-2">
+    <?php
+                                            // Exemplo de como exibir estrelas com base na classificação do alojamento
+                                            // for ($i = 0; $i < $alojamento->classificacao; $i++) {
+                                            //     echo '<small class="fa fa-star text-primary"></small>';
+                                            // }
+                                            ?>
+</div> -->
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Camas</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Casas de Banho</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <?= Html::a('Detalhes', ['alojamentos/view'], ['class' => 'btn btn-primary btn-sm']) ?>
-                                    <?= Html::a('Reservar', ['reservas/create'], ['class' => 'btn btn-dark btn-sm']) ?>
+                                    <div class="d-flex mb-3">
+                                        <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i> Camas</small>
+                                        <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>Casas de Banho</small>
+                                        <small><i class="fa fa-wifi text-primary me-2"></i><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></small>
+                                    </div>
+                                    <p class="text-body mb-3"><?= Html::encode($fornecedor->tipo) ?></p>
+                                    <div class="d-flex justify-content-between">
+                                        <?= Html::a('Detalhes', ['alojamentos/view', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                        <?= Html::a('Reservar', ['reservas/create', 'id' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-2.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">100€ por noite</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Executive Suite</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Camas</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Casas de Banho</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <?= Html::a('Detalhes', ['alojamentos/view'], ['class' => 'btn btn-primary btn-sm']) ?>
-                                    <?= Html::a('Reservar', ['reservas/create'], ['class' => 'btn btn-dark btn-sm']) ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="room-item shadow rounded overflow-hidden">
-                            <div class="position-relative">
-                                <img class="img-fluid" src="img/room-3.jpg" alt="">
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">100€ por noite</small>
-                            </div>
-                            <div class="p-4 mt-2">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <h5 class="mb-0">Super Deluxe</h5>
-                                    <div class="ps-2">
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                        <small class="fa fa-star text-primary"></small>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>3 Camas</small>
-                                    <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>2 Casas de Banho</small>
-                                    <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
-                                </div>
-                                <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                                <div class="d-flex justify-content-between">
-                                    <?= Html::a('Detalhes', ['alojamentos/view'], ['class' => 'btn btn-primary btn-sm']) ?>
-                                    <?= Html::a('Reservar', ['reservas/create'], ['class' => 'btn btn-dark btn-sm']) ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Fim do loop -->
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>

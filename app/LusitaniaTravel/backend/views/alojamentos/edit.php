@@ -49,7 +49,12 @@ $this->registerJs("
             <?= $form->field($fornecedor, 'localizacao_alojamento')->textInput(['class' => 'form-control'])->label('Localização do Alojamento') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($fornecedor, 'acomodacoes_alojamento')->checkboxList(
+            <?php
+            $acomodacoesSelecionadas = !empty($fornecedor->acomodacoes_alojamento)
+                ? explode(';', $fornecedor->acomodacoes_alojamento)
+                : [];
+
+            echo $form->field($fornecedor, 'acomodacoes_alojamento[]')->checkboxList(
                 [
                     'Cama de Casal' => 'Cama de Casal',
                     'Cama de Solteiro' => 'Cama de Solteiro',
@@ -63,7 +68,8 @@ $this->registerJs("
                     'Estacionamento' => 'Estacionamento',
                 ],
                 [
-                    'item' => function ($index, $label, $name, $checked, $value) {
+                    'item' => function ($index, $label, $name, $checked, $value) use ($acomodacoesSelecionadas) {
+                        $checked = in_array($value, $acomodacoesSelecionadas);
                         $checked = $checked ? 'checked' : '';
                         return "<label class='checkbox-inline'><input type='checkbox' $checked name='$name' value='$value'> $label</label>";
                     },
@@ -79,7 +85,10 @@ $this->registerJs("
                 <?php foreach ($fornecedor->imagens as $key => $imagem): ?>
                     <div class="image-block">
                         <?= Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100px; margin-right: 5px;']); ?>
-                        <?= Html::button('Remover', ['class' => 'btn btn-danger remove-image-btn', 'data-key' => $key]); ?>
+                        <?= Html::a('Remover', ['alojamentos/remover-imagem', 'id' => $fornecedor->id, 'key' => $key], [
+                            'class' => 'btn btn-danger remove-image-btn',
+                            'data-confirm' => 'Tem certeza que deseja remover esta imagem?',
+                        ]); ?>
                     </div>
                 <?php endforeach; ?>
             </div>
