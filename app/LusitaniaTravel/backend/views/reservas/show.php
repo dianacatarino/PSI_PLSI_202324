@@ -23,7 +23,7 @@ $this->title = 'Detalhes da Reserva';
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Reserva</h3>
+            <h3 class="card-title">Detalhes da Reserva <?= $reserva->id ?></h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -32,8 +32,8 @@ $this->title = 'Detalhes da Reserva';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Id</span>
-                                    <span class="info-box-number text-center text-muted mb-0">13</span>
+                                    <span class="info-box-text text-center text-muted">ID da Rerserva</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->id) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@ $this->title = 'Detalhes da Reserva';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Check-in</span>
-                                    <span class="info-box-number text-center text-muted mb-0">23-04-2024</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->checkin) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -49,23 +49,23 @@ $this->title = 'Detalhes da Reserva';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Check-out</span>
-                                    <span class="info-box-number text-center text-muted mb-0">28-04-2024</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->checkout) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Pessoas</span>
-                                    <span class="info-box-number text-center text-muted mb-0">4</span>
+                                    <span class="info-box-text text-center text-muted">Nº de Clientes</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->numeroclientes) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Quartos</span>
-                                    <span class="info-box-number text-center text-muted mb-0">2</span>
+                                    <span class="info-box-text text-center text-muted">Nº de Quartos</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->numeroquartos) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@ $this->title = 'Detalhes da Reserva';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Preço por noite</span>
-                                    <span class="info-box-number text-center text-muted mb-0">50€</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($reserva->valor) ?></span>
                                 </div>
                             </div>
                         </div>

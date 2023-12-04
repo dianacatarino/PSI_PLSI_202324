@@ -29,37 +29,39 @@ $this->title = 'Gestão de Reservas';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 5%">Id Alojamento</th>
+                    <th style="width: 5%">ID do Alojamento</th>
                     <th style="width: 5%">Check-in</th>
                     <th style="width: 5%">Check-out</th>
-                    <th style="width: 5%">Pessoas</th>
-                    <th style="width: 5%">Quartos</th>
+                    <th style="width: 5%">Nºde Clientes</th>
+                    <th style="width: 5%">Nº de Quartos</th>
                     <th style="width: 5%">Preço por noite</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>13</td>
-                    <td>23-04-2024</td>
-                    <td>28-04-2024</td>
-                    <td>4</td>
-                    <td>2</td>
-                    <td>50€</td>
-                    <td class="project-actions text-right">
-                        <div class="btn-group">
-                            <?= Html::a('<i class="fas fa-folder"></i>', ['reservas/show'], ['class' => 'btn btn-primary btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['reservas/edit'], ['class' => 'btn btn-info btn-sm']) ?>
-                            <?= Html::a('<i class="fas fa-trash"></i>', ['reservas/delete'], [
-                                'class' => 'btn btn-danger btn-sm',
-                                'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
-                                    'method' => 'post',
-                                ],
-                            ]) ?>
-                        </div>
-                    </td>
-                </tr>
+                <?php foreach ($reservas as $reserva): ?>
+                    <tr>
+                        <td><?= $reserva->id ?></td>
+                        <td><?= Html::encode($reserva->checkin) ?></td>
+                        <td><?= Html::encode($reserva->checkout) ?></td>
+                        <td><?= Html::encode($reserva->numeroclientes) ?></td>
+                        <td><?= Html::encode($reserva->numeroquartos) ?></td>
+                        <td><?= Html::encode($reserva->valor) ?></td>
+                        <td class="project-actions text-right">
+                            <div class="btn-group">
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['reservas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['reservas/edit', 'id' => $reserva->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['reservas/delete', 'id' => $reserva->id], [
+                                    'class' => 'btn btn-danger btn-sm',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete this item?',
+                                        'method' => 'post',
+                                    ],
+                                ]) ?>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

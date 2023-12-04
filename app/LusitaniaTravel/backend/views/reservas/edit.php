@@ -11,27 +11,22 @@ $this->title = 'Editar Reserva';
     <div class="card-header">
         <h3 class="card-title">Reserva</h3>
     </div>
-    <form action="caminho/para/store" method="post" class="container">
+    <?php $form = ActiveForm::begin(['action' => ['reservas/edit', 'id' => $reserva->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
         <div class="card-body">
             <div class="form-group">
-                <label for="check-in" class="control-label">Check-in</label>
-                <input type="date" id="check-in" class="form-control" name="check-in">
+                <?= $form->field($reserva, 'checkin')->textInput(['class' => 'form-control'])->label('Check-in') ?>
             </div>
             <div class="form-group">
-                <label for="check-out" class="control-label">Check-out</label>
-                <input type="date" id="check-out" class="form-control" name="check-out">
+                <?= $form->field($reserva, 'checkout')->textInput(['class' => 'form-control'])->label('Check-out') ?>
             </div>
             <div class="form-group">
-                <label for="pessoas" class="control-label">Pessoas</label>
-                <input type="number" id="pessoas" class="form-control" name="pessoas">
+                <?= $form->field($reserva, 'numeroclientes')->textInput(['class' => 'form-control'])->label('Nº de Clientes') ?>
             </div>
             <div class="form-group">
-                <label for="quartos" class="control-label">Quartos</label>
-                <input type="number" id="quartos" class="form-control" name="quartos">
+                <?= $form->field($reserva, 'numeroquartos')->textInput(['class' => 'form-control'])->label('Nº de Quartos') ?>
             </div>
             <div class="form-group">
-                <label for="preco_noite" class="control-label">Preço por noite</label>
-                <input type="text" id="preco_noite" class="form-control" name="preco_noite">
+                <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Preço por noite') ?>
             </div>
         </div>
         <div class="card-footer">

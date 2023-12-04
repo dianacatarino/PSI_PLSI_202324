@@ -3,39 +3,35 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+
 $this->title = 'Criar nova Reserva';
 
 ?>
 
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">Reserva</h3>
+        <h3 class="card-title">Criar nova Reserva</h3>
     </div>
-    <form action="caminho/para/store" method="post" class="container">
+    <!--<form action="" method="post" class="container">-->
+        <?php $form = ActiveForm::begin(['action' => ['reservas/create'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
         <div class="card-body">
-            <div class="form-group">
-                <label for="reserva-check-in" class="control-label">Alojamento nº</label>
-                <input type="text" id="reserva-alojamento" class="form-control" name="Reserva[alojamento]">
+            <div class="form-group"> <!--TODO: ATENÇÃO VER SE BASE DE D-->
+                <?= $form->field($reserva, 'tipo')->textInput(['class' => 'form-control'])->label('Tipo') ?>
             </div>
             <div class="form-group">
-                <label for="reserva-check-in" class="control-label">Check-in</label>
-                <input type="date" id="reserva-check-in" class="form-control" name="Reserva[check-in]">
+                <?= $form->field($reserva, 'checkin')->textInput(['class' => 'form-control'])->label('Check-in') ?>
             </div>
             <div class="form-group">
-                <label for="reserva-check-out" class="control-label">Check-out</label>
-                <input type="date" id="reserva-check-out" class="form-control" name="Reserva[check-out]">
+                <?= $form->field($reserva, 'checkout')->textInput(['class' => 'form-control'])->label('Check-out') ?>
             </div>
             <div class="form-group">
-                <label for="reserva-pessoas" class="control-label">Pessoas</label>
-                <input type="number" id="reserva-pessoas" class="form-control" name="Reserva[pessoas]">
+                <?= $form->field($reserva, 'numeroclientes')->textInput(['class' => 'form-control'])->label('Nº de Clientes') ?>
             </div>
             <div class="form-group">
-                <label for="reserva-quartos" class="control-label">Quartos</label>
-                <input type="number" id="reserva-quartos" class="form-control" name="Reserva[quartos]">
+                <?= $form->field($reserva, 'numeroquartos')->textInput(['class' => 'form-control'])->label('Nº de Quartos') ?>
             </div>
             <div class="form-group">
-                <label for="reserva-precopornoite" class="control-label">Preço por noite</label>
-                <input type="text" id="reserva-precopornoite" class="form-control" name="Reserva[precopornoite]">
+                <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Preço por noite') ?>
             </div>
         </div>
         <div class="card-footer">
@@ -45,11 +41,12 @@ $this->title = 'Criar nova Reserva';
                         <?= Html::a('Cancelar', ['reservas/index'], ['class' => 'btn btn-secondary']) ?>
                     </div>
                     <div class="float-right">
-                        <?= Html::submitButton('Criar Reserva', ['class' => 'btn btn-success']) ?>
+                        <?= Html::submitButton('Criar Reserva',  ['class' => 'btn btn-success']) ?>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        <?php ActiveForm::end(); ?>
+    <!--</form>-->
 </div>
 
