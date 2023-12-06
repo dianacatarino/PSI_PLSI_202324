@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
-use backend\models\Reserva;
+use app\models\Reserva;
+use backend\models\Empresa;
+use backend\models\Fornecedor;
+use backend\models\Linhasreserva;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -10,36 +13,61 @@ class ReservasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $reservas = Reserva::find()->all();
+
+        return $this->render('index', ['reservas' => $reservas]);
     }
 
     public function actionCreate()
     {
-        return $this->render('create');
+        $reserva = new Reserva();
+        $linhareserva = new Linhasreserva();
+
+        if ($reserva->load(Yii::$app->request->post())) {
+            if ($reserva->save()) {
+                Yii::$app->session->setFlash('success', 'Reserva criada com sucesso.');
+                return $this->redirect(['index']);
+            } else {
+                Yii::error('Error saving reserva to database.');
+                Yii::error($reserva->errors);
+            }
+        }
+
+        return $this->render('create', ['reserva' => $reserva]);
     }
 
-    public function actionStore()
+    public function actionEdit($id)
     {
-        return $this->render('store');
+        $reserva = Reserva::findOne($id);
+
+        if ($reserva->load(Yii::$app->request->post()) && $reserva->save()) {
+            Yii::$app->session->setFlash('success', 'Reserva atualizada com sucesso.');
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('edit', ['reserva' => $reserva]);
     }
 
-    public function actionEdit()
+    public function actionShow($id)
     {
-        return $this->render('edit');
+        $reserva = Reserva::findOne($id);
+
+        if (!$reserva) {
+            throw new NotFoundHttpException('A reserva não foi encontrada.');
+        }
+
+        return $this->render('show', ['reserva' => $reserva]);
     }
 
-    public function actionUpdate()
+    public function actionDelete($id)
     {
-        return $this->render('update');
-    }
+        $reserva = Reserva::findOne($id);
 
-    public function actionShow()
-    {
-        return $this->render('show');
-    }
+        // Lógica para excluir uma reserva
 
-    public function actionDelete()
-    {
-        return $this->render('delete');
+        $reserva->delete();
+        Yii::$app->session->setFlash('success', 'Reserva excluída com sucesso.');
+
+        return $this->redirect(['index']);
     }
 }

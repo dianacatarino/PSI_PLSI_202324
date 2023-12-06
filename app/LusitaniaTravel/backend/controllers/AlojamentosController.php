@@ -75,13 +75,21 @@ class AlojamentosController extends \yii\web\Controller
         }
 
         // Remova a imagem pelo índice
-        $imagem = $fornecedor->imagens[$key];
+        if (isset($fornecedor->imagens[$key])) {
+            $imagem = $fornecedor->imagens[$key];
 
-        // Remova o arquivo físico usando o caminho relativo
-        unlink(Yii::getAlias('@common/public' . $imagem->filename));
+            // Remova o arquivo físico usando o caminho relativo
+            $filePath = Yii::getAlias('@common/public' . $imagem->filename);
 
-        // Remova a referência no banco de dados
-        $imagem->delete();
+            if (file_exists($filePath)) {
+                unlink($filePath);
+
+                // Remova a referência no banco de dados
+                $imagem->delete();
+            } else {
+                Yii::warning("O arquivo não foi encontrado: $filePath");
+            }
+        }
 
         return $this->redirect(['alojamentos/edit', 'id' => $fornecedor->id]);
     }
@@ -95,8 +103,8 @@ class AlojamentosController extends \yii\web\Controller
         }
 
         if ($fornecedor->load(Yii::$app->request->post())) {
-            // Remova a linha abaixo relacionada ao método enviarImagens se você não precisar dela aqui
             $this->enviarImagens($fornecedor);
+            $this->removerImagens($fornecedor);
 
 
             if (!empty($fornecedor->acomodacoes_alojamento)) {

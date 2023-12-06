@@ -15,6 +15,7 @@ use Yii;
  * @property string $postalCode
  * @property string|null $role
  * @property int $user_id
+ * @property string|null $favorites
  *
  * @property User $user
  * @property User[] $users
@@ -36,7 +37,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'mobile', 'street', 'locale', 'postalCode', 'user_id'], 'required'],
-            [['role'], 'string'],
+            [['role', 'favorites'], 'string'],
             [['user_id'], 'integer'],
             [['name'], 'string', 'max' => 25],
             [['mobile'], 'string', 'max' => 9],
@@ -61,6 +62,7 @@ class Profile extends \yii\db\ActiveRecord
             'postalCode' => 'Postal Code',
             'role' => 'Role',
             'user_id' => 'User ID',
+            'favorites' => 'Favorites',
         ];
     }
 

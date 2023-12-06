@@ -57,15 +57,14 @@ $this->title = 'Criar novo Alojamento';
             ?>
         </div>
         <div class="form-group">
-            <?= $form->field($fornecedor, 'imagens[]')->fileInput(['multiple' => true])->label('Imagens') ?>
-            <div id="image-preview">
-                <?php
-                // Exibir imagens existentes (caso existam)
-                foreach ($fornecedor->imagens as $imagem) {
-                    echo Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100px; margin-right: 5px;']);
-                }
-                ?>
-            </div>
+            <?= $form->field($fornecedor, 'imagens[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+        </div>
+        <div id="image-preview">
+            <?php foreach ($fornecedor->imagens as $key => $imagem): ?>
+                <div class="image-block">
+                    <?= Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100px; margin-right: 5px;']); ?>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="card-footer">

@@ -92,12 +92,24 @@ $this->title = 'Lusitânia Travel';
                                             <?= Html::encode($fornecedor->nome_alojamento) ?>
                                             <?php if (!Yii::$app->user->isGuest): ?>
                                                 <?php
-                                                $isFavorite = Yii::$app->session->get('userFavorites', []);
+                                                // Obtém o perfil do user
+                                                $profile = Yii::$app->user->identity->profile;
+
+                                                // Verifica se a coluna favoritos está vazia ou nula e atribui um array vazio se for o caso
+                                                $favoritos = $profile->favorites ? json_decode($profile->favorites, true) : [];
+
+                                                // Verifica se o fornecedor atual está nos favoritos
+                                                $isFavorite = in_array($fornecedor->id, $favoritos);
+
+                                                // Exibe o ícone de favorito com base no status
+                                                $iconClass = $isFavorite ? 'fa-heart text-danger' : 'fa-heart-o';
                                                 ?>
-                                                <button class="btn btn-link favorite-btn <?= isset($isFavorite[$fornecedor->id]) ? 'text-danger' : '' ?>"
-                                                        data-fornecedor-id="<?= $fornecedor->id ?>">
-                                                    <i class="<?= isset($isFavorite[$fornecedor->id]) ? 'fas' : 'far' ?> fa-heart"></i>
-                                                </button>
+                                                <form action="<?= Yii::$app->urlManager->createUrl(['favoritos/atualizar']) ?>" method="post">
+                                                    <input type="hidden" name="fornecedorId" value="<?= $fornecedor->id ?>">
+                                                    <button type="submit" class="btn btn-link">
+                                                        <i class="fa <?= $iconClass ?>"></i> <?= $isFavorite ? 'Remover' : 'Adicionar' ?>
+                                                    </button>
+                                                </form>
                                             <?php endif; ?>
                                         </h5>
                                         <div class="ps-2">

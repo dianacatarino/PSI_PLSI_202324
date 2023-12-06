@@ -80,7 +80,6 @@ $this->registerJs("
         <div class="form-group">
             <?= $form->field($fornecedor, 'imagens[]')->fileInput(['multiple' => true])->label('Imagens') ?>
 
-            <!-- Exibir imagens existentes com botão de remoção -->
             <div id="image-preview">
                 <?php foreach ($fornecedor->imagens as $key => $imagem): ?>
                     <div class="image-block">

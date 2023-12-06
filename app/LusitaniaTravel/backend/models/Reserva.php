@@ -1,9 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace app\models;
 
-use backend\models\Confirmacao;
-use backend\models\Imagem;
+use backend\models\Fatura;
+use backend\models\Fornecedor;
 use backend\models\Linhasreserva;
 use common\models\User;
 use Yii;
@@ -20,14 +20,13 @@ use Yii;
  * @property float $valor
  * @property int $cliente_id
  * @property int $funcionario_id
+ * @property int $fornecedor_id
  *
- * @property Avaliacao[] $avaliacoes
  * @property User $cliente
- * @property Comentario[] $comentarios
  * @property Confirmacao[] $confirmacoes
  * @property Fatura[] $faturas
+ * @property Fornecedor $fornecedor
  * @property User $funcionario
- * @property Imagem[] $imagens
  * @property Linhasreserva[] $linhasreservas
  */
 class Reserva extends \yii\db\ActiveRecord
@@ -47,11 +46,12 @@ class Reserva extends \yii\db\ActiveRecord
     {
         return [
             [['tipo'], 'string'],
-            [['checkin', 'checkout', 'numeroquartos', 'numeroclientes', 'valor', 'cliente_id', 'funcionario_id'], 'required'],
+            [['checkin', 'checkout', 'numeroquartos', 'numeroclientes', 'valor', 'cliente_id', 'funcionario_id', 'fornecedor_id'], 'required'],
             [['checkin', 'checkout'], 'safe'],
-            [['numeroquartos', 'numeroclientes', 'cliente_id', 'funcionario_id'], 'integer'],
+            [['numeroquartos', 'numeroclientes', 'cliente_id', 'funcionario_id', 'fornecedor_id'], 'integer'],
             [['valor'], 'number'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['cliente_id' => 'id']],
+            [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
             [['funcionario_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['funcionario_id' => 'id']],
         ];
     }
@@ -71,17 +71,8 @@ class Reserva extends \yii\db\ActiveRecord
             'valor' => 'Valor',
             'cliente_id' => 'Cliente ID',
             'funcionario_id' => 'Funcionario ID',
+            'fornecedor_id' => 'Fornecedor ID',
         ];
-    }
-
-    /**
-     * Gets query for [[Avaliacos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAvaliacos()
-    {
-        return $this->hasMany(Avaliacao::class, ['reserva_id' => 'id']);
     }
 
     /**
@@ -95,21 +86,11 @@ class Reserva extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Comentarios]].
+     * Gets query for [[Confirmacoes]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getComentarios()
-    {
-        return $this->hasMany(Comentario::class, ['reserva_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Confirmacos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConfirmacos()
+    public function getConfirmacoes()
     {
         return $this->hasMany(Confirmacao::class, ['reserva_id' => 'id']);
     }
@@ -125,6 +106,16 @@ class Reserva extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Fornecedor]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFornecedor()
+    {
+        return $this->hasOne(Fornecedor::class, ['id' => 'fornecedor_id']);
+    }
+
+    /**
      * Gets query for [[Funcionario]].
      *
      * @return \yii\db\ActiveQuery
@@ -132,16 +123,6 @@ class Reserva extends \yii\db\ActiveRecord
     public function getFuncionario()
     {
         return $this->hasOne(User::class, ['id' => 'funcionario_id']);
-    }
-
-    /**
-     * Gets query for [[Imagens]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getImagens()
-    {
-        return $this->hasMany(Imagem::class, ['reserva_id' => 'id']);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace backend\models;
 
+use app\models\Reserva;
+use DateTime;
 use Yii;
 
 /**
@@ -74,5 +76,17 @@ class Linhasreserva extends \yii\db\ActiveRecord
     public function getReservas()
     {
         return $this->hasOne(Reserva::class, ['id' => 'reservas_id']);
+    }
+
+    public function calcularNoites($reserva)
+    {
+        if ($reserva->checkin && $reserva->checkout) {
+            $datetime1 = new DateTime($reserva->checkin);
+            $datetime2 = new DateTime($reserva->checkout);
+            $interval = $datetime1->diff($datetime2);
+            return $interval->days;
+        }
+
+        return 1;
     }
 }
