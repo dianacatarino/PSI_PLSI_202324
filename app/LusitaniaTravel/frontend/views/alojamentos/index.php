@@ -51,7 +51,16 @@ $this->title = 'Alojamentos';
                                     echo 'Nenhuma imagem disponível';
                                 }
                                 ?>
-                                <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">€ por noite</small>
+                                <?php foreach ($fornecedor->reservas as $reserva) {
+                                    foreach ($reserva->linhasreservas as $linha):
+                                        $formattedValue = Yii::$app->formatter->asCurrency($linha->subtotal, 'EUR');
+
+                                        echo '<small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">';
+                                        echo $formattedValue . ' por noite';
+                                        echo '</small>';
+                                    endforeach;
+                                }
+                                ?>
                             </div>
                             <div class="p-4 mt-2">
                                 <div class="d-flex justify-content-between mb-3">

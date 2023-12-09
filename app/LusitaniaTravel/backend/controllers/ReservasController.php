@@ -2,10 +2,8 @@
 
 namespace backend\controllers;
 
-use app\models\Reserva;
-use backend\models\Empresa;
-use backend\models\Fornecedor;
-use backend\models\Linhasreserva;
+use common\models\Reserva;
+use common\models\Linhasreserva;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -13,7 +11,7 @@ class ReservasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $reservas = Reserva::find()->all();
+        $reservas = Reserva::find()->with('linhasreservas')->all();
 
         return $this->render('index', ['reservas' => $reservas]);
     }
@@ -33,7 +31,10 @@ class ReservasController extends \yii\web\Controller
             }
         }
 
-        return $this->render('create', ['reserva' => $reserva]);
+        return $this->render('create', ['reserva' => $reserva,
+        'selectAlojamentos' => $reserva->selectAlojamentos(),
+        'selectClientes' => $reserva->selectClientes(),
+        'selectFuncionarios' => $reserva->selectFuncionarios()]);
     }
 
     public function actionEdit($id)
@@ -45,7 +46,10 @@ class ReservasController extends \yii\web\Controller
             return $this->redirect(['index']);
         }
 
-        return $this->render('edit', ['reserva' => $reserva]);
+        return $this->render('edit', ['reserva' => $reserva,
+        'selectAlojamentos' => $reserva->selectAlojamentos(),
+        'selectClientes' => $reserva->selectClientes(),
+        'selectFuncionarios' => $reserva->selectFuncionarios()]);
     }
 
     public function actionShow($id)

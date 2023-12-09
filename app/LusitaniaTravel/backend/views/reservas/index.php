@@ -34,10 +34,10 @@ $this->title = 'Gestão de Reservas';
                     <th style="width: 5%">Check-out</th>
                     <th style="width: 5%">Nº Pessoas</th>
                     <th style="width: 5%">Nº Quartos</th>
-                    <th style="width: 10%">Preço por noite</th>
+                    <th style="width: 10%">Valor Total</th>
                     <th style="width: 5%">Alojamento</th>
                     <th style="width: 5%">Cliente</th>
-                    <th style="width: 5%">Funcionario</th>
+                    <th style="width: 5%">Funcionário</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
@@ -55,6 +55,9 @@ $this->title = 'Gestão de Reservas';
                         <td><?= Html::encode($reserva->funcionario->profile->name) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
+                                <button type="button" class="btn btn-tool" data-toggle="collapse" data-target="#collapseLinhasReserva<?= $reserva->id ?>">
+                                    <i class="fas fa-minus"></i>
+                                </button>
                                 <?= Html::a('<i class="fas fa-plus"></i>', ['linhasreservas/create', 'reservas_id' => $reserva->id], ['class' => 'btn btn-success btn-sm']) ?>
                                 <?= Html::a('<i class="fas fa-folder"></i>', ['reservas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
                                 <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['reservas/edit', 'id' => $reserva->id], ['class' => 'btn btn-info btn-sm']) ?>
@@ -66,6 +69,47 @@ $this->title = 'Gestão de Reservas';
                                     ],
                                 ]) ?>
                             </div>
+                        </td>
+                    </tr>
+                    <!-- Linhas de Reservas -->
+                    <tr id="collapseLinhasReserva<?= $reserva->id ?>" class="collapse">
+                        <td colspan="10">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th style="width: 5%">Id</th>
+                                    <th style="width: 5%">Tipo de Quarto</th>
+                                    <th style="width: 5%">Nº Noites</th>
+                                    <th style="width: 5%">Nº Camas</th>
+                                    <th style="width: 10%">Valor por Noite</th>
+                                    <th style="width: 1%">Ações</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($reserva->linhasreservas as $linhareserva): ?>
+                                    <tr>
+                                        <td><?= Html::encode($linhareserva->id) ?></td>
+                                        <td><?= Html::encode($linhareserva->tipoquarto) ?></td>
+                                        <td><?= Html::encode($linhareserva->numeronoites) ?></td>
+                                        <td><?= Html::encode($linhareserva->numerocamas) ?></td>
+                                        <td><?= Html::encode($linhareserva->subtotal) ?>€</td>
+                                        <td class="project-actions text-right">
+                                            <div class="btn-group">
+                                                <?= Html::a('<i class="fas fa-folder"></i>', ['linhasreservas/show', 'id' => $linhareserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['linhasreservas/edit', 'id' => $linhareserva->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                                <?= Html::a('<i class="fas fa-trash"></i>', ['linhasreservas/delete', 'id' => $linhareserva->id], [
+                                                    'class' => 'btn btn-danger btn-sm',
+                                                    'data' => [
+                                                        'confirm' => 'Are you sure you want to delete this item?',
+                                                        'method' => 'post',
+                                                    ],
+                                                ]) ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 <?php endforeach; ?>

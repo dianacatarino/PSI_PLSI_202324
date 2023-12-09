@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use app\models\Confirmacao;
+use common\models\Confirmacao;
 use Yii;
 use yii\web\NotFoundHttpException;
 

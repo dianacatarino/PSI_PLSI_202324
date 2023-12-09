@@ -40,6 +40,13 @@ $this->title = 'Lusitânia Travel';
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3">
@@ -48,6 +55,9 @@ $this->title = 'Lusitânia Travel';
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
                                     </select>
                                 </div>
                             </div>
@@ -84,7 +94,16 @@ $this->title = 'Lusitânia Travel';
                                         echo 'Nenhuma imagem disponível';
                                     }
                                     ?>
-                                    <small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">€ por noite</small>
+                                    <?php foreach ($fornecedor->reservas as $reserva) {
+                                        foreach ($reserva->linhasreservas as $linha):
+                                            $formattedValue = Yii::$app->formatter->asCurrency($linha->subtotal, 'EUR');
+
+                                            echo '<small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">';
+                                            echo $formattedValue . ' por noite';
+                                            echo '</small>';
+                                    endforeach;
+                                    }
+                                    ?>
                                 </div>
                                 <div class="p-4 mt-2">
                                     <div class="d-flex justify-content-between mb-3">

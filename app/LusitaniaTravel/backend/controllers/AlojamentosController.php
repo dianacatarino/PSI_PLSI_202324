@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use backend\models\Fornecedor;
-use backend\models\Imagem;
+use common\models\Fornecedor;
+use common\models\Imagem;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;

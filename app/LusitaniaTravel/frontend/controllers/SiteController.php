@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use backend\models\Fornecedor;
+use common\models\Fornecedor;
 use console\controllers\RbacController;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;

@@ -9,7 +9,7 @@ class ReservasController extends \yii\web\Controller
         return $this->render('index');
     }
 
-    public function actionView()
+    public function actionShow()
     {
         return $this->render('view');
     }

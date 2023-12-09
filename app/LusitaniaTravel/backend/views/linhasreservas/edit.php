@@ -3,16 +3,16 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Adicionar Linha de Reserva';
+$this->title = 'Editar Linha de Reserva';
 ?>
 
-<div class="card card-primary linhasreservas-create">
+<div class="card card-primary linhasreservas-edit">
 
     <div class="card-header">
         <h3 class="card-title"><?= Html::encode($this->title) ?></h3>
     </div>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => ['linhasreservas/edit', 'id' => $linhasreserva->id], 'method' => 'post', 'options' => ['class' => 'container']]);?>
 
     <div class="card-body">
         <div class="form-group">
@@ -42,7 +42,7 @@ $this->title = 'Adicionar Linha de Reserva';
         </div>
 
         <div class="form-group">
-            <?= $form->field($linhasreserva, 'reservas_id')->hiddenInput(['value' => $reservas_id])->label(false) ?>
+            <?= $form->field($linhasreserva, 'reservas_id')->hiddenInput(['value' => $linhasreserva->reservas_id])->label(false) ?>
         </div>
     </div>
 
@@ -53,7 +53,7 @@ $this->title = 'Adicionar Linha de Reserva';
                     <?= Html::a('Cancelar', ['reservas/index'], ['class' => 'btn btn-secondary']) ?>
                 </div>
                 <div class="float-right">
-                    <?= Html::submitButton('Adicionar Linha Reserva', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('Editar Linha Reserva', ['class' => 'btn btn-success']) ?>
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\models\Comentario;
+use common\models\Comentario;
 use Yii;
 use yii\web\NotFoundHttpException;
 

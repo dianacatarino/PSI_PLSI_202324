@@ -48,7 +48,7 @@ $this->title = 'Detalhes do Alojamento';
     <table class="table">
         <tbody>
         <tr>
-            <th scope="row">Tipo</th>
+            <th scope="row">Tipo de Alojamento</th>
             <td><?= Html::encode($fornecedor->tipo) ?></td>
         </tr>
         <tr>
@@ -56,16 +56,16 @@ $this->title = 'Detalhes do Alojamento';
             <td><?= Html::encode($fornecedor->localizacao_alojamento) ?></td>
         </tr>
         <tr>
+            <th scope="row">Tipo de Quarto</th>
+            <td><?= Html::encode($tipoQuarto) ?></td>
+        </tr>
+        <tr>
             <th scope="row">Número de Quartos</th>
-            <td></td>
+            <td><?= Html::encode($numeroQuartos) ?></td>
         </tr>
         <tr>
             <th scope="row">Número de Camas</th>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">Número de Casas de Banho</th>
-            <td></td>
+            <td><?= Html::encode($numeroCamas) ?></td>
         </tr>
         <tr>
             <th scope="row">Acomodações</th>
@@ -73,7 +73,7 @@ $this->title = 'Detalhes do Alojamento';
         </tr>
         <tr>
             <th scope="row">Preço por Noite</th>
-            <td>€</td>
+            <td><?= Html::encode($precoPorNoite) ?>€</td>
         </tr>
         </tbody>
     </table>

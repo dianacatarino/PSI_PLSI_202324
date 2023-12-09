@@ -31,39 +31,32 @@ $this->title = 'Editar Reserva';
             <?= $form->field($reserva, 'checkout')->input('date', ['class' => 'form-control'])->label('Check Out') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($reserva, 'numeroquartos')->input('number',['class' => 'form-control'])->label('Numero de Quartos') ?>
+            <?= $form->field($reserva, 'numeroquartos')->input('number',['class' => 'form-control'])->label('Número de Quartos') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($reserva, 'numeroclientes')->input('number',['class' => 'form-control'])->label('Numero de Clientes') ?>
+            <?= $form->field($reserva, 'numeroclientes')->input('number',['class' => 'form-control'])->label('Número de Clientes') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Valor') ?>
+            <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Valor Total') ?>
         </div>
         <div class="form-group">
             <?= $form->field($reserva, 'fornecedor_id')->dropDownList(
-                Fornecedor::find()->select(['nome_alojamento', 'id'])->indexBy('id')->column(),
+                $selectAlojamentos,
                 ['prompt' => 'Selecione um alojamento', 'class' => 'form-control']
             )->label('Alojamento') ?>
         </div>
+
         <div class="form-group">
             <?= $form->field($reserva, 'cliente_id')->dropDownList(
-                Profile::find()
-                    ->select(['name', 'user_id'])
-                    ->where(['role' => 'cliente'])
-                    ->indexBy('user_id')
-                    ->column(),
-                ['prompt' => 'Selecione um cliente', 'class' => 'form-control', 'disabled' => true]
+                $selectClientes,
+                ['prompt' => 'Selecione um cliente', 'class' => 'form-control','disabled' => true]
             )->label('Cliente') ?>
         </div>
 
         <div class="form-group">
             <?= $form->field($reserva, 'funcionario_id')->dropDownList(
-                Profile::find()
-                    ->select(['name', 'user_id'])
-                    ->where(['role' => 'funcionario'])
-                    ->indexBy('user_id')
-                    ->column(),
-                ['prompt' => 'Selecione um funcionário', 'class' => 'form-control', 'disabled' => true]
+                $selectFuncionarios,
+                ['prompt' => 'Selecione um funcionário', 'class' => 'form-control','disabled' => true]
             )->label('Funcionário') ?>
         </div>
     </div>

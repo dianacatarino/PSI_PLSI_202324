@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Fornecedor;
+use common\models\Fornecedor;
 use common\models\Profile;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -46,31 +46,25 @@ $this->title = 'Criar nova Reserva';
             ])->label('Numero de Clientes') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Valor') ?>
+            <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Valor Total') ?>
         </div>
         <div class="form-group">
             <?= $form->field($reserva, 'fornecedor_id')->dropDownList(
-                Fornecedor::find()->select(['nome_alojamento', 'id'])->indexBy('id')->column(),
+                $selectAlojamentos,
                 ['prompt' => 'Selecione um alojamento', 'class' => 'form-control']
             )->label('Alojamento') ?>
         </div>
+
         <div class="form-group">
             <?= $form->field($reserva, 'cliente_id')->dropDownList(
-                Profile::find()
-                    ->select(['name', 'user_id'])
-                    ->where(['role' => 'cliente'])
-                    ->indexBy('user_id')
-                    ->column(),
+                $selectClientes,
                 ['prompt' => 'Selecione um cliente', 'class' => 'form-control']
             )->label('Cliente') ?>
         </div>
+
         <div class="form-group">
             <?= $form->field($reserva, 'funcionario_id')->dropDownList(
-                Profile::find()
-                    ->select(['name', 'user_id'])
-                    ->where(['role' => 'funcionario'])
-                    ->indexBy('user_id')
-                    ->column(),
+                $selectFuncionarios,
                 ['prompt' => 'Selecione um funcionário', 'class' => 'form-control']
             )->label('Funcionário') ?>
         </div>
