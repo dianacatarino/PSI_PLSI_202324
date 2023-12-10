@@ -27,7 +27,7 @@ $this->title = 'Gestão das Confirmações';
                     <th style="width: 10%">Estado da Confirmação</th>
                     <th style="width: 10%">Data da Confirmação</th>
                     <th style="width: 10%">Id da Reserva</th>
-                    <th style="width: 10%">Id do Alojamento</th>
+                    <th style="width: 10%">Alojamento</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
@@ -36,14 +36,14 @@ $this->title = 'Gestão das Confirmações';
                     <tr>
                         <td><?= Html::encode($confirmacao->id) ?></td>
                         <td><?= Html::encode($confirmacao->estado) ?></td>
-                        <td><?= Html::encode($confirmacao->data_confirmacao) ?></td>
-                        <td><?= Html::encode($confirmacao->id_reserva) ?></td>
-                        <td><?= Html::encode($confirmacao->id_alojamento) ?></td>
+                        <td><?= Html::encode($confirmacao->dataconfirmacao) ?></td>
+                        <td><?= Html::encode($confirmacao->reserva_id) ?></td>
+                        <td><?= Html::encode($confirmacao->fornecedor->nome_alojamento) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
-                                <?= Html::a('<i class="fas fa-folder"></i>', ['confirmacao/show', 'id' => $confirmacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['confirmacao/edit', 'id' => $confirmacao->id], ['class' => 'btn btn-info btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['confirmacao/delete', 'id' => $confirmacao->id], [
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['confirmacoes/show', 'id' => $confirmacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['confirmacoes/edit', 'id' => $confirmacao->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['confirmacoes/delete', 'id' => $confirmacao->id], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',

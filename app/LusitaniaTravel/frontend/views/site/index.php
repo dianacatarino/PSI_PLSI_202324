@@ -23,18 +23,22 @@ $this->title = 'Lusitânia Travel';
                     <div class="row g-2">
                         <div class="col-md-10">
                             <div class="row g-2">
-                                <div class="col-md-3">
-                                    <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input"
-                                               placeholder="Check in" data-target="#date1" data-toggle="datetimepicker" />
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="localizacao" placeholder="Localização">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="date" id="date2" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" placeholder="Check out" data-target="#date2" data-toggle="datetimepicker"/>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" id="checkin" placeholder="Check-in">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" id="checkout" placeholder="Check-out">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <select class="form-select">
                                         <option selected>Pessoas</option>
                                         <option value="1">1</option>
@@ -49,7 +53,7 @@ $this->title = 'Lusitânia Travel';
                                         <option value="10">10</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <select class="form-select">
                                         <option selected>Quartos</option>
                                         <option value="1">1</option>

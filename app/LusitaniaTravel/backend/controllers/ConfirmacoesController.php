@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Confirmacao;
+use common\models\Reserva;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -29,45 +30,25 @@ class ConfirmacoesController extends \yii\web\Controller
         return $this->render('create', ['confirmacao' => $confirmacao]);
     }
 
-    public function actionStore()
-    {
-        $confirmacao = new Confirmacao();
-
-        if ($confirmacao->load(Yii::$app->request->post()) && $confirmacao->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('create', ['confirmacao' => $confirmacao]);
-    }
-
     public function actionEdit($id)
     {
         // Lógica para editar uma confirmação específica
-        $confirmacao = $this->findModel($id);
+        $confirmacao = Confirmacao::findOne($id);
 
         if ($confirmacao->load(Yii::$app->request->post()) && $confirmacao->save()) {
             Yii::$app->session->setFlash('success', 'Confirmação atualizada com sucesso.');
             return $this->redirect(['index']);
         }
 
-        return $this->render('edit', ['confirmacao' => $confirmacao]);
-    }
-
-    public function actionUpdate($id)
-    {
-        $confirmacao = $this->findModel($id);
-
-        if ($confirmacao->load(Yii::$app->request->post()) && $confirmacao->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->render('update', ['confirmacao' => $confirmacao]);
+        return $this->render('edit', ['confirmacao' => $confirmacao,
+        'selectAlojamentos' => $confirmacao->selectAlojamentos(),
+            'selectReservas' => $confirmacao->selectReservas()]);
     }
 
     public function actionShow($id)
     {
         // Lógica para exibir detalhes de uma confirmação específica
-        $confirmacao = $this->findModel($id);
+        $confirmacao = Confirmacao::findOne($id);
 
         return $this->render('show', ['confirmacao' => $confirmacao]);
     }
@@ -75,7 +56,7 @@ class ConfirmacoesController extends \yii\web\Controller
     public function actionDelete($id)
     {
         // Lógica para excluir uma confirmação específica
-        $confirmacao = $this->findModel($id);
+        $confirmacao = Confirmacao::findOne($id);
 
         if ($confirmacao->delete()) {
             Yii::$app->session->setFlash('success', 'Confirmação excluída com sucesso.');
@@ -84,17 +65,5 @@ class ConfirmacoesController extends \yii\web\Controller
         }
 
         return $this->redirect(['index']);
-    }
-
-    // Método auxiliar para encontrar o modelo Confirmacoes pelo ID
-    protected function findModel($id)
-    {
-        $confirmacao = Confirmacao::findOne($id);
-
-        if ($confirmacao === null) {
-            throw new NotFoundHttpException('A confirmação não foi encontrada.');
-        }
-
-        return $confirmacao;
     }
 }

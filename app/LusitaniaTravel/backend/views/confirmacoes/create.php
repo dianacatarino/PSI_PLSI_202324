@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use backend\models\Reserva;
-use backend\models\Fornecedor;
+use common\models\Reserva;
+use common\models\Fornecedor;
 
 $this->title = 'Criar Confirmação';
 ?>
@@ -16,22 +16,22 @@ $this->title = 'Criar Confirmação';
     <?php $form = ActiveForm::begin(['action' => ['confirmacao/store'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
         <div class="form-group">
-            <?= $form->field($confirmacao, 'estado')->textInput(['class' => 'form-control'])->label('Estado da Confirmação') ?>
+            <?= $form->field($confirmacao, 'estado')->dropDownList(['Pendente' => 'Pendente', 'Confirmado' => 'Confirmado', 'Cancelado' => 'Cancelado'], ['class' => 'form-control'])->label('Estado da Confirmação') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($confirmacao, 'data_confirmacao')->textInput(['class' => 'form-control'])->label('Data da Confirmação') ?>
+            <?= $form->field($confirmacao, 'data_confirmacao')->input('date',['class' => 'form-control'])->label('Data da Confirmação') ?>
         </div>
         <div class="form-group">
             <?= $form->field($confirmacao, 'reserva_id')->dropDownList(
                 ArrayHelper::map(Reserva::find()->all(), 'id', 'id'),
                 ['prompt' => 'Selecionar Reserva', 'class' => 'form-control']
-            )->label('ID da Reserva') ?>
+            )->label('Id da Reserva') ?>
         </div>
         <div class="form-group">
             <?= $form->field($confirmacao, 'alojamento_id')->dropDownList(
                 ArrayHelper::map(Fornecedor::find()->all(), 'id', 'id'),
                 ['prompt' => 'Selecionar Alojamento', 'class' => 'form-control']
-            )->label('ID do Alojamento') ?>
+            )->label('Id do Alojamento') ?>
         </div>
     </div>
     <div class="card-footer">

@@ -136,7 +136,7 @@ $this->title = 'Alojamentos';
                                     echo $descricaoAutomatica;
                                     ?></p>
                                 <div class="d-flex justify-content-between">
-                                    <?= Html::a('Detalhes', ['alojamentos/view', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                    <?= Html::a('Detalhes', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
                                     <?= Html::a('Reservar', ['reservas/create', 'id' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
                                 </div>
                             </div>

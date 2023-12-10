@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Confirmacao;
 use common\models\Reserva;
 use common\models\Linhasreserva;
 use Yii;
@@ -19,10 +20,18 @@ class ReservasController extends \yii\web\Controller
     public function actionCreate()
     {
         $reserva = new Reserva();
-        $linhareserva = new Linhasreserva();
 
         if ($reserva->load(Yii::$app->request->post())) {
             if ($reserva->save()) {
+                $confirmacao = new Confirmacao();
+                $confirmacao->estado = 'Pendente'; // Estado pendente
+                $confirmacao->dataconfirmacao = null; // Data de confirmação nula
+
+                // Atribui a reserva associada à confirmação
+                $confirmacao->reserva_id = $reserva->id;
+                $confirmacao->fornecedor_id = $reserva->fornecedor_id;
+                $confirmacao->save();
+
                 Yii::$app->session->setFlash('success', 'Reserva criada com sucesso.');
                 return $this->redirect(['index']);
             } else {

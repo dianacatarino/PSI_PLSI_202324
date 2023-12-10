@@ -75,4 +75,15 @@ class Confirmacao extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Reserva::class, ['id' => 'reserva_id']);
     }
+
+    public static function selectAlojamentos()
+    {
+        return Fornecedor::find()->select(['nome_alojamento', 'id'])->indexBy('id')->column();
+    }
+
+    public static function selectReservas()
+    {
+        return Reserva::find()->select(['id'])->indexBy('id')->column();
+    }
+
 }

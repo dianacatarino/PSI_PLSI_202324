@@ -16,7 +16,7 @@ $this->title = 'Detalhes da Confirmação';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Voltar', ['confirmacao/index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('Voltar', ['confirmacoes/index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 </div>
 
@@ -42,7 +42,7 @@ $this->title = 'Detalhes da Confirmação';
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
                                     <span class="info-box-text text-center text-muted">Data da Confirmação</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($confirmacao->data_confirmacao) ?></span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($confirmacao->dataconfirmacao) ?></span>
                                 </div>
                             </div>
                         </div>

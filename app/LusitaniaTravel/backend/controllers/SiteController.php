@@ -3,7 +3,10 @@
 namespace backend\controllers;
 
 use app\models\PasswordResetForm;
+use common\models\Confirmacao;
+use common\models\Fornecedor;
 use common\models\LoginForm;
+use common\models\Reserva;
 use common\models\SignupForm;
 use common\models\User;
 use Yii;
@@ -90,7 +93,29 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->configureLayout();
-        return $this->render('index');
+
+        // Count de novos alojamentos
+        $novosAlojamentos = Fornecedor::find()->count();
+
+        // Count de novas reservas
+        $novasReservas = Reserva::find()->count();
+
+        // Count de novos utilizadores
+        $novosUtilizadores = User::find()->count();
+
+        // Calcular a taxa de reservas
+        $totalReservas = Reserva::find()->count();
+        $reservasConfirmadas = Confirmacao::find()->where(['estado' => 'Confirmado'])->count();
+
+        // Evitar divisão por zero
+        $taxaReservas = $totalReservas > 0 ? ($reservasConfirmadas / $totalReservas) * 100 : 0;
+
+        return $this->render('index', [
+            'novosAlojamentos' => $novosAlojamentos,
+            'novasReservas' => $novasReservas,
+            'taxaReservas' => $taxaReservas,
+            'novosUtilizadores' => $novosUtilizadores,
+        ]);
     }
 
     /**
