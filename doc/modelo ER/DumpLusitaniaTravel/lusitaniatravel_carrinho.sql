@@ -16,33 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `avaliacoes`
+-- Table structure for table `carrinho`
 --
 
-DROP TABLE IF EXISTS `avaliacoes`;
+DROP TABLE IF EXISTS `carrinho`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `avaliacoes` (
+CREATE TABLE `carrinho` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `classificacao` int NOT NULL,
-  `data_avaliacao` date NOT NULL,
+  `quantidade` int NOT NULL,
+  `preco` decimal(10,2) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL,
   `cliente_id` int NOT NULL,
   `fornecedor_id` int NOT NULL,
+  `reserva_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_avaliacoes_cliente` (`cliente_id`),
-  KEY `fk_avaliacoes_fornecedor` (`fornecedor_id`),
-  CONSTRAINT `fk_avaliacoes_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `fk_avaliacoes_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`)
+  KEY `fk_carrinho_cliente` (`cliente_id`),
+  KEY `fk_carrinho_fornecedor` (`fornecedor_id`),
+  KEY `fk_carrinho_reserva` (`reserva_id`),
+  CONSTRAINT `fk_carrinho_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `fk_carrinho_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
+  CONSTRAINT `fk_carrinho_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `avaliacoes`
+-- Dumping data for table `carrinho`
 --
 
-LOCK TABLES `avaliacoes` WRITE;
-/*!40000 ALTER TABLE `avaliacoes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `avaliacoes` ENABLE KEYS */;
+LOCK TABLES `carrinho` WRITE;
+/*!40000 ALTER TABLE `carrinho` DISABLE KEYS */;
+/*!40000 ALTER TABLE `carrinho` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-11 17:05:45
+-- Dump completed on 2023-12-11 17:05:44

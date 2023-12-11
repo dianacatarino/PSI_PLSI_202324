@@ -32,7 +32,7 @@ CREATE TABLE `linhasreservas` (
   PRIMARY KEY (`id`),
   KEY `fk_linhasreservas_reservas` (`reservas_id`),
   CONSTRAINT `fk_linhasreservas_reservas` FOREIGN KEY (`reservas_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `linhasreservas` (
 
 LOCK TABLES `linhasreservas` WRITE;
 /*!40000 ALTER TABLE `linhasreservas` DISABLE KEYS */;
+INSERT INTO `linhasreservas` VALUES (1,'Quarto Duplo',3,2,89.00,1),(2,'Quarto Duplo',6,2,58.33,5),(3,'Quarto Duplo',6,2,58.33,5),(4,'Quarto Familiar',3,4,46.67,6),(6,'Quarto Duplo',7,2,100.00,7);
 /*!40000 ALTER TABLE `linhasreservas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-01 13:44:32
+-- Dump completed on 2023-12-11 17:05:45

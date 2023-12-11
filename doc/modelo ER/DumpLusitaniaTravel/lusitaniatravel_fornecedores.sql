@@ -39,7 +39,7 @@ CREATE TABLE `fornecedores` (
 
 LOCK TABLES `fornecedores` WRITE;
 /*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
-INSERT INTO `fornecedores` VALUES (1,'Fornecedor','Alojamento Local','Casa Mar','Algarve','Cama de Solteiro;WC Privativa;Pequeno Almoço'),(2,'Fornecedor1','Hotel','Hotel Arizona','Lisboa','Cama de Solteiro;Wi-Fi;TV;Quartos Familiares;Piscina'),(3,'Fornecedor1','Alojamento Local','Casa Rosa','Lisboa','Cama de Casal;Cama de Solteiro;TV'),(4,'Fornecedor','Alojamento Local','Casa Rosa','Lisboa','Cama de Casal;TV;AC;Estacionamento'),(8,'Fornecedor1','Hotel','Hotel Arizona','Porto','Wi-Fi;TV;Quartos Familiares'),(9,'Fornecedor1','Resort','Hotel Arizona','Porto','Cama de Solteiro;Wi-Fi;TV;WC Privativa');
+INSERT INTO `fornecedores` VALUES (1,'Fornecedor','Alojamento Local','Casa Mar','Algarve','Cama de Solteiro;WC Privativa;Pequeno Almoço'),(2,'Fornecedor1','Hotel','Hotel Arizona','Lisboa','Cama de Solteiro;Wi-Fi;TV;Quartos Familiares;Piscina'),(3,'Fornecedor1','Alojamento Local','Casa Rosa','Lisboa','Cama de Casal;Cama de Solteiro;TV;Estacionamento'),(4,'Fornecedor','Alojamento Local','Casa Rosa','Lisboa','Cama de Casal;TV;AC;Estacionamento'),(8,'Fornecedor1','Hotel','Selene Hotel','Porto','Wi-Fi;TV;Quartos Familiares;Piscina'),(9,'Fornecedor1','Resort','Hotel Arizona','Porto','Cama de Solteiro;Wi-Fi;TV;WC Privativa');
 /*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-01 13:44:31
+-- Dump completed on 2023-12-11 17:05:44

@@ -32,9 +32,11 @@ CREATE TABLE Reservas (
     valor DECIMAL(10, 2) NOT NULL,
     cliente_id INT NOT NULL,
     funcionario_id INT NOT NULL,
+    fornecedor_id INT NOT NULL,
     CONSTRAINT pk_reservas_id PRIMARY KEY (id),
     CONSTRAINT fk_reservas_cliente FOREIGN KEY (cliente_id) REFERENCES User(id),
-    CONSTRAINT fk_reservas_funcionario FOREIGN KEY (funcionario_id) REFERENCES User(id)
+    CONSTRAINT fk_reservas_funcionario FOREIGN KEY (funcionario_id) REFERENCES User(id),
+    CONSTRAINT fk_reservas_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Imagens (
@@ -128,10 +130,26 @@ CREATE TABLE Profile (
     CONSTRAINT pk_profile_user_id FOREIGN KEY (user_id) REFERENCES User(id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE Carrinho(
+	id INT AUTO_INCREMENT,
+    quantidade INT NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,  
+    subtotal DECIMAL(10, 2) NOT NULL,
+    cliente_id INT NOT NULL,
+    fornecedor_id INT NOT NULL,
+    reserva_id INT NOT NULL,
+    CONSTRAINT pk_carrinho_id PRIMARY KEY (id),
+    CONSTRAINT fk_carrinho_cliente FOREIGN KEY (cliente_id) REFERENCES User(id),
+    CONSTRAINT fk_carrinho_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES Fornecedores(id),
+    CONSTRAINT fk_carrinho_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
+) ENGINE=InnoDB;
+
+DROP TABLE Carrinho;
+
+
 ALTER TABLE User
 ADD COLUMN profile_id INT,
 ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id);
 
-
-
-
+ALTER TABLE profile
+ADD COLUMN favorites TEXT DEFAULT NULL;
