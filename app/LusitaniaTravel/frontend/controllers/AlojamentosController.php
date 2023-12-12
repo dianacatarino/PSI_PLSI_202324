@@ -4,6 +4,9 @@ namespace frontend\controllers;
 use common\models\Fornecedor;
 use common\models\Linhasreserva;
 use common\models\Reserva;
+use common\models\Comentario;
+use common\models\Avaliacao;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 class AlojamentosController extends \yii\web\Controller
@@ -18,6 +21,9 @@ class AlojamentosController extends \yii\web\Controller
     public function actionShow($id)
     {
         $fornecedor = Fornecedor::findOne($id);
+
+        $comentario = new Comentario();
+        $avaliacao = new Avaliacao();
 
         if ($fornecedor === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -52,7 +58,29 @@ class AlojamentosController extends \yii\web\Controller
             }
         }
 
+        if ($comentario->load(Yii::$app->request->post()) && $avaliacao->load(Yii::$app->request->post())) {
+            $comentario->cliente_id = Yii::$app->user->id;
+            $comentario->fornecedor_id = $id;
+
+            $avaliacao->cliente_id = Yii::$app->user->id;
+            $avaliacao->fornecedor_id = $id;
+
+            $isValid = $comentario->validate() && $avaliacao->validate();
+            if ($isValid) {
+                // Salvar o Comentario
+                $comentario->save();
+
+                // Salvar a Avaliacao
+                $avaliacao->save();
+
+                Yii::$app->session->setFlash('success', 'Comentário e avaliação criados com sucesso.');
+                return $this->redirect(['index']);
+            }
+        }
+
         return $this->render('show', [
+            'avaliacao' => $avaliacao,
+            'comentario' => $comentario,
             'fornecedor' => $fornecedor,
             'numeroQuartos' => $numeroQuartos,
             'numeroCamas' => $numeroCamas,

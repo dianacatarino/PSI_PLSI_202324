@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Avaliacao;
 use common\models\Comentario;
 use Yii;
 
@@ -11,21 +12,36 @@ class ComentariosController extends \yii\web\Controller
     {
         // Lógica para exibir uma lista dos comentários
         $comentarios = Comentario::find()->all();
-
-        return $this->render('index', ['comentarios' => $comentarios]);
+        $avaliacoes = Avaliacao::find()->all();
+        return $this->render('index', ['comentarios' => $comentarios , 'avaliacoes' => $avaliacoes]);
     }
 
-    public function actionCreate()
+    public function actionCreate($fornecedor_id)
     {
-        // TODO: confirmar se a lógica será esta devido ao index
         $comentario = new Comentario();
+        $avaliacao = new Avaliacao();
 
-        if ($comentario->load(Yii::$app->request->post()) && $comentario->save()) {
-            Yii::$app->session->setFlash('success', 'Comentário criada com sucesso.');
-            return $this->redirect(['index']);
+        if ($comentario->load(Yii::$app->request->post()) && $avaliacao->load(Yii::$app->request->post())) {
+            $comentario->cliente_id = Yii::$app->user->id;
+            $comentario->fornecedor_id = $fornecedor_id;
+
+            $avaliacao->cliente_id = Yii::$app->user->id;
+            $avaliacao->fornecedor_id = $fornecedor_id;
+
+            $isValid = $comentario->validate() && $avaliacao->validate();
+            if ($isValid) {
+                // Salvar o Comentario
+                $comentario->save();
+
+                // Salvar a Avaliacao
+                $avaliacao->save();
+
+                Yii::$app->session->setFlash('success', 'Comentário e avaliação criados com sucesso.');
+                return $this->redirect(['index']);
+            }
         }
 
-        return $this->render('create', ['comentario' => $comentario]);
+        return $this->render('create', ['comentario' => $comentario , 'avaliacao' => $avaliacao] );
     }
 
     public function actionEdit($id)
@@ -47,8 +63,13 @@ class ComentariosController extends \yii\web\Controller
     {
         // Lógica para exibir detalhes de um cometario específico
         $comentario = Comentario::findOne($id);
+        $avaliacao = Comentario::findOne($id);
 
-        return $this->render('show', ['coemtario' => $comentario]);
+        if ($comentario === null && $avaliacao === null) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->render('show', ['comentario' => $comentario , 'avaliacao' => $avaliacao ]);
     }
 
     public function actionDelete($id)
