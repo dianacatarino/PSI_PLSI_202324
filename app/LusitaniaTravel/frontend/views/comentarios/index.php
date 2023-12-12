@@ -13,18 +13,31 @@ $this->title = 'Comentários';
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Comentário #1</h5>
 
+            <?php foreach ($comentarios as $comentario): ?>
+            <h5 class="card-title">Comentário <?= Html::encode($comentario->id) ?></h5>
             <table class="table comentarios-table">
                 <tbody>
                 <tr>
                     <th scope="row">Data</th>
-                    <td>2023-01-15</td>
+                    <td><?= Html::encode($comentario->data_comentario) ?></td>
                 </tr>
                 <tr>
-                    <th scope="row">Avaliação</th>
-                    <td>5 estrelas</td>
+                    <th scope="row">Título</th>
+                    <td><?= Html::encode($comentario->titulo) ?></td>
                 </tr>
+                <tr>
+                    <th scope="row">Descrição</th>
+                    <td><?= Html::encode($comentario->descricao) ?></td>
+                </tr>
+                <?php endforeach; ?>
+
+                <?php foreach ($avaliacoes as $avaliacao): ?>
+                <tr>
+                    <th scope="row">Avaliação</th>
+                    <td><?= Html::encode($avaliacao->classificacao) ?></td>
+                </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
 
