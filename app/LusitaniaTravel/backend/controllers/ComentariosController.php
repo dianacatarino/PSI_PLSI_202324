@@ -2,7 +2,8 @@
 
 namespace backend\controllers;
 
-use common\models\Comentario;
+use backend\models\Avaliacao;
+use backend\models\Comentario;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -29,13 +30,15 @@ class ComentariosController extends \yii\web\Controller
     public function actionDelete($id)
     {
         $comentario = Comentario::findOne($id);
+        $avaliacao = Avaliacao::findOne($id);
 
-        if (!$comentario) {
+        if (!$comentario && !$avaliacao) {
             throw new NotFoundHttpException('O comentário não foi encontrado.');
         }
 
         $comentario->delete();
+        $avaliacao->delete();
 
-        return $this->redirect(['index'], ['comentario' => $comentario]);
+        return $this->redirect(['index'], ['comentario' => $comentario , 'avaliacao' => $avaliacao]);
     }
 }

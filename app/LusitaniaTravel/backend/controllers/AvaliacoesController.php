@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use common\models\Avaliacao;
+use backend\models\Avaliacao;
 use Yii;
 use yii\web\NotFoundHttpException;
 
