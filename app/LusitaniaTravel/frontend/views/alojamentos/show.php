@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Detalhes do Alojamento';
 
@@ -81,27 +82,56 @@ $this->title = 'Detalhes do Alojamento';
     <div style="height: 20px;"></div>
 
     <div class="mt-3">
-        <h5>Comentários/Avaliação</h5>
+        <h5>Comentários</h5>
+        <?php $formComentario = ActiveForm::begin(['action' => ['comentarios/create', 'fornecedor_id' => $fornecedor->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
+        <div class="mb-3">
+            <?= $formComentario->field($comentario, 'titulo')->textInput(['class' => 'form-control'])->label('Título') ?>
+        </div>
 
-        <!-- Adicione um formulário para adicionar comentários -->
-        <form>
-            <div class="mb-3">
-                <label for="comment" class="form-label">Adicionar Comentário:</label>
-                <textarea class="form-control" id="comment" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="rating" class="form-label">Avaliação:</label>
-                <select class="form-select" id="rating" name="rating">
-                    <option value="5">5 estrelas</option>
-                    <option value="4">4 estrelas</option>
-                    <option value="3">3 estrelas</option>
-                    <option value="2">2 estrelas</option>
-                    <option value="1">1 estrela</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Adicionar Comentário/Avaliação</button>
-        </form>
+        <div class="mb-3">
+            <?= $formComentario->field($comentario, 'descricao')->textInput(['class' => 'form-control'])->label('Descrição') ?>
+        </div>
 
+        <div class="mb-3">
+            <?= $formComentario->field($comentario, 'data_comentario')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <?= Html::submitButton('Adicionar Comentário', ['class' => 'btn btn-primary btn-sm']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+
+        <br><br>
+
+        <h5>Avaliação</h5>
+        <?php $formAvaliacao = ActiveForm::begin(['action' => ['avaliacoes/create'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
+        <div class="mb-3">
+            <?= $formAvaliacao->field($avaliacao, 'classificacao')->dropDownList(
+                [1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5'],
+                ['prompt' => 'Avalie de 1 a 5', 'class' => 'form-control custom-select']
+            )->label('Avaliação') ?>
+        </div>
+
+        <div class="mb-3">
+            <?= $formAvaliacao->field($avaliacao, 'data_avaliacao')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <?= Html::submitButton('Adicionar Avaliação', ['class' => 'btn btn-primary btn-sm']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+
+        <br><br>
+
+        <div>
+            <h5>Comentários de Clientes</h5>
+            <?php foreach($fornecedor->comentarios as $comentario){ ?>
+                <h6>username?</h6>
+                <?= $comentario->data_comentario; ?> <br>
+                <?= $comentario->titulo; ?> <br>
+                <?= $comentario->descricao; ?>
+            <?php } ?>
+        </div>
         <div style="height: 20px;"></div>
     </div>
 

@@ -77,4 +77,15 @@ class Linhasfatura extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Linhasreserva::class, ['id' => 'linhasreservas_id']);
     }
+
+    /**
+     * Calcula o IVA com base no subtotal.
+     * @param float $subtotal
+     * @return float
+     */
+    public function calcularIva($subtotal)
+    {
+        $percentagemIva = 0.06; // 6%
+        return $subtotal * $percentagemIva;
+    }
 }

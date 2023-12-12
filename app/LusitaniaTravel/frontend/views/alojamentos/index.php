@@ -137,7 +137,6 @@ $this->title = 'Alojamentos';
                                     ?></p>
                                 <div class="d-flex justify-content-between">
                                     <?= Html::a('Detalhes', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                    <?= Html::a('Reservar', ['reservas/create', 'id' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
                                 </div>
                             </div>
                         </div>

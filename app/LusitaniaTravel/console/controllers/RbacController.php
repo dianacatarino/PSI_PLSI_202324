@@ -98,10 +98,72 @@ class RbacController extends Controller
 
         if ($clienteRole !== null && $user !== null && !$auth->checkAccess($user->id, $clienteRole->name)) {
             $auth->assign($clienteRole, $user->id);
+
+            $user->profile->role = 'cliente';
+            $user->profile->save();
+
             Yii::$app->session->setFlash('success', 'Papel de Cliente atribuído com sucesso.');
         } else {
             Yii::$app->session->setFlash('error', 'Falha ao atribuir o papel de Cliente.');
         }
     }
+
+    public function actionAssignAdministradorRole($userId)
+    {
+        $auth = Yii::$app->authManager;
+        $adminRole = $auth->getRole('administrador');
+
+        $user = User::findOne($userId);
+
+        if ($adminRole !== null && $user !== null && !$auth->checkAccess($user->id, $adminRole->name)) {
+            $auth->assign($adminRole, $user->id);
+
+            $user->profile->role = 'administrador';
+            $user->profile->save();
+
+            Yii::$app->session->setFlash('success', 'Papel de Administrador atribuído com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Falha ao atribuir o papel de Administrador.');
+        }
+    }
+
+    public function actionAssignFuncionarioRole($userId)
+    {
+        $auth = Yii::$app->authManager;
+        $funcionarioRole = $auth->getRole('funcionario');
+
+        $user = User::findOne($userId);
+
+        if ($funcionarioRole !== null && $user !== null && !$auth->checkAccess($user->id, $funcionarioRole->name)) {
+            $auth->assign($funcionarioRole, $user->id);
+
+            $user->profile->role = 'funcionario';
+            $user->profile->save();
+
+            Yii::$app->session->setFlash('success', 'Papel de Funcionário atribuído com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Falha ao atribuir o papel de Funcionário.');
+        }
+    }
+
+    public function actionAssignFornecedorRole($userId)
+    {
+        $auth = Yii::$app->authManager;
+        $fornecedorRole = $auth->getRole('fornecedor');
+
+        $user = User::findOne($userId);
+
+        if ($fornecedorRole !== null && $user !== null && !$auth->checkAccess($user->id, $fornecedorRole->name)) {
+            $auth->assign($fornecedorRole, $user->id);
+
+            $user->profile->role = 'fornecedor';
+            $user->profile->save();
+
+            Yii::$app->session->setFlash('success', 'Papel de Fornecedor atribuído com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Falha ao atribuir o papel de Fornecedor.');
+        }
+    }
+
 }
 

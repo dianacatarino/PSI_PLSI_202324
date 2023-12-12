@@ -65,7 +65,9 @@ class AlojamentosController extends \yii\web\Controller
             $avaliacao->cliente_id = Yii::$app->user->id;
             $avaliacao->fornecedor_id = $id;
 
+            // Validar os modelos antes de salvar
             $isValid = $comentario->validate() && $avaliacao->validate();
+
             if ($isValid) {
                 // Salvar o Comentario
                 $comentario->save();
@@ -78,6 +80,9 @@ class AlojamentosController extends \yii\web\Controller
             }
         }
 
+        // Se chegar aqui, há erros de validação
+        Yii::$app->session->setFlash('error', 'Erro ao validar os comentários e avaliações.');
+
         return $this->render('show', [
             'avaliacao' => $avaliacao,
             'comentario' => $comentario,
@@ -85,7 +90,7 @@ class AlojamentosController extends \yii\web\Controller
             'numeroQuartos' => $numeroQuartos,
             'numeroCamas' => $numeroCamas,
             'precoPorNoite' => $precoPorNoite,
-            'tipoQuarto' => $tipoQuarto, // Passa a variável para a view
+            'tipoQuarto' => $tipoQuarto,
         ]);
     }
 

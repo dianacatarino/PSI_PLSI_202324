@@ -38,13 +38,12 @@ $this->title = 'Emitir Fatura';
                             From
                             <address>
                                 <tr>
-                                    <strong><td> Sede </td></strong><br>
-                                    <td> Capital Social </td>
-                                    <td> Email </td>
-                                    <td> Morada </td><br>
-                                    <td> Localidade </td><br>
-                                    Nif: <td> </td><br>
-                                    Email: <td> </td>
+                                    <strong><td><?= Html::encode($empresa->sede) ?></td></strong><br>
+                                    <td><?= Html::encode($empresa->capitalsocial) ?></td><br>
+                                    <td><?= Html::encode($empresa->email) ?></td><br>
+                                    <td><?= Html::encode($empresa->morada) ?></td><br>
+                                    <td><?= Html::encode($empresa->localidade) ?></td><br>
+                                    <td><?= Html::encode($empresa->nif) ?></td><br>
                                 </tr>
                             </address>
                         </div>
@@ -52,16 +51,22 @@ $this->title = 'Emitir Fatura';
                         <div class="col-sm-4 invoice-col">
                             To
                             <address>
-                                <strong>Cliente</strong>
-                                <a href="#" class="btn btn-info" role="button">Selecionar Cliente</a>
+                                <label for="cliente_id">Selecione o Cliente:</label>
+                                <?= Html::dropDownList('cliente_id', null, $selectClientes, ['class' => 'form-control', 'prompt' => 'Selecione um cliente']) ?>
+                                <label for="reserva_id">Selecione a Reserva:</label>
+                                <?php foreach ($faturas as $fatura): ?>
+                                    <?= Html::dropDownList('reserva_id', null, $selectReservas, ['class' => 'form-control', 'prompt' => 'Selecione uma reserva']) ?>
+                                <?php endforeach; ?>
                             </address>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            <b>Fatura #007612</b><br>
+                            <?php foreach ($faturas as $fatura): ?>
+                            <b>Fatura Id</b><br>
                             <br>
-                            <b>Fatura ID: </b> 1 <br>
+                            <b><?= Html::encode($fatura->id) ?></b><br>
                             <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
+                            <?php endforeach; ?>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -76,17 +81,19 @@ $this->title = 'Emitir Fatura';
                                     <th>Referência</th>
                                     <th>Quantidade</th>
                                     <th>Preço Unitário</th>
-                                    <th>Valor Iva</th>
-                                    <th>Sub Total</th>
+                                    <th>Iva</th>
+                                    <th>Subtotal</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>60€</td>
-                                    <td>10%</td>
-                                    <td>100€</td>
+                                    <?php foreach ($linhasfaturas as $linhasfatura): ?>
+                                        <th><?= Html::encode($linhasfatura->id) ?></th>
+                                        <th><?= Html::encode($linhasfatura->quantidade) ?></th>
+                                        <th><?= Html::encode($linhasfatura->precounitario) ?></th>
+                                        <th><?= Html::encode($linhasfatura->iva) ?></th>
+                                        <th><?= Html::encode($linhasfatura->subtotal) ?></th>
+                                    <?php endforeach; ?>
                                 </tr>
                                 </tbody>
                             </table>
@@ -108,18 +115,20 @@ $this->title = 'Emitir Fatura';
                         <div class="col-6">
                             <div class="table-responsive">
                                 <table class="table">
+                                    <?php foreach ($faturas as $fatura): ?>
                                     <tr>
-                                        <th>Iva Total:</th>
-                                        <td>90€</td>
+                                        <th>Total S/ Iva:</th>
+                                        <td><?= Html::encode($fatura->totalsi) ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Valor Total:</th>
-                                        <td>100€</td>
+                                        <th>Iva:</th>
+                                        <td><?= Html::encode($fatura->iva) ?></td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td>200€</td>
+                                        <td><?= Html::encode($fatura->totalf) ?></td>
                                     </tr>
+                                    <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>
@@ -142,7 +151,7 @@ $this->title = 'Emitir Fatura';
                     <footer class="invoice-footer">
                         <div class="row">
                             <div class="col-12">
-                                <p>Emissão realizada por: <strong> Nome do Funcionário </strong></p>
+                                <p>Emissão realizada por: <strong><?= Html::encode($reserva->funcionario_id) ?></strong></p>
                             </div>
                         </div>
                     </footer>

@@ -2,35 +2,43 @@
 
 use yii\helpers\Html;
 
-$this->title = 'Reservas';
+$this->title = 'As Minhas Reservas';
 ?>
 
 <div class="reserva">
-    <h1>Reserva</h1>
+    <h3>Reservas</h3>
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Reserva #1</h5>
+    <?php if (empty($reservas)): ?>
+        <p>Você não possui nenhuma reserva no momento.</p>
+    <?php else: ?>
+        <?php foreach ($reservas as $reserva): ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Reserva <?= $reserva->id ?></h5>
+                    <table class="table reserva-table">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Check-in</th>
+                            <td><?= $reserva->checkin ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Check-out</th>
+                            <td><?= $reserva->checkout ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Valor</th>
+                            <td><?= $reserva->valor ?>€</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Estado</th>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-            <table class="table reserva-table">
-                <tbody>
-                <tr>
-                    <th scope="row">Check-in</th>
-                    <td>2023-01-01</td>
-                </tr>
-                <tr>
-                    <th scope="row">Check-out</th>
-                    <td>2023-01-10</td>
-                </tr>
-                <tr>
-                    <th scope="row">Valor</th>
-                    <td>200 €</td>
-                </tr>
-                <!-- Adicione mais informações conforme necessário -->
-                </tbody>
-            </table>
-
-            <?= Html::a('Detalhes', ['reservas/view'], ['class' => 'btn btn-primary']) ?>
-        </div>
-    </div>
+                    <?= Html::a('Detalhes', ['reservas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary']) ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>

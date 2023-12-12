@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Avaliacao;
 use common\models\Comentario;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 class ComentariosController extends \yii\web\Controller
 {
@@ -19,29 +20,21 @@ class ComentariosController extends \yii\web\Controller
     public function actionCreate($fornecedor_id)
     {
         $comentario = new Comentario();
-        $avaliacao = new Avaliacao();
 
-        if ($comentario->load(Yii::$app->request->post()) && $avaliacao->load(Yii::$app->request->post())) {
+        if ($comentario->load(Yii::$app->request->post())) {
             $comentario->cliente_id = Yii::$app->user->id;
             $comentario->fornecedor_id = $fornecedor_id;
 
-            $avaliacao->cliente_id = Yii::$app->user->id;
-            $avaliacao->fornecedor_id = $fornecedor_id;
-
-            $isValid = $comentario->validate() && $avaliacao->validate();
-            if ($isValid) {
-                // Salvar o Comentario
+            if ($comentario->validate()) {
+                // Salvar o Comentário
                 $comentario->save();
 
-                // Salvar a Avaliacao
-                $avaliacao->save();
-
-                Yii::$app->session->setFlash('success', 'Comentário e avaliação criados com sucesso.');
+                Yii::$app->session->setFlash('success', 'Comentário criado com sucesso.');
                 return $this->redirect(['index']);
             }
         }
 
-        return $this->render('create', ['comentario' => $comentario , 'avaliacao' => $avaliacao] );
+        return $this->render('create', ['comentario' => $comentario]);
     }
 
     public function actionEdit($id)
@@ -57,7 +50,6 @@ class ComentariosController extends \yii\web\Controller
         return $this->render('edit', ['comentario' => $comentario]);
 
     }
-
 
     public function actionShow($id)
     {

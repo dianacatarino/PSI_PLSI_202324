@@ -30,11 +30,12 @@ $this->title = 'Gestão de Reservas';
                 <thead>
                 <tr>
                     <th style="width: 5%">Id</th>
+                    <th style="width: 1%">Tipo</th>
                     <th style="width: 5%">Check-in</th>
                     <th style="width: 5%">Check-out</th>
-                    <th style="width: 5%">Nº Pessoas</th>
-                    <th style="width: 5%">Nº Quartos</th>
-                    <th style="width: 10%">Valor Total</th>
+                    <th style="width: 3%">Pessoas</th>
+                    <th style="width: 3%">Quartos</th>
+                    <th style="width: 5%">Valor Total</th>
                     <th style="width: 5%">Alojamento</th>
                     <th style="width: 5%">Cliente</th>
                     <th style="width: 5%">Funcionário</th>
@@ -45,6 +46,7 @@ $this->title = 'Gestão de Reservas';
                 <?php foreach ($reservas as $reserva): ?>
                     <tr>
                         <td><?= Html::encode($reserva->id) ?></td>
+                        <td><?= Html::encode($reserva->tipo) ?></td>
                         <td><?= Html::encode($reserva->checkin) ?></td>
                         <td><?= Html::encode($reserva->checkout) ?></td>
                         <td><?= Html::encode($reserva->numeroclientes) ?></td>

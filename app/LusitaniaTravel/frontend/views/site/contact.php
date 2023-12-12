@@ -57,13 +57,13 @@ $this->title = 'Contacto';
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Seu Nome">
+                                    <input type="text" class="form-control" id="name" placeholder="Nome">
                                     <label for="name">Seu Nome</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Seu Email">
+                                    <input type="email" class="form-control" id="email" placeholder="Email">
                                     <label for="email">Seu Email</label>
                                 </div>
                             </div>

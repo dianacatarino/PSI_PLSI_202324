@@ -76,7 +76,7 @@ AppAsset::register($this);
                     } else {
                         echo Html::a(
                             '<i class="fas fa-shopping-cart"></i>',
-                            ['site/carrinho'],
+                            ['carrinho/index'],
                             ['class' => 'btn btn-info rounded-0 py-4 px-md-5 ml-2']
                         );
                         echo Html::tag('span', Yii::$app->user->identity->username, ['class' => 'btn btn-secondary rounded-0 py-4 px-md-5 mr-2']);

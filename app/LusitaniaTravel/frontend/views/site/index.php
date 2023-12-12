@@ -3,6 +3,8 @@
 /** @var yii\web\View $this */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 $this->title = 'Lusitânia Travel';
 ?>
@@ -115,7 +117,7 @@ $this->title = 'Lusitânia Travel';
                                             <?= Html::encode($fornecedor->nome_alojamento) ?>
                                             <?php if (!Yii::$app->user->isGuest): ?>
                                                 <?php
-                                                // Obtém o perfil do user
+                                                // Obtém o perfil do usuário
                                                 $profile = Yii::$app->user->identity->profile;
 
                                                 // Verifica se a coluna favoritos está vazia ou nula e atribui um array vazio se for o caso
@@ -125,14 +127,15 @@ $this->title = 'Lusitânia Travel';
                                                 $isFavorite = in_array($fornecedor->id, $favoritos);
 
                                                 // Exibe o ícone de favorito com base no status
-                                                $iconClass = $isFavorite ? 'fa-heart text-danger' : 'fa-heart-o';
+                                                $iconClass = $isFavorite ? 'fas fa-heart text-danger' : 'far fa-heart';
+
+                                                // URL para adicionar ou remover favorito
+                                                $addAction = Url::to(['favoritos/adicionar', 'fornecedorId' => $fornecedor->id]);
+                                                $removeAction = Url::to(['favoritos/remover', 'fornecedorId' => $fornecedor->id]);
                                                 ?>
-                                                <form action="<?= Yii::$app->urlManager->createUrl(['favoritos/atualizar']) ?>" method="post">
-                                                    <input type="hidden" name="fornecedorId" value="<?= $fornecedor->id ?>">
-                                                    <button type="submit" class="btn btn-link">
-                                                        <i class="fa <?= $iconClass ?>"></i> <?= $isFavorite ? 'Remover' : 'Adicionar' ?>
-                                                    </button>
-                                                </form>
+                                                <a href="<?= $isFavorite ? $removeAction : $addAction ?>" class="btn btn-link">
+                                                    <i class="<?= $iconClass ?>"></i>
+                                                </a>
                                             <?php endif; ?>
                                         </h5>
                                         <div class="ps-2">
@@ -207,7 +210,7 @@ $this->title = 'Lusitânia Travel';
                                         ?></p>
                                     <div class="d-flex justify-content-between">
                                         <?= Html::a('Detalhes', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?= Html::a('Reservar', ['reservas/create', 'id' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
+                                        <?= Html::a('Adicionar ao Carrinho', ['carrinho/create', 'fornecedorId' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
                                     </div>
                                 </div>
                             </div>

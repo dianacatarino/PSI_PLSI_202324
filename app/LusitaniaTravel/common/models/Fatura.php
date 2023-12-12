@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use app\models\Reserva;
+use common\models\Reserva;
 use backend\models\Empresa;
 use Yii;
 

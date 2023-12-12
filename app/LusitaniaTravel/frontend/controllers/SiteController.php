@@ -133,7 +133,7 @@ class SiteController extends Controller
 
     public function actionCarrinho()
     {
-        return $this->render('carrinho');
+        return $this->render('carrinho/index');
     }
 
     public function actionReservas()

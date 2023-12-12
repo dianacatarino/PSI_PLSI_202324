@@ -3,11 +3,41 @@
 namespace backend\controllers;
 
 use backend\models\Empresa;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use Yii;
 
 class EmpresaController extends \yii\web\Controller
 {
+    /*public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'show'],
+                        'roles' => ['admin', 'funcionario'], // Adjust roles as needed
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create', 'store', 'edit', 'update', 'delete'],
+                        'roles' => ['admin'], // Adjust roles as needed
+                    ],
+                    [
+                        'allow' => false, // Deny access to everything by default
+                        'roles' => ['cliente'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Não tem permissões para aceder a esta página.');
+                        },
+                    ],
+                ],
+            ],
+        ];
+    }*/
+
     public function actionIndex()
     {
         $empresas = Empresa::find()->all();

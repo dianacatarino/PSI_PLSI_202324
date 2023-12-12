@@ -33,10 +33,10 @@ $this->title = 'Comentários';
                 <?php endforeach; ?>
 
                 <?php foreach ($avaliacoes as $avaliacao): ?>
-                <tr>
-                    <th scope="row">Avaliação</th>
-                    <td><?= Html::encode($avaliacao->classificacao) ?></td>
-                </tr>
+                    <tr>
+                        <th scope="row">Avaliação</th>
+                        <td><?= Html::encode($avaliacao->classificacao) ?></td>
+                    </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
