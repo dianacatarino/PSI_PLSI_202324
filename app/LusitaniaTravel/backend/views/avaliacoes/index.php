@@ -24,30 +24,25 @@ $this->title = 'Gestão dos Avaliações';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 1%">ID do Alojamento</th>
-                    <th style="width: 5%">Avaliação Geral (0-10)</th>
-                    <th style="width: 5%">ID do Cliente</th>
+                    <th style="width: 1%">Id</th>
+                    <th style="width: 5%">Alojamento</th>
+                    <th style="width: 10%">Avaliação Geral (0-5)</th>
+                    <th style="width: 5%">Cliente</th>
                     <th style="width: 5%">Data da Avaliação</th>
+                    <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($avaliacoes as $avaliacao): ?>
                     <tr>
-                        <td><?= $avaliacao->id ?></td>
-                        <td><?= Html::encode($avaliacao->fornecedor_id) ?></td>
+                        <td><?= Html::encode( $avaliacao->id) ?></td>
+                        <td><?= Html::encode($avaliacao->fornecedor->nome_alojamento) ?></td>
                         <td><?= Html::encode($avaliacao->classificacao) ?></td>
                         <td><?= Html::encode($avaliacao->cliente_id) ?></td>
                         <td><?= Html::encode($avaliacao->data_avaliacao) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
                                 <?= Html::a('<i class="fas fa-folder"></i>', ['avaliacoes/show', 'id' => $avaliacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['avaliacoes/delete', 'id' => $avaliacao->id], [
-                                    'class' => 'btn btn-danger btn-sm',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this item?',
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
                             </div>
                         </td>
                     </tr>

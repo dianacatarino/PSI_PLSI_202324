@@ -28,26 +28,20 @@ class FavoritosController extends \yii\web\Controller
 
     public function actionAdicionar()
     {
-        // Check if 'fornecedorId' is present in the request
         $fornecedorId = Yii::$app->request->get('fornecedorId');
 
         if ($fornecedorId !== null) {
-            // Fetch the user's profile
             $profile = Yii::$app->user->identity->profile;
 
-            // Get the current favorites array or initialize an empty array
             $favoritos = $profile->favorites ? json_decode($profile->favorites, true) : [];
 
-            // Add $fornecedorId to favorites if not already present
             if (!in_array($fornecedorId, $favoritos)) {
                 $favoritos[] = $fornecedorId;
             }
 
-            // Update the favorites array and save the profile
             $profile->favorites = json_encode($favoritos);
             $profile->save();
 
-            // Redirect back to the previous page or display a success message
             return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         } else {
             Yii::$app->session->setFlash('error', 'Fornecedor ID not provided.');
@@ -57,26 +51,20 @@ class FavoritosController extends \yii\web\Controller
 
     public function actionRemover()
     {
-        // Check if 'fornecedorId' is present in the request
         $fornecedorId = Yii::$app->request->get('fornecedorId');
 
         if ($fornecedorId !== null) {
-            // Fetch the user's profile
             $profile = Yii::$app->user->identity->profile;
 
-            // Get the current favorites array or initialize an empty array
             $favoritos = $profile->favorites ? json_decode($profile->favorites, true) : [];
 
-            // Remove $fornecedorId from favorites if present
             if (in_array($fornecedorId, $favoritos)) {
                 $favoritos = array_diff($favoritos, [$fornecedorId]);
             }
 
-            // Update the favorites array and save the profile
             $profile->favorites = json_encode($favoritos);
             $profile->save();
 
-            // Redirect back to the previous page or display a success message
             return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         } else {
             Yii::$app->session->setFlash('error', 'Fornecedor ID not provided.');

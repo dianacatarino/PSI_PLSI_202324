@@ -11,10 +11,17 @@ class ComentariosController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        // Lógica para exibir uma lista dos comentários
-        $comentarios = Comentario::find()->all();
-        $avaliacoes = Avaliacao::find()->all();
-        return $this->render('index', ['comentarios' => $comentarios , 'avaliacoes' => $avaliacoes]);
+        $userId = Yii::$app->user->id;
+
+        $comentarios = Comentario::find()
+            ->where(['cliente_id' => $userId])
+            ->all();
+
+        $avaliacoes = Avaliacao::find()
+            ->where(['cliente_id' => $userId])
+            ->all();
+
+        return $this->render('index', ['comentarios' => $comentarios, 'avaliacoes' => $avaliacoes]);
     }
 
     public function actionCreate($fornecedor_id)
@@ -30,7 +37,7 @@ class ComentariosController extends \yii\web\Controller
                 $comentario->save();
 
                 Yii::$app->session->setFlash('success', 'Comentário criado com sucesso.');
-                return $this->redirect(['index']);
+                return $this->redirect(Yii::$app->request->referrer ?: ['alojamentos/show', 'id' => $fornecedor_id]);
             }
         }
 

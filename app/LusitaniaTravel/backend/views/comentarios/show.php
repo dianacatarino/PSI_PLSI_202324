@@ -33,8 +33,8 @@ $this->title = 'Detalhes do Comentário';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">ID do Alojamento</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->fornecedor_id) ?></span>
+                                    <span class="info-box-text text-center text-muted">Alojamento</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->fornecedor->nome_alojamento) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ $this->title = 'Detalhes do Comentário';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">ID do Cliente</span>
+                                    <span class="info-box-text text-center text-muted">Cliente</span>
                                     <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($comentario->cliente_id) ?></span>
                                 </div>
                             </div>

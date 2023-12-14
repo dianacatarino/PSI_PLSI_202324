@@ -24,32 +24,27 @@ $this->title = 'Gestão dos Comentários';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 1%">ID do Alojamento</th>
-                    <th style="width: 1%">Título</th>
-                    <th style="width: 5%">Comentário da estadia</th>
-                    <th style="width: 5%">ID do Cliente</th>
-                    <th style="width: 1%">Data do Comentário</th>
+                    <th style="width: 1%">Id</th>
+                    <th style="width: 5%">Alojamento</th>
+                    <th style="width: 20%">Título</th>
+                    <th style="width: 20%">Comentário da estadia</th>
+                    <th style="width: 10%">Cliente</th>
+                    <th style="width: 20%">Data do Comentário</th>
+                    <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($comentarios as $comentario): ?>
                     <tr>
-                        <td><?= $comentario->id ?></td>
-                        <td><?= Html::encode($comentario->fornecedor_id) ?></td>
+                        <td><?= Html::encode($comentario->id) ?></td>
+                        <td><?= Html::encode($comentario->fornecedor->nome_alojamento) ?></td>
                         <td><?= Html::encode($comentario->titulo) ?></td>
                         <td><?= Html::encode($comentario->descricao) ?></td>
                         <td><?= Html::encode($comentario->cliente_id) ?></td>
                         <td><?= Html::encode($comentario->data_comentario)?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
-                                <?= Html::a('<i class="fas fa-folder"></i>', ['alojamentos/show', 'id' => $comentario->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['alojamentos/delete', 'id' => $comentario->id], [
-                                    'class' => 'btn btn-danger btn-sm',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this item?',
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['comentarios/show', 'id' => $comentario->id], ['class' => 'btn btn-primary btn-sm']) ?>
                             </div>
                         </td>
                     </tr>

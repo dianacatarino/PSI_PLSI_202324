@@ -210,7 +210,7 @@ $this->title = 'Lusitânia Travel';
                                         ?></p>
                                     <div class="d-flex justify-content-between">
                                         <?= Html::a('Detalhes', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?= Html::a('Adicionar ao Carrinho', ['carrinho/create', 'fornecedorId' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
+                                        <?= Html::a('Adicionar ao Carrinho', ['carrinho/adicionar', 'fornecedorId' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
                                     </div>
                                 </div>
                             </div>

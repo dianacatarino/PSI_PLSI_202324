@@ -58,31 +58,6 @@ class AlojamentosController extends \yii\web\Controller
             }
         }
 
-        if ($comentario->load(Yii::$app->request->post()) && $avaliacao->load(Yii::$app->request->post())) {
-            $comentario->cliente_id = Yii::$app->user->id;
-            $comentario->fornecedor_id = $id;
-
-            $avaliacao->cliente_id = Yii::$app->user->id;
-            $avaliacao->fornecedor_id = $id;
-
-            // Validar os modelos antes de salvar
-            $isValid = $comentario->validate() && $avaliacao->validate();
-
-            if ($isValid) {
-                // Salvar o Comentario
-                $comentario->save();
-
-                // Salvar a Avaliacao
-                $avaliacao->save();
-
-                Yii::$app->session->setFlash('success', 'Comentário e avaliação criados com sucesso.');
-                return $this->redirect(['index']);
-            }
-        }
-
-        // Se chegar aqui, há erros de validação
-        Yii::$app->session->setFlash('error', 'Erro ao validar os comentários e avaliações.');
-
         return $this->render('show', [
             'avaliacao' => $avaliacao,
             'comentario' => $comentario,

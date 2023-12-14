@@ -11,8 +11,27 @@ class AvaliacoesController extends \yii\web\Controller
     public function actionIndex()
     {
         $avaliacoes = Avaliacao::find()->all();
-
         return $this->render('index', ['avaliacoes' => $avaliacoes]);
+    }
+
+    public function actionCreate($fornecedor_id)
+    {
+        $avaliacao = new Avaliacao();
+
+        if ($avaliacao->load(Yii::$app->request->post())) {
+            $avaliacao->cliente_id = Yii::$app->user->id;
+            $avaliacao->fornecedor_id = $fornecedor_id;
+
+            if ($avaliacao->validate()) {
+                // Salvar a Avaliação
+                $avaliacao->save();
+
+                Yii::$app->session->setFlash('success', 'Avaliação criada com sucesso.');
+                return $this->redirect(Yii::$app->request->referrer ?: ['alojamentos/show', 'id' => $fornecedor_id]);
+            }
+        }
+
+        return $this->render('alojamentos/show', ['avaliacao' => $avaliacao]);
     }
 
     public function actionShow($id)

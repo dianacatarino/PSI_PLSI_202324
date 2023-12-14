@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\User;
 use Yii;
+use yii\validators\UniqueValidator;
 
 /**
  * This is the model class for table "avaliacoes".
@@ -38,6 +39,7 @@ class Avaliacao extends \yii\db\ActiveRecord
             [['data_avaliacao'], 'safe'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['cliente_id' => 'id']],
             [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
+            ['fornecedor_id', 'validateAvaliacaoUnica'],
         ];
     }
 
@@ -73,5 +75,16 @@ class Avaliacao extends \yii\db\ActiveRecord
     public function getFornecedor()
     {
         return $this->hasOne(Fornecedor::class, ['id' => 'fornecedor_id']);
+    }
+
+    public function validateAvaliacaoUnica($attribute, $params)
+    {
+        $validator = new UniqueValidator([
+            'targetClass' => self::class,
+            'targetAttribute' => ['cliente_id', 'fornecedor_id'],
+            'message' => 'Você já avaliou este fornecedor.',
+        ]);
+
+        $validator->validateAttribute($this, $attribute);
     }
 }

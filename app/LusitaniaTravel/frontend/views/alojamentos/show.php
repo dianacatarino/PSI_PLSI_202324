@@ -82,7 +82,7 @@ $this->title = 'Detalhes do Alojamento';
     <div style="height: 20px;"></div>
 
     <div class="mt-3">
-        <h5>Comentários</h5>
+        <h5>Adicionar Comentário e Avaliação</h5>
         <?php $formComentario = ActiveForm::begin(['action' => ['comentarios/create', 'fornecedor_id' => $fornecedor->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
         <div class="mb-3">
             <?= $formComentario->field($comentario, 'titulo')->textInput(['class' => 'form-control'])->label('Título') ?>
@@ -102,13 +102,17 @@ $this->title = 'Detalhes do Alojamento';
         <?php ActiveForm::end(); ?>
 
         <br><br>
-
-        <h5>Avaliação</h5>
-        <?php $formAvaliacao = ActiveForm::begin(['action' => ['avaliacoes/create'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
+        <?php $formAvaliacao = ActiveForm::begin(['action' => ['avaliacoes/create', 'fornecedor_id' => $fornecedor->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
         <div class="mb-3">
             <?= $formAvaliacao->field($avaliacao, 'classificacao')->dropDownList(
-                [1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5'],
-                ['prompt' => 'Avalie de 1 a 5', 'class' => 'form-control custom-select']
+                [
+                    1 => '★☆☆☆☆', // Uma estrela
+                    2 => '★★☆☆☆', // Duas estrelas
+                    3 => '★★★☆☆', // Três estrelas
+                    4 => '★★★★☆', // Quatro estrelas
+                    5 => '★★★★★', // Cinco estrelas
+                ],
+                ['prompt' => 'Selecione uma avaliação', 'class' => 'form-control']
             )->label('Avaliação') ?>
         </div>
 
@@ -124,13 +128,48 @@ $this->title = 'Detalhes do Alojamento';
         <br><br>
 
         <div>
-            <h5>Comentários de Clientes</h5>
-            <?php foreach($fornecedor->comentarios as $comentario){ ?>
-                <h6>username?</h6>
-                <?= $comentario->data_comentario; ?> <br>
-                <?= $comentario->titulo; ?> <br>
-                <?= $comentario->descricao; ?>
-            <?php } ?>
+            <h5>Comentários e Avaliações de Clientes</h5>
+
+            <?php if (empty($fornecedor->comentarios) && empty($fornecedor->avaliacoes)) : ?>
+                <p>Sem comentários e avaliações.</p>
+            <?php else : ?>
+                <?php foreach ($fornecedor->comentarios as $comentario) : ?>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title"><?= Html::encode($comentario->cliente->username ?? 'Usuário Desconhecido') ?></h6>
+                            <p class="card-text">
+                                <strong><?= Html::encode($comentario->titulo ?? 'Sem Título') ?></strong> <br>
+                                Comentário: <?= Html::encode($comentario->descricao); ?>
+                            </p>
+
+                            <?php
+                            $avaliacaoEncontrada = null;
+
+                            foreach ($fornecedor->avaliacoes as $avaliacao) {
+                                if ($avaliacao->cliente_id == $comentario->cliente_id) {
+                                    $avaliacaoEncontrada = $avaliacao;
+                                    break;
+                                }
+                            }
+                            ?>
+
+                            <?php if ($avaliacaoEncontrada) : ?>
+                                <p class="card-text">
+                                    Avaliação:
+                                    <?php
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        echo ($i <= $avaliacaoEncontrada->classificacao) ? '★' : '☆';
+                                    }
+                                    ?>
+                                </p>
+                                <small class="text-muted"><?= Yii::$app->formatter->asDate($avaliacaoEncontrada->data_avaliacao, 'dd/MM/yyyy') ?></small>
+                            <?php else : ?>
+                                <small class="text-muted"><?= Yii::$app->formatter->asDate($comentario->data_comentario, 'dd/MM/yyyy') ?></small>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
         <div style="height: 20px;"></div>
     </div>

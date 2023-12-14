@@ -30,7 +30,7 @@ class CarrinhoController extends \yii\web\Controller
         ]);
     }
 
-    public function actionCreate($fornecedorId)
+    public function actionAdicionar($fornecedorId)
     {
         // Verificar se o usuário está logado
         if (Yii::$app->user->isGuest) {
@@ -96,5 +96,12 @@ class CarrinhoController extends \yii\web\Controller
 
         return $this->redirect(Yii::$app->request->referrer ?: ['site/index']);
     }
+
+    public function actionRemover($fornecedorId)
+    {
+
+    }
+
+
 
 }

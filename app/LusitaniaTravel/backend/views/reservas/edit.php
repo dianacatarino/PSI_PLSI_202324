@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Fornecedor;
+use common\models\Fornecedor;
 use common\models\Profile;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

@@ -44,7 +44,7 @@ $this->title = 'Carrinho de Compras';
 
                 <div class="text-right p-3">
                     <p class="font-weight-bold">Total a Pagar: <?= Yii::$app->formatter->asCurrency($totalCarrinho, 'EUR') ?></p>
-                    <?= Html::a('Finalizar Compra', ['carrinho/finalizar-compra'], ['class' => 'btn btn-success']) ?>
+                    <?= Html::a('Finalizar Compra', ['carrinho/finalizarcompra'], ['class' => 'btn btn-success']) ?>
                 </div>
             <?php else : ?>
                 <p class="p-3 text-center">O carrinho está vazio.</p>

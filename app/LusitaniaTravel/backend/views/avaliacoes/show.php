@@ -24,7 +24,7 @@ $this->title = 'Detalhes da Avaliação';
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Detalhes da Avaliação<?= $avaliacao->id ?></h3>
+            <h3 class="card-title">Detalhes da Avaliação <?= $avaliacao->id ?></h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -33,8 +33,8 @@ $this->title = 'Detalhes da Avaliação';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">ID do Alojamento</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($avaliacao->fornecedor_id) ?></span>
+                                    <span class="info-box-text text-center text-muted">Alojamento</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($avaliacao->fornecedor->nome_alojamento) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ $this->title = 'Detalhes da Avaliação';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">ID do Cliente</span>
+                                    <span class="info-box-text text-center text-muted">Cliente</span>
                                     <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($avaliacao->cliente_id) ?></span>
                                 </div>
                             </div>
