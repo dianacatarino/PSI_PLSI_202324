@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\Html;
+
 $this->title = 'Dashboard';
 ?>
 <div class="site-index">
@@ -20,7 +22,7 @@ $this->title = 'Dashboard';
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+                        <?= Html::a('Mais informações', ['reservas/index'], ['class' => 'btn btn-info']) ?>
                     </div>
                 </div>
 
@@ -34,7 +36,7 @@ $this->title = 'Dashboard';
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+                        <?= Html::a('Mais informações', ['reservas/index'], ['class' => 'btn btn-info bg-success', 'style' => 'border-color: transparent;']) ?>
                     </div>
                 </div>
 
@@ -48,7 +50,7 @@ $this->title = 'Dashboard';
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+                        <?= Html::a('Mais informações', ['user/index'], ['class' => 'btn btn-info bg-warning', 'style' => 'border-color: transparent;']) ?>
                     </div>
                 </div>
 
@@ -62,7 +64,7 @@ $this->title = 'Dashboard';
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+                        <?= Html::a('Mais informações', ['alojamentos/index'], ['class' => 'btn btn-info bg-danger', 'style' => 'border-color: transparent;']) ?>
                     </div>
                 </div>
             </div>
@@ -106,4 +108,3 @@ $this->title = 'Dashboard';
         </div>
     </section>
 </div>
-
