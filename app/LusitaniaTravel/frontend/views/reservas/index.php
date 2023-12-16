@@ -31,7 +31,7 @@ $this->title = 'As Minhas Reservas';
                         </tr>
                         <tr>
                             <th scope="row">Estado</th>
-                            <td></td>
+                            <td><?= $reserva->confirmacoes[0]->estado?></td>
                         </tr>
                         </tbody>
                     </table>

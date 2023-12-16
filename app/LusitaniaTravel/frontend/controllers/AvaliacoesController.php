@@ -34,6 +34,20 @@ class AvaliacoesController extends \yii\web\Controller
         return $this->render('alojamentos/show', ['avaliacao' => $avaliacao]);
     }
 
+    public function actionEdit($id)
+    {
+        // Lógica para editar uma avaliação específica
+        $avaliacao = Avaliacao::findOne($id);
+
+        if ($avaliacao->load(Yii::$app->request->post()) && $avaliacao->save()) {
+            Yii::$app->session->setFlash('success', 'Avaliação atualizada com sucesso.');
+            return $this->redirect(['alojamentos/show', 'id' => $avaliacao->fornecedor_id]);
+        }
+
+        return $this->render('edit', ['avaliacao' => $avaliacao]);
+    }
+
+
     public function actionShow($id)
     {
         $avaliacao = Avaliacao::findOne($id);
@@ -49,7 +63,7 @@ class AvaliacoesController extends \yii\web\Controller
         $avaliacao = Avaliacao::findOne($id);
 
         if (!$avaliacao) {
-            throw new NotFoundHttpException('O comentário não foi encontrado.');
+            throw new NotFoundHttpException('A avaliação não foi encontrada.');
         }
 
         $avaliacao->delete();

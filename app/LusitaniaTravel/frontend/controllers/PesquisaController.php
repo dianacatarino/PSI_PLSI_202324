@@ -14,19 +14,29 @@ class PesquisaController extends Controller
 {
     public function actionIndex()
     {
-        $fornecedores = Fornecedor::find()->all();
-        return $this->render('index', ['fornecedores' => $fornecedores]);
+        $searchModel = new PesquisaForm();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
-    public function actionSearch()
+    public function actionPesquisar()
     {
         $searchModel = new PesquisaForm();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('search', [
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionResultados()
+    {
+
     }
 }
 

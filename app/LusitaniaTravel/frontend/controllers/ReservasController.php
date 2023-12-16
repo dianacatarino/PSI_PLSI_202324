@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Reserva;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 class ReservasController extends \yii\web\Controller
 {
@@ -13,14 +14,19 @@ class ReservasController extends \yii\web\Controller
         $userId = Yii::$app->user->id;
 
         // Busque as reservas associadas ao usuário atual
-        $reservas = Reserva::find()->where(['cliente_id' => $userId])->all();
+        $reservas = Reserva::find()->with('confirmacoes')->where(['cliente_id' => $userId])->all();
 
         return $this->render('index', ['reservas' => $reservas]);
     }
 
     public function actionShow($id)
     {
-        $reserva = Reserva::findOne($id);
+        $reserva = Reserva::find()->with('linhasreservas')->where(['id' => $id])->one();
+
+        // Verifique se a reserva foi encontrada
+        if ($reserva === null) {
+            throw new NotFoundHttpException('A reserva não foi encontrada.');
+        }
 
         return $this->render('show', ['reserva' => $reserva]);
     }

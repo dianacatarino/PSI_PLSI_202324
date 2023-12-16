@@ -60,15 +60,19 @@ class ComentariosController extends \yii\web\Controller
 
     public function actionShow($id)
     {
-        // Lógica para exibir detalhes de um cometario específico
+        // Lógica para exibir detalhes de um comentário específico
         $comentario = Comentario::findOne($id);
-        $avaliacao = Comentario::findOne($id);
 
-        if ($comentario === null && $avaliacao === null) {
+        if ($comentario === null) {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        return $this->render('show', ['comentario' => $comentario , 'avaliacao' => $avaliacao ]);
+        // Obter avaliações associadas com base em fornecedor_id e user_id
+        $avaliacoes = Avaliacao::find()
+            ->where(['fornecedor_id' => $comentario->fornecedor_id, 'cliente_id' => $comentario->cliente_id])
+            ->all();
+
+        return $this->render('show', ['comentario' => $comentario, 'avaliacoes' => $avaliacoes]);
     }
 
     public function actionDelete($id)

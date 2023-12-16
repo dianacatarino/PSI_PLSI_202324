@@ -54,7 +54,7 @@ AppAsset::register($this);
                     echo '<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">';
                     echo '<div class="navbar-nav mr-auto py-0">';
                     echo Html::a('Home', ['site/index'], ['class' => 'nav-item nav-link active']);
-                    echo Html::a('Pesquisar', ['site/pesquisa'], ['class' => 'nav-item nav-link']);
+                    echo Html::a('Pesquisar', ['pesquisa/index'], ['class' => 'nav-item nav-link']);
 
                     if (Yii::$app->user->isGuest) {
                         echo Html::a('Alojamentos', ['alojamentos/index'], ['class' => 'nav-item nav-link']);

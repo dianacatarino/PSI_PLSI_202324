@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "fornecedores".
@@ -106,5 +107,23 @@ class Fornecedor extends \yii\db\ActiveRecord
     public function getReservas()
     {
         return $this->hasMany(Reserva::class, ['fornecedor_id' => 'id']);
+    }
+
+    public function search($params)
+    {
+        $query = self::find();
+
+        // Add conditions based on the search parameters
+        $query->andFilterWhere(['like', 'responsavel', $this->responsavel])
+            ->andFilterWhere(['like', 'tipo', $this->tipo])
+            ->andFilterWhere(['like', 'nome_alojamento', $this->nome_alojamento])
+            ->andFilterWhere(['like', 'localizacao_alojamento', $this->localizacao_alojamento])
+            ->andFilterWhere(['like', 'acomodacoes_alojamento', $this->acomodacoes_alojamento]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $dataProvider;
     }
 }

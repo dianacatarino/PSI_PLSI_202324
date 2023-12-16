@@ -18,28 +18,28 @@ $this->title = 'Comentários';
                 <table class="table comentarios-table">
                     <tbody>
                     <tr>
-                        <th scope="row">Data</th>
-                        <td><?= Html::encode($comentario->data_comentario) ?></td>
+                        <th scope="row">Alojamento</th>
+                        <td><?= Html::encode($comentario->fornecedor->nome_alojamento) ?></td>
                     </tr>
                     <tr>
-                        <th scope="row">Título</th>
-                        <td><?= Html::encode($comentario->titulo) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Descrição</th>
+                        <th scope="row">Comentário</th>
                         <td><?= Html::encode($comentario->descricao) ?></td>
                     </tr>
+                    <?php foreach ($avaliacoes as $avaliacao): ?>
+                        <tr>
+                            <th scope="row"> Avaliação </th>
+                            <td>
+                                <?php
+                                for ($i = 1; $i <= 5; $i++) {
+                                    echo ($i <= $avaliacao->classificacao) ? '★' : '☆';
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
-
-                <?php foreach ($avaliacoes as $avaliacao): ?>
-                        <p>
-                            <strong>Avaliação:</strong>
-                            <?= Html::encode($avaliacao->classificacao) ?>
-                        </p>
-                <?php endforeach; ?>
-
-                <?= Html::a('Detalhes', ['comentarios/show'], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Detalhes', ['comentarios/show', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     <?php endforeach; ?>

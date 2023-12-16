@@ -32,25 +32,12 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'actions' => ['index','login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
                     ],
                     [
                         'allow' => true,
                         'actions' => ['logout'],
                         'roles' => ['@'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'alojamentos', 'reservas', 'faturas', 'empresa', 'fornecedores', 'user'],
-                        'roles' => ['admin', 'funcionario', 'fornecedor'],
-                    ],
-                    [
-                        'allow' => false,
-                        'actions' => ['login','index', 'alojamentos', 'reservas', 'faturas', 'empresa', 'fornecedores', 'user'],
-                        'roles' => ['cliente'],
-                        'denyCallback' => function ($rule, $action) {
-                            throw new ForbiddenHttpException('Não tem permissões para aceder a esta página.');
-                        },
                     ],
                 ],
             ],
@@ -240,6 +227,6 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['login']);
     }
 }

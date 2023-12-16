@@ -23,10 +23,6 @@ $this->title = 'Gestão da Empresa';
 <?php $error = Yii::$app->session->getFlash('error');
 if ($error !== null) {
     echo '<div class="alert alert-danger">' . $error . '</div>';
-}
-$success = Yii::$app->session->getFlash('success');
-if ($success !== null) {
-    echo '<div class="alert alert-success">' . $success . '</div>';
 } ?>
 
 <section class="content">

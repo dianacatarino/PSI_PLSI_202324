@@ -22,56 +22,42 @@ $this->title = 'Lusitânia Travel';
         <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
                 <div class="bg-white shadow" style="padding: 35px;">
+
+                    <?php $form = ActiveForm::begin(['action' => ['pesquisa/search'], 'method' => 'get']); ?>
+
                     <div class="row g-2">
                         <div class="col-md-10">
                             <div class="row g-2">
                                 <div class="col-md-2">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="localizacao" placeholder="Localização">
-                                    </div>
+                                    <?= $form->field($searchModel, 'localizacao')->textInput(['placeholder' => 'Localização'])->label(false) ?>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="date" class="form-control" id="checkin" placeholder="Check-in">
-                                    </div>
+                                    <?= $form->field($searchModel, 'checkin')->textInput(['type' => 'date'])->label(false) ?>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <input type="date" class="form-control" id="checkout" placeholder="Check-out">
-                                    </div>
+                                    <?= $form->field($searchModel, 'checkout')->textInput(['type' => 'date'])->label(false) ?>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-select">
-                                        <option selected>Pessoas</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
+                                    <?= $form->field($searchModel, 'numeroPessoas')->dropDownList(
+                                        ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'],
+                                        ['prompt' => 'Pessoas']
+                                    )->label(false) ?>
                                 </div>
                                 <div class="col-md-2">
-                                    <select class="form-select">
-                                        <option selected>Quartos</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                    </select>
+                                    <?= $form->field($searchModel, 'numeroQuartos')->dropDownList(
+                                        ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'],
+                                        ['prompt' => 'Quartos']
+                                    )->label(false) ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-primary w-100">Procurar</button>
+                            <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary w-100']) ?>
                         </div>
                     </div>
+
+                    <?php ActiveForm::end(); ?>
+
                 </div>
             </div>
         </div>

@@ -43,9 +43,26 @@ $this->title = 'Detalhes da Reserva';
                     <td><?= Html::encode($reserva->valor) ?> €</td>
                 </tr>
 
+                <?php foreach ($reserva->linhasreservas as $linhareserva): ?>
+                    <tr>
+                        <th scope="row">Preço por noite</th>
+                        <td><?= Html::encode($linhareserva->subtotal) ?>€</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tipo de Quarto</th>
+                        <td><?= Html::encode($linhareserva->tipoquarto) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Numero de Noites</th>
+                        <td><?= Html::encode($linhareserva->numeronoites) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Numero de Camas</th>
+                        <td><?= Html::encode($linhareserva->numerocamas) ?></td>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>

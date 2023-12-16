@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Fornecedor;
 use console\controllers\RbacController;
+use frontend\models\PesquisaForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -79,12 +80,29 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new PesquisaForm();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // Obter todos os fornecedores
         $fornecedores = Fornecedor::find()->all();
 
-        return $this->render('index', [
-            'fornecedores' => $fornecedores,
-        ]);
+        // Verificar se há parâmetros de pesquisa
+        if ($searchModel->load(Yii::$app->request->queryParams) && $searchModel->validate()) {
+            // Se houver parâmetros de pesquisa, exibir os resultados da pesquisa
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'fornecedores' => $fornecedores,
+            ]);
+        } else {
+            // Se não houver parâmetros de pesquisa, exibir todos os fornecedores
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'fornecedores' => $fornecedores,
+            ]);
+        }
     }
+
 
     /**
      * Logs in a user.
@@ -173,7 +191,7 @@ class SiteController extends Controller
 
     public function actionPesquisa()
     {
-        return $this->render('pesquisa');
+        return $this->render('pesquisa/index');
     }
 
     /**
