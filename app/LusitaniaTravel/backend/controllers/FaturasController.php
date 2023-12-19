@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
+use backend\models\Fatura;
+use backend\models\Linhasfatura;
 use backend\models\Empresa;
-use common\models\Fatura;
-use common\models\Linhasfatura;
 use common\models\Reserva;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -18,35 +18,31 @@ class FaturasController extends \yii\web\Controller
         return $this->render('index', ['faturas' => $faturas]);
     }
 
-    public function actionCreate()
+    public function actionCreate2()
     {
         $fatura = new Fatura();
-        $linhafatura = new Linhasfatura();
-        $empresa = Empresa::findOne(1);
+
 
         if ($fatura->load(Yii::$app->request->post())) {
+
+            $reservaId = Yii::$app->request->post('Fatura')['reserva_id'];
+            $fatura->reserva_id = $reservaId;
+
             if ($fatura->save()) {
                 Yii::$app->session->setFlash('success', 'Fatura criada com sucesso.');
-                return $this->redirect(['index']);
+                return $this->redirect(['faturas/show', 'id' => $fatura->id]);
             } else {
-                Yii::error('Error saving fatura to database.');
-                Yii::error($fatura->errors);
+                Yii::$app->session->setFlash('error', 'Erro ao criar a fatura.');
             }
         }
 
-        return $this->render('create', [
-            'fatura' => $fatura,
-            'empresa' => $empresa,
-            'linhafatura' => $linhafatura,
-            'selectClientes' => $fatura->selectClientes(),
-            'selectReservas' => $fatura->selectReservas(),
-        ]);
+        return $this->render('create2', ['fatura' => $fatura]);
     }
 
 
-    public function actionEdit($id)
+    public function actionEdit($reserva_id)
     {
-        $fatura = Fatura::findOne($id);
+        $fatura = Fatura::findOne($reserva_id);
 
         // Lógica para editar uma reserva (pode envolver o uso de um formulário)
 
@@ -61,23 +57,29 @@ class FaturasController extends \yii\web\Controller
 
     public function actionShow($id)
     {
-        $fatura = Reserva::findOne($id);
+        $fatura = new Fatura();
+        $id = Yii::$app->request->post('Fatura')['reserva_id'];
+        $reserva = Reserva::findOne($id);
 
-        if (!$fatura) {
-            throw new NotFoundHttpException('A fatura não foi encontrada.');
+        if ($reserva) {
+            $fatura->reserva_id = $id;
+
+        } else {
+            Yii::$app->session->setFlash('error', 'Erro ao encontrar a resserva.');
         }
 
         return $this->render('show', ['fatura' => $fatura]);
     }
 
+
     public function actionDelete($id)
     {
         $fatura = Fatura::findOne($id);
 
-        // Lógica para excluir uma reserva
+        // Lógica para excluir uma fatura
 
         $fatura->delete();
-        Yii::$app->session->setFlash('success', 'Fatura excluída com sucesso.');
+        Yii::$app->session->setFlash('success', 'Fatura apagada com sucesso.');
 
         return $this->redirect(['index']);
     }
