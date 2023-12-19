@@ -17,16 +17,19 @@ $this->title = 'Criar nova Fatura';
     </div>
     <?php $form = ActiveForm::begin(['action' => ['faturas/show'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
-        <div class="form-group">
-            <?= $form->field($fatura, 'reserva_id')->dropDownList(
+            <div class="col-md-8">
+                <?= $form->field($reservaModel, 'nome_alojamento')->textInput(['placeholder' => 'Pesquise Fornecedor, Cliente e Referência de reserva'])->label(false) ?>
+            </div>
+
+        <!--<div class="form-group">
+            < ?= $form->field($fatura, 'reserva_id')->dropDownList(
                 Reserva::find()
                     ->select(['id']) // Ajuste para os campos corretos
                     ->indexBy('id')
                     ->column(),
                 ['prompt' => 'Selecione uma reserva', 'class' => 'form-control']
             )->label('Referência da Reserva') ?>
-
-        </div>
+        </div>-->
     </div>
     <div class="card-footer">
         <div class="row">

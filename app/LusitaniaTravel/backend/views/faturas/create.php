@@ -62,10 +62,10 @@ $this->title = 'Emitir Fatura';
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
                             <?php foreach ($faturas as $fatura): ?>
-                            <b>Fatura Id</b><br>
-                            <br>
-                            <b><?= Html::encode($fatura->id) ?></b><br>
-                            <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
+                                <b>Fatura Id</b><br>
+                                <br>
+                                <b><?= Html::encode($fatura->id) ?></b><br>
+                                <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
                             <?php endforeach; ?>
                         </div>
                         <!-- /.col -->
@@ -116,18 +116,18 @@ $this->title = 'Emitir Fatura';
                             <div class="table-responsive">
                                 <table class="table">
                                     <?php foreach ($faturas as $fatura): ?>
-                                    <tr>
-                                        <th>Total S/ Iva:</th>
-                                        <td><?= Html::encode($fatura->totalsi) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Iva:</th>
-                                        <td><?= Html::encode($fatura->iva) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total:</th>
-                                        <td><?= Html::encode($fatura->totalf) ?></td>
-                                    </tr>
+                                        <tr>
+                                            <th>Total S/ Iva:</th>
+                                            <td><?= Html::encode($fatura->totalsi) ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Iva:</th>
+                                            <td><?= Html::encode($fatura->iva) ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total:</th>
+                                            <td><?= Html::encode($fatura->totalf) ?></td>
+                                        </tr>
                                     <?php endforeach; ?>
                                 </table>
                             </div>
@@ -163,4 +163,3 @@ $this->title = 'Emitir Fatura';
 </section>
 <!-- /.content -->
 <!-- /.content-wrapper -->
-
