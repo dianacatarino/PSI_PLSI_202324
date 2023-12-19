@@ -51,22 +51,18 @@ $this->title = 'Emitir Fatura';
                         <div class="col-sm-4 invoice-col">
                             To
                             <address>
-                                <label for="cliente_id">Selecione o Cliente:</label>
-                                <?= Html::dropDownList('cliente_id', null, $selectClientes, ['class' => 'form-control', 'prompt' => 'Selecione um cliente']) ?>
-                                <label for="reserva_id">Selecione a Reserva:</label>
-                                <?php foreach ($faturas as $fatura): ?>
-                                    <?= Html::dropDownList('reserva_id', null, $selectReservas, ['class' => 'form-control', 'prompt' => 'Selecione uma reserva']) ?>
-                                <?php endforeach; ?>
+                                <strong>Cliente</strong>
+                                <a href="#" class="btn btn-info" role="button">Selecionar Cliente</a>
                             </address>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            <?php foreach ($faturas as $fatura): ?>
-                            <b>Fatura Id</b><br>
+                           <!-- ?php foreach ($faturas as $fatura): ? -->
+                            <b>Fatura #007612</b><br>
                             <br>
-                            <b><?= Html::encode($fatura->id) ?></b><br>
+                            <b><!-- = Html::encode($fatura->id) ?--></b><br>
                             <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
-                            <?php endforeach; ?>
+                            <!-- ?php endforeach; ?-->
                         </div>
                         <!-- /.col -->
                     </div>
@@ -87,7 +83,11 @@ $this->title = 'Emitir Fatura';
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <?php foreach ($linhasfaturas as $linhasfatura): ?>
+                                    <?php
+                                    if($linhasfaturas == null){
+                                        return ;
+                                    }
+                                    foreach ($linhasfaturas as $linhasfatura): ?>
                                         <th><?= Html::encode($linhasfatura->id) ?></th>
                                         <th><?= Html::encode($linhasfatura->quantidade) ?></th>
                                         <th><?= Html::encode($linhasfatura->precounitario) ?></th>
@@ -115,18 +115,18 @@ $this->title = 'Emitir Fatura';
                         <div class="col-6">
                             <div class="table-responsive">
                                 <table class="table">
-                                    <?php foreach ($faturas as $fatura): ?>
+                                    <?php foreach ($linhasfaturas as $linhasfatura): ?>
                                     <tr>
-                                        <th>Total S/ Iva:</th>
-                                        <td><?= Html::encode($fatura->totalsi) ?></td>
+                                        <th>Iva Total:</th>
+                                        <td><?= Html::encode($linhasfatura->subtotal) ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Iva:</th>
-                                        <td><?= Html::encode($fatura->iva) ?></td>
+                                        <th>Valor Total:</th>
+                                        <td><?= Html::encode($linhasfatura->subtotal) ?></td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td><?= Html::encode($fatura->totalf) ?></td>
+                                        <td><?= Html::encode($linhasfatura->subtotal) ?></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </table>
