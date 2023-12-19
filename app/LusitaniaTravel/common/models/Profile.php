@@ -85,4 +85,9 @@ class Profile extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::class, ['profile_id' => 'id']);
     }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
 }

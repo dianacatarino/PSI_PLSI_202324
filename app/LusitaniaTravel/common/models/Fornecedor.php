@@ -109,21 +109,20 @@ class Fornecedor extends \yii\db\ActiveRecord
         return $this->hasMany(Reserva::class, ['fornecedor_id' => 'id']);
     }
 
-    public function search($params)
+    public function getMediaClassificacoes()
     {
-        $query = self::find();
+        $avaliacoes = $this->avaliacoes;
 
-        // Add conditions based on the search parameters
-        $query->andFilterWhere(['like', 'responsavel', $this->responsavel])
-            ->andFilterWhere(['like', 'tipo', $this->tipo])
-            ->andFilterWhere(['like', 'nome_alojamento', $this->nome_alojamento])
-            ->andFilterWhere(['like', 'localizacao_alojamento', $this->localizacao_alojamento])
-            ->andFilterWhere(['like', 'acomodacoes_alojamento', $this->acomodacoes_alojamento]);
+        if (empty($avaliacoes)) {
+            return null; // ou qualquer valor padrão que você preferir para o caso de não haver avaliações
+        }
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $somaClassificacoes = 0;
 
-        return $dataProvider;
+        foreach ($avaliacoes as $avaliacao) {
+            $somaClassificacoes += $avaliacao->classificacao;
+        }
+
+        return $somaClassificacoes / count($avaliacoes);
     }
 }

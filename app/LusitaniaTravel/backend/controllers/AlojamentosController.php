@@ -31,11 +31,17 @@ class AlojamentosController extends \yii\web\Controller
             $filename = $imagem->baseName . '.' . $imagem->extension;
             $imagem->saveAs($uploadPath . $filename);
 
-            // Alteração aqui: armazenar o caminho relativo completo
-            $caminhoRelativo = '/LusitaniaTravel/common/public/img/' . $filename;
+            // Check if Fornecedor model has a valid primary key
+            if ($model->primaryKey) {
+                // Alteração aqui: armazenar o caminho relativo completo
+                $caminhoRelativo = '/LusitaniaTravel/common/public/img/' . $filename;
 
-            $imagemModel = new Imagem(['filename' => $caminhoRelativo]);
-            $model->link('imagens', $imagemModel);
+                $imagemModel = new Imagem(['filename' => $caminhoRelativo]);
+                $model->link('imagens', $imagemModel);
+            } else {
+                Yii::warning("Fornecedor model does not have a valid primary key.");
+                // Handle the case where Fornecedor model does not have a valid primary key
+            }
         }
     }
 
@@ -52,12 +58,10 @@ class AlojamentosController extends \yii\web\Controller
                 $fornecedor->acomodacoes_alojamento = implode(';', $fornecedor->acomodacoes_alojamento);
             }
 
-            $this->enviarImagens($fornecedor);
-
-
             if ($fornecedor->save()) {
+                $this->enviarImagens($fornecedor);
                 // O modelo foi salvo com sucesso
-                return $this->redirect(['view', 'id' => $fornecedor->id]);
+                return $this->redirect(['alojamentos/index']);
             }
         }
 

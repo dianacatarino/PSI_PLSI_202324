@@ -2,41 +2,37 @@
 
 namespace frontend\controllers;
 
-use common\models\Confirmacao;
-use common\models\Reserva;
-use frontend\models\PesquisaForm;
 use Yii;
+use frontend\models\FornecedorSearch;
 use yii\web\Controller;
-use common\models\Fornecedor;
-use yii\data\ActiveDataProvider;
 
 class PesquisaController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new PesquisaForm();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $fornecedorModel = new FornecedorSearch();
+        $dataProvider = null;
+
+        if ($fornecedorModel->load(Yii::$app->request->post()) && $fornecedorModel->validate()) {
+            // Realizar a pesquisa no modelo FornecedorSearch
+            $localizacao = $fornecedorModel->localizacao_alojamento;
+            $dataProvider = $fornecedorModel->search(['FornecedorSearch' => ['localizacao_alojamento' => $localizacao]]);
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'fornecedorModel' => $fornecedorModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionPesquisar()
+    public function actionResultados($localizacao_alojamento)
     {
-        $searchModel = new PesquisaForm();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $fornecedorModel = new FornecedorSearch();
+        $dataProvider = $fornecedorModel->search(['FornecedorSearch' => ['localizacao_alojamento' => $localizacao_alojamento]]);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
+        return $this->render('resultados', [
+            'fornecedorModel' => $fornecedorModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
-
-    public function actionResultados()
-    {
-
     }
 }
-

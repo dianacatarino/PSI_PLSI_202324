@@ -6,6 +6,7 @@ use app\models\PasswordResetForm;
 use common\models\Confirmacao;
 use common\models\Fornecedor;
 use common\models\LoginForm;
+use common\models\Profile;
 use common\models\Reserva;
 use common\models\SignupForm;
 use common\models\User;
@@ -32,12 +33,23 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index','login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'roles' => ['?', '@'], // Permitir acesso a todos (usuários não autenticados e autenticados)
                     ],
                     [
                         'allow' => true,
                         'actions' => ['logout'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['login'],
+                        'roles' => ['cliente'],
+                        'denyCallback' => function ($rule, $action) {
+                            Yii::$app->session->setFlash('error', 'Clientes não têm permissão para acessar o backend.');
+                            Yii::$app->user->logout();
+                            return $this->goHome();
+                        },
                     ],
                 ],
             ],
@@ -56,7 +68,7 @@ class SiteController extends Controller
         ];
     }
 
-    private function configureLayout()
+    /*private function configureLayout()
     {
         if (!Yii::$app->user->isGuest) {
             $userRole = Yii::$app->user->identity->profile->role;
@@ -76,7 +88,7 @@ class SiteController extends Controller
                     break;
             }
         }
-    }
+    }*/
 
 
     /**
@@ -86,7 +98,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->configureLayout();
 
         // Count de novos alojamentos
         $novosAlojamentos = Fornecedor::find()->count();
@@ -127,7 +138,17 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            // Obter o perfil associado ao usuário
+            $profile = Profile::findOne(['user_id' => Yii::$app->user->id]); // Substitua 'user_id' pelo campo correto de relacionamento
+
+            // Verificar se o usuário tem uma das roles permitidas (admin, funcionario, fornecedor) com base no perfil
+            if ($profile && in_array($profile->getRole(), ['admin', 'funcionario', 'fornecedor'])) {
+                return $this->goBack();
+            } else {
+                Yii::$app->user->logout(); // Logout se o usuário não tiver permissão
+                Yii::$app->session->setFlash('error', 'Você não tem permissão para fazer login.');
+                return $this->redirect(['site/login']);
+            }
         }
 
         if ($model->hasErrors() && $model->getFirstError('password') !== null) {

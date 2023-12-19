@@ -16,7 +16,7 @@ $this->title = 'Gestão de Faturas';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Criar nova Fatura', ['faturas/create2'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Criar nova Fatura', ['faturas/create'], ['class' => 'btn btn-info']) ?>
     </p>
 </div>
 
@@ -45,9 +45,9 @@ $this->title = 'Gestão de Faturas';
                         <td><?= Html::encode($fatura->iva) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
-                                <?= Html::a('<i class="fas fa-folder"></i>', ['faturas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['faturas/edit', 'id' => $reserva->id], ['class' => 'btn btn-info btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['faturas/delete', 'id' => $reserva->id], [
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['reservas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['reservas/edit', 'id' => $reserva->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['reservas/delete', 'id' => $reserva->id], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',

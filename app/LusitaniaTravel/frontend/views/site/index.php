@@ -78,7 +78,14 @@ $this->title = 'Lusitânia Travel';
                                         $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
 
                                         if ($imagem->filename) {
-                                            echo Html::img($imagem->filename, ['class' => 'img-thumbnail']);
+                                            echo '<style>';
+                                            echo '.custom-image-class {';
+                                            echo '    width: 500px;';
+                                            echo '    height: 250px;';
+                                            echo '    object-fit: cover; /* Ensure the aspect ratio is maintained and the image covers the entire container */';
+                                            echo '}';
+                                            echo '</style>';
+                                            echo Html::img($imagem->filename, ['class' => 'img-thumbnail custom-image-class']);
                                         } else {
                                             echo 'Imagem não encontrada';
                                         }
@@ -125,14 +132,20 @@ $this->title = 'Lusitânia Travel';
                                             <?php endif; ?>
                                         </h5>
                                         <div class="ps-2">
-                                            <!-- <div class="ps-2">
-                                            <?php
-                                            // Exemplo de como exibir estrelas com base na classificação do alojamento
-                                            // for ($i = 0; $i < $alojamento->classificacao; $i++) {
-                                            //     echo '<small class="fa fa-star text-primary"></small>';
-                                            // }
-                                            ?>
-                                            </div> -->
+                                            <div class="ps-2">
+                                                <?php
+                                                $mediaClassificacoes = $fornecedor->getMediaClassificacoes();
+
+                                                if ($mediaClassificacoes !== null) {
+                                                    // Exibindo estrelas com base na média das classificações
+                                                    for ($i = 0; $i < $mediaClassificacoes; $i++) {
+                                                        echo '<small class="fa fa-star text-primary"></small>';
+                                                    }
+                                                } else {
+                                                    echo 'Sem avaliações';
+                                                }
+                                                ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="d-flex mb-3">

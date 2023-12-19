@@ -38,4 +38,6 @@ $this->title = 'Detalhes da Fatura';
             </table>
         </div>
     </div>
+
+    <div style="height: 20px;"></div>
 </div>

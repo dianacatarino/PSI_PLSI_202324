@@ -43,7 +43,14 @@ $this->title = 'Alojamentos';
                                     $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
 
                                     if ($imagem->filename) {
-                                        echo Html::img($imagem->filename, ['class' => 'img-thumbnail']);
+                                        echo '<style>';
+                                        echo '.custom-image-class {';
+                                        echo '    width: 500px;';
+                                        echo '    height: 250px;';
+                                        echo '    object-fit: cover; /* Ensure the aspect ratio is maintained and the image covers the entire container */';
+                                        echo '}';
+                                        echo '</style>';
+                                        echo Html::img($imagem->filename, ['class' => 'img-thumbnail custom-image-class']);
                                     } else {
                                         echo 'Imagem não encontrada';
                                     }
