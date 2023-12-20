@@ -40,7 +40,7 @@ CREATE TABLE `reservas` (
   CONSTRAINT `fk_reservas_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_reservas_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_reservas_funcionario` FOREIGN KEY (`funcionario_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES (1,'Online','2023-12-05','2023-12-08',1,2,267.00,44,48,1),(5,'Online','2023-12-06','2023-12-12',2,4,350.00,46,54,2),(6,'Online','2023-12-25','2023-12-28',1,4,140.00,47,49,8),(7,'Presencial','2023-12-10','2023-12-17',3,6,700.00,56,49,9);
+INSERT INTO `reservas` VALUES (1,'Presencial','2023-12-05','2023-12-08',1,2,267.00,44,48,1),(5,'Presencial','2023-12-06','2023-12-12',2,4,350.00,46,54,2),(6,'Presencial','2023-12-25','2023-12-28',1,4,140.00,47,49,8),(7,'Presencial','2023-12-21','2023-12-28',3,6,700.00,56,49,9),(8,'Presencial','2023-12-14','2023-12-18',3,5,100.00,46,49,4);
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-11 17:05:44
+-- Dump completed on 2023-12-20 20:30:26

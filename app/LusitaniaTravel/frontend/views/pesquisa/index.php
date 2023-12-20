@@ -43,8 +43,11 @@ $this->title = 'Pesquisa';
                         'itemView' => '_result',
                         'summary' => '',
                         'options' => ['class' => 'list-view'],
-                        'itemOptions' => ['class' => 'mb-4 card-item'], // Adicione a classe mb-4 aqui
-                        'layout' => '{items}{pager}',
+                        'itemOptions' => [
+                            'class' => 'col-md-4', // Certifique-se de ajustar a classe conforme necessário
+                            'style' => 'margin-bottom: 15px;', // Adicione margem inferior se desejar
+                        ],
+                        'layout' => '<div class="row">{items}</div>{pager}',
                     ]) ?>
                 </div>
             </div>

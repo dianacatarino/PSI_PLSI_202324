@@ -5,11 +5,43 @@ namespace backend\controllers;
 use common\models\Fornecedor;
 use common\models\Imagem;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class AlojamentosController extends \yii\web\Controller
 {
+    /*public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'roles' => ['?', '@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['login'],
+                        'roles' => ['cliente'],
+                        'denyCallback' => function ($rule, $action) {
+                            Yii::$app->session->setFlash('error', 'Clientes não têm permissão para acessar o backend.');
+                            Yii::$app->user->logout();
+                            return $this->goHome();
+                        },
+                    ],
+                ],
+            ],
+        ];
+    }*/
+
     public function actionIndex()
     {
         $fornecedores = Fornecedor::find()->with('imagens')->all();
@@ -67,35 +99,8 @@ class AlojamentosController extends \yii\web\Controller
 
         return $this->render('create', [
             'fornecedor' => $fornecedor,
+            'selectFornecedores' => $fornecedor->selectFornecedores()
         ]);
-    }
-
-    public function actionRemoverImagem($id, $key)
-    {
-        $fornecedor = Fornecedor::findOne($id);
-
-        if (!$fornecedor) {
-            throw new NotFoundHttpException('O alojamento não foi encontrado.');
-        }
-
-        // Remova a imagem pelo índice
-        if (isset($fornecedor->imagens[$key])) {
-            $imagem = $fornecedor->imagens[$key];
-
-            // Remova o arquivo físico usando o caminho relativo
-            $filePath = Yii::getAlias('@common/public' . $imagem->filename);
-
-            if (file_exists($filePath)) {
-                unlink($filePath);
-
-                // Remova a referência no banco de dados
-                $imagem->delete();
-            } else {
-                Yii::warning("O arquivo não foi encontrado: $filePath");
-            }
-        }
-
-        return $this->redirect(['alojamentos/edit', 'id' => $fornecedor->id]);
     }
 
     public function actionEdit($id)
@@ -106,13 +111,18 @@ class AlojamentosController extends \yii\web\Controller
             throw new NotFoundHttpException('O alojamento não foi encontrado.');
         }
 
+        $responsaveis = Fornecedor::find()->select(['responsavel'])->distinct()->column();
+        $tipos = Fornecedor::find()->select(['tipo'])->distinct()->column();
+
         if ($fornecedor->load(Yii::$app->request->post())) {
             $this->enviarImagens($fornecedor);
-            $this->removerImagens($fornecedor);
-
 
             if (!empty($fornecedor->acomodacoes_alojamento)) {
                 $fornecedor->acomodacoes_alojamento = implode(';', $fornecedor->acomodacoes_alojamento);
+            }
+
+            if (!empty($fornecedor->tipoquartos)) {
+                $fornecedor->tipoquartos = implode(';', $fornecedor->tipoquartos);
             }
 
             if ($fornecedor->save()) {
@@ -122,6 +132,9 @@ class AlojamentosController extends \yii\web\Controller
 
         return $this->render('edit', [
             'fornecedor' => $fornecedor,
+            'selectFornecedores' => $fornecedor->selectFornecedores(),
+            'responsaveis' => $responsaveis,
+            'tipos' => $tipos,
         ]);
     }
 

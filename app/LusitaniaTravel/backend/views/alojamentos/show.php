@@ -70,6 +70,30 @@ $this->title = 'Detalhes do Alojamento';
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Tipo de Quartos</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->tipoquartos) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Nº Quartos</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->numeroquartos) ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Preço por Noite</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($fornecedor->precopornoite) ?></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">

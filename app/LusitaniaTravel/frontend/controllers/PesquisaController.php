@@ -24,15 +24,4 @@ class PesquisaController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
-    public function actionResultados($localizacao_alojamento)
-    {
-        $fornecedorModel = new FornecedorSearch();
-        $dataProvider = $fornecedorModel->search(['FornecedorSearch' => ['localizacao_alojamento' => $localizacao_alojamento]]);
-
-        return $this->render('resultados', [
-            'fornecedorModel' => $fornecedorModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 }

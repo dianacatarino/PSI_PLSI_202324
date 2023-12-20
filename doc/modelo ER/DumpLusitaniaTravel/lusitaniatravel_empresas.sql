@@ -40,7 +40,7 @@ CREATE TABLE `empresas` (
 
 LOCK TABLES `empresas` WRITE;
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
-INSERT INTO `empresas` VALUES (2,'Lusitânia Travel',1000000.00,'lusitaniatravel@email.com','Leiria','123456789','Rua da Lusitania Travel');
+INSERT INTO `empresas` VALUES (1,'Lusitânia Travel',1000000.00,'lusitaniatravel@email.com','Leiria','123456789','Rua da Lusitania Travel');
 /*!40000 ALTER TABLE `empresas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-11 17:05:44
+-- Dump completed on 2023-12-20 20:30:24

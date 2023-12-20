@@ -23,7 +23,7 @@ $this->title = 'Conta';
                 // Exibir informações obtidas
                 echo '<h2>' . Html::label('Username:')  . ' ' . Html::encode($userModel->username) . '</h2>';
                 echo '<p>' . Html::label('Nome:') . ' ' . Html::encode($profileModel->name) . '</p>';
-                echo '<p>' . Html::label('E-mail:') . ' ' . Html::encode($userModel->email) . '</p>';
+                echo '<p>' . Html::label('Email:') . ' ' . Html::encode($userModel->email) . '</p>';
                 echo '<p>' . Html::label('Telefone:') . ' ' . Html::encode($profileModel->mobile) . '</p>';
                 echo '<p>' . Html::label('Morada:') . ' ' . Html::encode($profileModel->street) . '</p>';
                 echo '<p>' . Html::label('Localidade:') . ' ' . Html::encode($profileModel->locale) . '</p>';
@@ -33,13 +33,13 @@ $this->title = 'Conta';
         </div>
 
         <div class="conta-links">
-            <button onclick="window.location.href='index.php?r=comentarios/index'" class="btn btn-primary">
+            <button onclick="window.location.href='index.php?r=comentarios%2Findex'" class="btn btn-primary">
                 <i class="fas fa-comments"></i> Os Meus Comentários
             </button>
-            <button onclick="window.location.href='index.php?r=user/definicoes'" class="btn btn-primary">
+            <button onclick="window.location.href='index.php?r=user%2Fdefinicoes'" class="btn btn-primary">
                 <i class="fas fa-cog"></i> Definições
             </button>
-            <button onclick="window.location.href='index.php?r=faturas/index'" class="btn btn-primary">
+            <button onclick="window.location.href='index.php?r=faturas%2Findex'" class="btn btn-primary">
                 <i class="fas fa-file-invoice-dollar"></i> As Minhas Faturas
             </button>
         </div>

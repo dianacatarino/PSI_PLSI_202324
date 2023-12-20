@@ -9,6 +9,7 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -84,23 +85,19 @@ class SiteController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         // Obter todos os fornecedores
-        $fornecedores = Fornecedor::find()->all();
+        $fornecedores = new ActiveDataProvider([
+            'query' => Fornecedor::find(),
+            'pagination' => [
+                'pageSize' => 10, // Ajuste o tamanho da página conforme necessário
+            ],
+        ]);
 
-        // Verificar se há parâmetros de pesquisa
-        if ($searchModel->load(Yii::$app->request->queryParams) && $searchModel->validate()) {
-            // Se houver parâmetros de pesquisa, exibir os resultados da pesquisa
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'fornecedores' => $fornecedores,
-            ]);
-        } else {
-            // Se não houver parâmetros de pesquisa, exibir todos os fornecedores
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'fornecedores' => $fornecedores,
-            ]);
-        }
+        // Renderizar a visão com o modelo de pesquisa, provedor de dados e fornecedores
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'fornecedores' => $fornecedores, // Alterando o nome da variável
+        ]);
     }
 
 

@@ -29,7 +29,7 @@ CREATE TABLE `imagens` (
   PRIMARY KEY (`id`),
   KEY `fk_imagens_fornecedor` (`fornecedor_id`),
   CONSTRAINT `fk_imagens_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `imagens` (
 
 LOCK TABLES `imagens` WRITE;
 /*!40000 ALTER TABLE `imagens` DISABLE KEYS */;
-INSERT INTO `imagens` VALUES (2,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',1),(6,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(7,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(8,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',2),(9,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',9),(11,'/LusitaniaTravel/common/public/img/hotel-928937_640.jpg',3),(12,'/LusitaniaTravel/common/public/img/hotel-room-1505455_640.jpg',4);
+INSERT INTO `imagens` VALUES (2,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',1),(6,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(7,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(8,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',2),(9,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',9),(11,'/LusitaniaTravel/common/public/img/hotel-928937_640.jpg',3),(12,'/LusitaniaTravel/common/public/img/hotel-room-1505455_640.jpg',4),(13,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',11),(14,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',12),(15,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',1);
 /*!40000 ALTER TABLE `imagens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-11 17:05:44
+-- Dump completed on 2023-12-20 20:30:25

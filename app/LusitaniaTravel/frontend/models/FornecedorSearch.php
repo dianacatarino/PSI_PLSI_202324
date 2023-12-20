@@ -18,7 +18,8 @@ class FornecedorSearch extends Fornecedor
     {
         return [
             [['id'], 'integer'],
-            [['responsavel', 'tipo', 'nome_alojamento', 'localizacao_alojamento', 'acomodacoes_alojamento'], 'safe'],
+            [['responsavel', 'tipo', 'nome_alojamento', 'localizacao_alojamento', 'acomodacoes_alojamento','tipoquartos','numeroquartos',
+                'precopornoite'], 'safe'],
         ];
     }
 

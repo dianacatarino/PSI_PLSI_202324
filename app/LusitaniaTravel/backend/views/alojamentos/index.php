@@ -21,7 +21,7 @@ $this->title = 'Gestão dos Alojamentos';
 </div>
 
 <section class="content">
-    <div class="card">
+    <div class="card" >
         <div class="card-header">
             <h3 class="card-title">Alojamentos</h3>
         </div>
@@ -29,31 +29,35 @@ $this->title = 'Gestão dos Alojamentos';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 1%">Id</th>
-                    <th style="width: 5%">Responsável</th>
-                    <th style="width: 5%">Tipo</th>
-                    <th style="width: 5%">Nome</th>
-                    <th style="width: 5%">Localização</th>
-                    <th style="width: 10%">Acomodações</th>
-                    <th style="width: 5%">Imagem</th>
+                    <th style="width: 1%">Nome</th>
+                    <th style="width: 1%">Responsável</th>
+                    <th style="width: 1%">Tipo</th>
+                    <th style="width: 1%">Localização</th>
+                    <th style="width: 1%">Acomodações</th>
+                    <th style="width: 1%">Tipos Quartos</th>
+                    <th style="width: 1%">Nº Quartos</th>
+                    <th style="width: 1%">Preço p/noite</th>
+                    <th style="width: 1%">Imagem</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($fornecedores as $fornecedor): ?>
                     <tr>
-                        <td><?= $fornecedor->id ?></td>
+                        <td><?= Html::encode($fornecedor->nome_alojamento) ?></td>
                         <td><?= Html::encode($fornecedor->responsavel) ?></td>
                         <td><?= Html::encode($fornecedor->tipo) ?></td>
-                        <td><?= Html::encode($fornecedor->nome_alojamento) ?></td>
                         <td><?= Html::encode($fornecedor->localizacao_alojamento) ?></td>
                         <td><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></td>
+                        <td><?= Html::encode($fornecedor->tipoquartos) ?></td>
+                        <td><?= Html::encode($fornecedor->numeroquartos) ?></td>
+                        <td><?= Html::encode($fornecedor->precopornoite) ?>€</td>
                         <td>
                             <?php
                             $imagens = $fornecedor->imagens;
                             if (!empty($imagens)) {
                                 $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
-                                echo Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:100px;']);
+                                echo Html::img($imagem->filename, ['class' => 'img-thumbnail', 'style' => 'max-width:60px;']);
                             }
                             ?>
                         </td>

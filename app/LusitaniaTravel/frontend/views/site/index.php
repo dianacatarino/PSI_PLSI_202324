@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\widgets\ListView;
 
 $this->title = 'Lusitânia Travel';
 ?>
@@ -23,13 +24,13 @@ $this->title = 'Lusitânia Travel';
             <div class="container">
                 <div class="bg-white shadow" style="padding: 35px;">
 
-                    <?php $form = ActiveForm::begin(['action' => ['pesquisa/search'], 'method' => 'get']); ?>
+                    <?php $form = ActiveForm::begin(); ?>
 
                     <div class="row g-2">
                         <div class="col-md-10">
                             <div class="row g-2">
                                 <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'localizacao')->textInput(['placeholder' => 'Localização'])->label(false) ?>
+                                    <?= $form->field($searchModel, 'localizacao_alojamento')->textInput(['placeholder' => 'Localização'])->label(false) ?>
                                 </div>
                                 <div class="col-md-3">
                                     <?= $form->field($searchModel, 'checkin')->textInput(['type' => 'date'])->label(false) ?>
@@ -38,13 +39,13 @@ $this->title = 'Lusitânia Travel';
                                     <?= $form->field($searchModel, 'checkout')->textInput(['type' => 'date'])->label(false) ?>
                                 </div>
                                 <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'numeroPessoas')->dropDownList(
+                                    <?= $form->field($searchModel, 'numeroclientes')->dropDownList(
                                         ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'],
                                         ['prompt' => 'Pessoas']
                                     )->label(false) ?>
                                 </div>
                                 <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'numeroQuartos')->dropDownList(
+                                    <?= $form->field($searchModel, 'numeroquartos')->dropDownList(
                                         ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'],
                                         ['prompt' => 'Quartos']
                                     )->label(false) ?>
@@ -63,163 +64,36 @@ $this->title = 'Lusitânia Travel';
         </div>
         <!-- Booking End -->
 
-        <!-- Room Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-4">
-                    <?php foreach ($fornecedores as $fornecedor): ?>
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="room-item shadow rounded overflow-hidden">
-                                <div class="position-relative">
-                                    <?php
-                                    $imagens = $fornecedor->imagens;
+        <div style="height: 20px;"></div>
 
-                                    if (!empty($imagens)) {
-                                        $imagem = $imagens[0]; // Ajuste conforme necessário, dependendo da lógica que você deseja aplicar
-
-                                        if ($imagem->filename) {
-                                            echo '<style>';
-                                            echo '.custom-image-class {';
-                                            echo '    width: 500px;';
-                                            echo '    height: 250px;';
-                                            echo '    object-fit: cover; /* Ensure the aspect ratio is maintained and the image covers the entire container */';
-                                            echo '}';
-                                            echo '</style>';
-                                            echo Html::img($imagem->filename, ['class' => 'img-thumbnail custom-image-class']);
-                                        } else {
-                                            echo 'Imagem não encontrada';
-                                        }
-                                    } else {
-                                        echo 'Nenhuma imagem disponível';
-                                    }
-                                    ?>
-                                    <?php foreach ($fornecedor->reservas as $reserva) {
-                                        foreach ($reserva->linhasreservas as $linha):
-                                            $formattedValue = Yii::$app->formatter->asCurrency($linha->subtotal, 'EUR');
-
-                                            echo '<small class="position-absolute start-0 top-100 translate-middle-y bg-primary text-white rounded py-1 px-3 ms-4">';
-                                            echo $formattedValue . ' por noite';
-                                            echo '</small>';
-                                    endforeach;
-                                    }
-                                    ?>
-                                </div>
-                                <div class="p-4 mt-2">
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <h5 class="mb-0">
-                                            <?= Html::encode($fornecedor->nome_alojamento) ?>
-                                            <?php if (!Yii::$app->user->isGuest): ?>
-                                                <?php
-                                                // Obtém o perfil do usuário
-                                                $profile = Yii::$app->user->identity->profile;
-
-                                                // Verifica se a coluna favoritos está vazia ou nula e atribui um array vazio se for o caso
-                                                $favoritos = $profile->favorites ? json_decode($profile->favorites, true) : [];
-
-                                                // Verifica se o fornecedor atual está nos favoritos
-                                                $isFavorite = in_array($fornecedor->id, $favoritos);
-
-                                                // Exibe o ícone de favorito com base no status
-                                                $iconClass = $isFavorite ? 'fas fa-heart text-danger' : 'far fa-heart';
-
-                                                // URL para adicionar ou remover favorito
-                                                $addAction = Url::to(['favoritos/adicionar', 'fornecedorId' => $fornecedor->id]);
-                                                $removeAction = Url::to(['favoritos/remover', 'fornecedorId' => $fornecedor->id]);
-                                                ?>
-                                                <a href="<?= $isFavorite ? $removeAction : $addAction ?>" class="btn btn-link">
-                                                    <i class="<?= $iconClass ?>"></i>
-                                                </a>
-                                            <?php endif; ?>
-                                        </h5>
-                                        <div class="ps-2">
-                                            <div class="ps-2">
-                                                <?php
-                                                $mediaClassificacoes = $fornecedor->getMediaClassificacoes();
-
-                                                if ($mediaClassificacoes !== null) {
-                                                    // Exibindo estrelas com base na média das classificações
-                                                    for ($i = 0; $i < $mediaClassificacoes; $i++) {
-                                                        echo '<small class="fa fa-star text-primary"></small>';
-                                                    }
-                                                } else {
-                                                    echo 'Sem avaliações';
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex mb-3">
-                                        <?php
-                                        $acomodacoes = $fornecedor->acomodacoes_alojamento; // Supondo que você tenha essa propriedade no modelo de alojamento
-
-                                        // Verificar o tipo de cama
-                                        $tipoDeCama = '';
-
-                                        switch (true) {
-                                            case (strpos($acomodacoes, 'Cama de Casal') !== false):
-                                                $tipoDeCama = '<i class="fa fa-bed text-primary me-2"></i> Cama de Casal';
-                                                break;
-                                            case (strpos($acomodacoes, 'Cama de Solteiro') !== false):
-                                                $tipoDeCama = '<i class="fa fa-bed text-primary me-2"></i> Cama de Solteiro';
-                                                break;
-                                        }
-
-                                        // Exibir a informação
-                                        if (!empty($tipoDeCama)) {
-                                            echo '<small class="border-end me-3 pe-3">' . $tipoDeCama . '</small>';
-                                        }
-
-                                        // Outras acomodações
-                                        $acomodacoesExtras = [
-                                            'Quartos Familiares' => '<small class="border-end me-3 pe-3"><i class="fa fa-users text-primary me-2"></i> Quartos Familiares </small>',
-                                            'WC Privativa' => '<small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i> Casa de Banho Privativa </small>',
-                                            'Wi-Fi' => '<small class><i class="fa fa-wifi text-primary me-2"></i>  </small>',
-                                            'Estacionamento' => '<small><i class="fa fa-car text-primary me-2"></i>  </small>',
-                                            'Piscina' => '<small><i class="fa fa-swimming-pool text-primary me-2"></i>  </small>',
-                                            'Pequeno-almoço' => '<small><i class="fa fa-coffee text-primary me-2"></i>  </small>',
-                                            'Ar Condicionado' => '<small><i class="fa fa-snowflake text-primary me-2"></i> </small>',
-                                            'TV' => '<small><i class="fa fa-tv text-primary me-2"></i> </small>',
-                                        ];
-
-                                        foreach ($acomodacoesExtras as $keyword => $output) {
-                                            if (strpos($acomodacoes, $keyword) !== false) {
-                                                echo $output . '&nbsp;'; // Adicionando um espaço entre cada item
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                    <p class="text-body mb-3"><?php
-                                        // Descrição automática
-                                        $descricaoAutomatica = '';
-
-                                        // Adicionar nome à descrição
-                                        $descricaoAutomatica .= "Bem-vindo ao {$fornecedor->nome_alojamento}. ";
-
-                                        // Adicionar tipo de alojamento à descrição
-                                        $descricaoAutomatica .= "Oferecemos alojamento do tipo {$fornecedor->tipo}. ";
-
-                                        // Adicionar localização à descrição
-                                        $descricaoAutomatica .= "Localizado em {$fornecedor->localizacao_alojamento}. ";
-
-                                        // Remover a vírgula no final da descrição
-                                        $descricaoAutomatica = rtrim($descricaoAutomatica, ', ');
-
-                                        // Exibir a descrição automática
-                                        echo $descricaoAutomatica;
-                                        ?></p>
-                                    <div class="d-flex justify-content-between">
-                                        <?= Html::a('Detalhes', ['alojamentos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?= Html::a('Adicionar ao Carrinho', ['carrinho/adicionar', 'fornecedorId' => $fornecedor->id], ['class' => 'btn btn-dark btn-sm']) ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Fim do loop -->
-                    <?php endforeach; ?>
-                </div>
+        <div class="container">
+            <div class="row">
+                <?php if (!$searchModel->validate() || !$dataProvider || !$searchModel->isFilled() || !$fornecedores) : ?>
+                    <?= ListView::widget([
+                        'dataProvider' => $fornecedores,
+                        'itemView' => '_item',
+                        'summary' => '',
+                        'options' => ['class' => 'list-view'],
+                        'itemOptions' => [
+                            'class' => 'col-md-4',
+                            'style' => 'margin-bottom: 15px;',
+                        ],
+                        'layout' => '<div class="row">{items}</div>{pager}',
+                    ]) ?>
+                <?php else : ?>
+                    <?= ListView::widget([
+                        'dataProvider' => $dataProvider,
+                        'itemView' => '_item',
+                        'summary' => '',
+                        'options' => ['class' => 'list-view'],
+                        'itemOptions' => [
+                            'class' => 'col-md-4',
+                            'style' => 'margin-bottom: 15px;',
+                        ],
+                        'layout' => '<div class="row">{items}</div>{pager}',
+                    ]) ?>
+                <?php endif; ?>
             </div>
         </div>
-        <!-- Room End -->
-
     </div>
 </div>

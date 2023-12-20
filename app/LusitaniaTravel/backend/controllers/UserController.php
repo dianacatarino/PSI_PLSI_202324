@@ -5,10 +5,42 @@ namespace backend\controllers;
 use common\models\Profile;
 use common\models\User;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 class UserController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password', 'create', 'store', 'edit', 'update', 'show', 'delete'],
+                        'roles' => ['?', '@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['login'],
+                        'roles' => ['cliente'],
+                        'denyCallback' => function ($rule, $action) {
+                            Yii::$app->session->setFlash('error', 'Clientes não têm permissão para acessar o backend.');
+                            Yii::$app->user->logout();
+                            return $this->goHome();
+                        },
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $users = User::find()->all();

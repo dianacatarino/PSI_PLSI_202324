@@ -15,7 +15,10 @@ $this->title = 'Criar novo Alojamento';
     <?php $form = ActiveForm::begin(['action' => ['alojamentos/create'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
         <div class="form-group">
-            <?= $form->field($fornecedor, 'responsavel')->textInput(['class' => 'form-control'])->label('Responsável') ?>
+            <?= $form->field($fornecedor, 'responsavel')->dropDownList(
+                $selectFornecedores,
+                ['prompt' => 'Selecione um fornecedor', 'class' => 'form-control']
+            )->label('Responsável') ?>
         </div>
         <div class="form-group">
             <?= $form->field($fornecedor, 'tipo')->dropDownList(
@@ -43,7 +46,6 @@ $this->title = 'Criar novo Alojamento';
                     'AC' => 'AC',
                     'WC Privativa' => 'WC Privativa',
                     'Pequeno Almoço' => 'Pequeno Almoço',
-                    'Quartos Familiares' => 'Quartos Familiares',
                     'Piscina' => 'Piscina',
                     'Estacionamento' => 'Estacionamento',
                 ],
@@ -55,6 +57,31 @@ $this->title = 'Criar novo Alojamento';
                 ]
             )->label('Acomodações');
             ?>
+        </div>
+        <div class="form-group">
+            <?= $form->field($fornecedor, 'tipoquartos')->checkboxList(
+                [
+                    'Individual' => 'Individual',
+                    'Duplo' => 'Duplo',
+                    'Triplo' => 'Triplo',
+                    'Familiares' => 'Familiares',
+                    'Suite' => 'Suite',
+                    'Villa' => 'Villa',
+                ],
+                [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        $checked = $checked ? 'checked' : '';
+                        return "<label class='checkbox-inline'><input type='checkbox' $checked name='$name' value='$value'> $label</label>";
+                    },
+                ]
+            )->label('Tipo de Quartos');
+            ?>
+        </div>
+        <div class="form-group">
+            <?= $form->field($fornecedor, 'numeroquartos')->textInput(['type' => 'number', 'class' => 'form-control'])->label('Número de Quartos') ?>
+        </div>
+        <div class="form-group">
+            <?= $form->field($fornecedor, 'precopornoite')->textInput(['class' => 'form-control'])->label('Preço por Noite') ?>
         </div>
         <div class="form-group">
             <?= $form->field($fornecedor, 'imagens[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>

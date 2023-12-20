@@ -18,19 +18,22 @@ class EmpresaController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'show'],
-                        'roles' => ['admin', 'funcionario'], // Adjust roles as needed
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['create', 'store', 'edit', 'update', 'delete'],
-                        'roles' => ['admin'], // Adjust roles as needed
+                        'actions' => ['logout'],
+                        'roles' => ['@'],
                     ],
                     [
-                        'allow' => false, // Deny access to everything by default
+                        'allow' => false,
+                        'actions' => ['login'],
                         'roles' => ['cliente'],
                         'denyCallback' => function ($rule, $action) {
-                            throw new ForbiddenHttpException('Não tem permissões para aceder a esta página.');
+                            Yii::$app->session->setFlash('error', 'Clientes não têm permissão para acessar o backend.');
+                            Yii::$app->user->logout();
+                            return $this->goHome();
                         },
                     ],
                 ],

@@ -2,53 +2,51 @@
 
 namespace frontend\models;
 
-use common\models\Reserva;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Fornecedor;
 
-class PesquisaForm extends Model
+class PesquisaForm extends Fornecedor
 {
-    public $localizacao;
+    public $localizacao_alojamento;
     public $checkin;
     public $checkout;
-    public $numeroPessoas;
-    public $numeroQuartos;
+    public $numeroclientes;
+    public $numeroquartos;
 
     public function rules()
     {
         return [
-            [['localizacao', 'checkin', 'checkout', 'numeroPessoas', 'numeroQuartos'], 'safe'],
+            [['localizacao_alojamento', 'checkin', 'checkout', 'numeroclientes', 'numeroquartos'], 'safe'],
         ];
     }
 
     public function search($params)
     {
-        $query = Fornecedor::find()
-            ->joinWith(['reservas', 'reservas.confirmacoes']);
+       /* $query = Fornecedor::find();
+
+        // Filtrar por localizacao_alojamento no modelo Fornecedor
+        $query->andFilterWhere(['like', 'localizacao_alojamento', $this->localizacao_alojamento]);
+
+        // Verificar se há filtros para as reservas
+        if ($this->checkin || $this->checkout || $this->numeroclientes || $this->numeroquartos) {
+            // Filtrar por reservas
+            $query->joinWith(['reservas' => function ($query) {
+                // Filtrar por checkin e checkout no modelo Reserva
+                $query->andFilterWhere(['>=', 'checkin', $this->checkin])
+                    ->andFilterWhere(['<=', 'checkout', $this->checkout])
+                    // Verificar confirmação associada
+                    ->andFilterWhere(['reserva.confirmada' => 1])
+                    ->andFilterWhere(['>', 'reserva.linhasreserva', 0])
+                    // Filtrar por numeroclientes e numeroquartos no modelo Reserva
+                    ->andFilterWhere(['reserva.numeroclientes' => $this->numeroclientes])
+                    ->andFilterWhere(['reserva.numeroquartos' => $this->numeroquartos]);
+            }]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        if ($this->load($params) && $this->validate()) {
-            $query->andFilterWhere(['like', 'localizacao_alojamento', $this->localizacao])
-                ->andFilterWhere(['>=', 'checkin', $this->checkin])
-                ->andFilterWhere(['<=', 'checkout', $this->checkout])
-                ->andFilterWhere(['=', 'numeroPessoas', $this->numeroPessoas])
-                ->andFilterWhere(['=', 'numeroQuartos', $this->numeroQuartos]);
-
-            $query->andWhere(['OR',
-                ['reservas.confirmacoes.estado' => null],
-                ['reservas.confirmacoes.estado' => 'Pendente'],
-            ]);
-
-            // Garanta que apenas os alojamentos sem reservas confirmadas são incluídos
-            $query->andWhere(['NOT EXISTS', Reserva::find()
-                ->where(['fornecedor_id' => new \yii\db\Expression('fornecedor.id'), 'estado' => 'Confirmado'])
-            ]);
-        }
-
-        return $dataProvider;
+        return $dataProvider;*/
     }
 }

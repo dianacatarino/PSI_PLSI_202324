@@ -57,24 +57,29 @@ $this->title = 'Detalhes do Alojamento';
             <td><?= Html::encode($fornecedor->localizacao_alojamento) ?></td>
         </tr>
         <tr>
-            <th scope="row">Tipo de Quarto</th>
-            <td><?= Html::encode($tipoQuarto) ?></td>
-        </tr>
-        <tr>
-            <th scope="row">Número de Quartos</th>
-            <td><?= Html::encode($numeroQuartos) ?></td>
-        </tr>
-        <tr>
-            <th scope="row">Número de Camas</th>
-            <td><?= Html::encode($numeroCamas) ?></td>
+            <th scope="row">Tipos de Quartos</th>
+            <td>
+                <?php
+                $numeroCamasPorTipoQuarto = $fornecedor->getNumeroCamasPorTipoQuarto();
+
+                foreach ($numeroCamasPorTipoQuarto as $tipoQuarto => $numeroCamas) {
+                    echo ucfirst($tipoQuarto) . ': ' . $numeroCamas . ' cama(s)<br>';
+                }
+                ?>
+            </td>
         </tr>
         <tr>
             <th scope="row">Acomodações</th>
-            <td><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></td>
+            <td>
+                <?php
+                $acomodacoes = explode(';', $fornecedor->acomodacoes_alojamento);
+                echo implode('<br>', $acomodacoes);
+                ?>
+            </td>
         </tr>
         <tr>
             <th scope="row">Preço por Noite</th>
-            <td><?= Html::encode($precoPorNoite) ?>€</td>
+            <td><?= Html::encode($fornecedor->precopornoite) ?>€</td>
         </tr>
         </tbody>
     </table>

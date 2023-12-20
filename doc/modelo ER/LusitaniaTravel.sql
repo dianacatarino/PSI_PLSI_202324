@@ -19,6 +19,9 @@ CREATE TABLE Fornecedores (
     nome_alojamento VARCHAR(30) NOT NULL,
     localizacao_alojamento VARCHAR(50) NOT NULL,
     acomodacoes_alojamento VARCHAR(100) NOT NULL,
+    tipoquartos VARCHAR(150) NOT NULL,
+    numeroquartos INT NOT NULL,
+    precopornoite DECIMAL(10, 2) NOT NULL,
     CONSTRAINT pk_fornecedores_id PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
@@ -126,6 +129,7 @@ CREATE TABLE Profile (
 	postalCode VARCHAR(10) NOT NULL,
     role ENUM('admin', 'funcionario', 'fornecedor','cliente') DEFAULT NULL,
     user_id INT NOT NULL,
+    favorites TEXT DEFAULT NULL,
     CONSTRAINT pk_profile_id PRIMARY KEY (id),
     CONSTRAINT pk_profile_user_id FOREIGN KEY (user_id) REFERENCES User(id)
 ) ENGINE=InnoDB;
@@ -144,12 +148,8 @@ CREATE TABLE Carrinho(
     CONSTRAINT fk_carrinho_reserva FOREIGN KEY (reserva_id) REFERENCES Reservas(id)
 ) ENGINE=InnoDB;
 
-DROP TABLE Carrinho;
-
-
 ALTER TABLE User
 ADD COLUMN profile_id INT,
 ADD CONSTRAINT fk_user_profile_id FOREIGN KEY (profile_id) REFERENCES Profile(id);
 
-ALTER TABLE profile
-ADD COLUMN favorites TEXT DEFAULT NULL;
+

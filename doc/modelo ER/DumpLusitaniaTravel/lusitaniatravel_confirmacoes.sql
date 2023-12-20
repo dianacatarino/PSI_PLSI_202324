@@ -33,7 +33,7 @@ CREATE TABLE `confirmacoes` (
   KEY `fk_confirmacoes_fornecedor` (`fornecedor_id`),
   CONSTRAINT `fk_confirmacoes_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_confirmacoes_reservas` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `confirmacoes` (
 
 LOCK TABLES `confirmacoes` WRITE;
 /*!40000 ALTER TABLE `confirmacoes` DISABLE KEYS */;
-INSERT INTO `confirmacoes` VALUES (1,'Pendente','0000-00-00',1,1),(2,'Pendente','0000-00-00',5,2),(3,'Pendente','0000-00-00',6,8),(4,'Confirmado','2023-12-10',7,9);
+INSERT INTO `confirmacoes` VALUES (1,'Pendente','0000-00-00',1,1),(2,'Pendente','0000-00-00',5,2),(3,'Confirmado','2023-12-20',6,8),(4,'Confirmado','2023-12-20',7,9),(5,'Confirmado','2023-12-20',8,9);
 /*!40000 ALTER TABLE `confirmacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-11 17:05:44
+-- Dump completed on 2023-12-20 20:30:27

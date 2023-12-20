@@ -34,7 +34,7 @@ class SiteController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
-                        'roles' => ['?', '@'], // Permitir acesso a todos (usuários não autenticados e autenticados)
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'allow' => true,
