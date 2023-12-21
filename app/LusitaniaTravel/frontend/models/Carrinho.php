@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\Confirmacao;
 use common\models\Fornecedor;
 use common\models\Reserva;
 use common\models\User;
@@ -91,5 +92,17 @@ class Carrinho extends \yii\db\ActiveRecord
     public function getReserva()
     {
         return $this->hasOne(Reserva::class, ['id' => 'reserva_id']);
+    }
+
+    /**
+     * Gets query for [[Confirmacao]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+
+    public function getConfirmacao()
+    {
+        return $this->hasOne(Confirmacao::class, ['carrinho_id' => 'id']);
+        // Substitua Confirmacao::class pelo nome da classe de confirmação e 'carrinho_id' pelo nome real da chave estrangeira
     }
 }

@@ -84,7 +84,6 @@ class SiteController extends Controller
         $searchModel = new PesquisaForm();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        // Obter todos os fornecedores
         $fornecedores = new ActiveDataProvider([
             'query' => Fornecedor::find(),
             'pagination' => [

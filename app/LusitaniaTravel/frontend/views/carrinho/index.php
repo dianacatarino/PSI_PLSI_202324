@@ -4,11 +4,74 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Carrinho de Compras';
+
+$this->registerJsFile('https://code.jquery.com/jquery-3.6.4.min.js', ['position' => \yii\web\View::POS_HEAD]);
+
+$script = <<< JS
+    $(document).ready(function() {
+        // Oculte o botão "Verificar Disponibilidade" no início
+        $('#verificar-disponibilidade-btn').hide();
+
+        $('input[name="selecionarReserva[]"]').change(function() {
+            var selectedReservas = $('input[name="selecionarReserva[]"]:checked');
+            
+            // Esconda todos os campos de formulário
+            $('.reserva-form').hide();
+            
+            // Mostre apenas os campos de formulário correspondentes às reservas selecionadas
+            selectedReservas.each(function() {
+                var reservaId = $(this).val();
+                $('.reserva-form[data-reserva-id="' + reservaId + '"]').show();
+            });
+
+            // Se houver pelo menos uma reserva selecionada, mostre o botão
+            if (selectedReservas.length > 0) {
+                $('#verificar-disponibilidade-btn').show();
+            } else {
+                // Caso contrário, oculte o botão
+                $('#verificar-disponibilidade-btn').hide();
+            }
+        });
+    });
+JS;
+
+$this->registerJs($script);
 ?>
+
 <div class="container mt-4">
     <div class="mb-3">
         <?= Html::a('<i class="fas fa-arrow-left"></i> Voltar', ['site/index'], ['class' => 'btn btn-secondary']) ?>
     </div>
+
+    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['reservas/verificar']]); ?>
+
+    <?php foreach ($itensCarrinho as $item) : ?>
+        <div class="form-group row m-3 reserva-form" data-reserva-id="<?= $item->reserva->id ?>">
+            <div class="col-md-3">
+                <?= Html::hiddenInput('reservaId', $item->reserva->id) ?>
+                <?= $form->field($reserva, 'checkin')->textInput(['type' => 'date', 'class' => 'form-control checkin'])->label('Check-in') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($reserva, 'checkout')->textInput(['type' => 'date', 'class' => 'form-control checkout'])->label('Check-out') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($reserva, 'numeroclientes')->textInput(['type' => 'number', 'class' => 'form-control numeroclientes', 'min' => 1, 'max' => 10])->label('Número de Clientes') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($reserva, 'numeroquartos')->textInput(['type' => 'number', 'class' => 'form-control numeroquartos', 'min' => 1, 'max' => 6])->label('Número de Quartos') ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+    <div class="col-md-12 mt-2">
+        <?= Html::submitButton('Verificar Disponibilidade', ['class' => 'btn btn-primary']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+
+    <div style="height: 20px;"></div>
+
     <div class="card">
         <div class="card-header bg-dark text-white">
             Carrinho de Compras
@@ -19,20 +82,43 @@ $this->title = 'Carrinho de Compras';
                     <thead class="thead-dark">
                     <tr>
                         <th>Reserva</th>
-                        <th>Número de Noites</th>
+                        <th>Quantidade</th>
                         <th>Preço por Noite</th>
                         <th>Preço Total</th>
+                        <th></th>
+                        <th>Estado</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($itensCarrinho as $item) : ?>
                         <tr>
-                            <td><?= Html::encode($item->reserva->id) ?></td>
+                            <td>
+                                <?= Html::checkbox('selecionarReserva[]', false, ['value' => $item->reserva->id]) ?>
+                                <?= Html::encode($item->reserva->id) ?>
+                            </td>
                             <td><?= Html::encode($item->quantidade) ?></td>
-                            <td><?= Yii::$app->formatter->asCurrency($item->subtotal, 'EUR') ?></td>
                             <td><?= Yii::$app->formatter->asCurrency($item->preco, 'EUR') ?></td>
+                            <td><?= Yii::$app->formatter->asCurrency($item->subtotal, 'EUR') ?></td>
+                            <td>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['carrinho/remover', 'id' => $item->id], ['class' => 'btn btn-danger btn-sm']) ?>
+                            </td>
+                            <td>
+                                <?php
+                                // Obtém o modelo de confirmação associado ao item do carrinho
+                                $confirmacoes = $item->reserva->confirmacoes;
+                                if (!empty($confirmacoes)) {
+                                    // Ajuste esta parte para corresponder à estrutura real do array de confirmações
+                                    $ultimaConfirmacao = end($confirmacoes); // assumindo que o array de confirmações é ordenado e queremos a última
+                                    echo Html::encode($ultimaConfirmacao['estado']);
+                                } else {
+                                    echo 'Não Confirmado';
+                                }
+                                ?>
+                            </td>
+                            <?php endforeach; ?>
+
                         </tr>
-                    <?php endforeach; ?>
+
                     </tbody>
                     <tfoot>
                     <tr>
@@ -50,5 +136,7 @@ $this->title = 'Carrinho de Compras';
                 <p class="p-3 text-center">O carrinho está vazio.</p>
             <?php endif; ?>
         </div>
+        <div style="height: 20px;"></div>
     </div>
+    <div style="height: 20px;"></div>
 </div>

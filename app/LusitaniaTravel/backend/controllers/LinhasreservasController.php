@@ -67,10 +67,11 @@ class LinhasreservasController extends \yii\web\Controller
             $linhasreserva->numerocamas = $linhasreserva->calcularNumeroCamas($linhasreserva->tipoquarto);
             $linhasreserva->subtotal = $linhasreserva->calcularSubtotal($reserva);
             $linhasreserva->reservas_id = $reservas_id;
+            return $this->redirect(['reservas/index']);
 
-            if ($linhasreserva->save()) {
+            /*if ($linhasreserva->save()) {
                 // Configurar propriedades da linha de fatura
-                $linhasfatura->linhasreserva_id = $linhasreserva->id;
+                $linhasfatura->linhasreservas_id = $linhasreserva->id;
                 $linhasfatura->quantidade = $linhasreserva->numeronoites;
                 $linhasfatura->precounitario = $reserva->valor;
                 $linhasfatura->subtotal = $linhasreserva->subtotal;
@@ -78,7 +79,7 @@ class LinhasreservasController extends \yii\web\Controller
 
                 // Salvar linha de fatura
                 if ($linhasfatura->save()) {
-                    return $this->redirect(['reservas/index']);
+                    return $this->redirect(['index']);
                 } else {
                     Yii::error('Erro ao salvar a linha de fatura.');
                     Yii::error($linhasfatura->errors);
@@ -86,7 +87,7 @@ class LinhasreservasController extends \yii\web\Controller
             } else {
                 Yii::error('Erro ao salvar a linha de reserva.');
                 Yii::error($linhasreserva->errors);
-            }
+            }*/
         }
 
         return $this->render('create', [

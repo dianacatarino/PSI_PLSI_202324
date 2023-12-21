@@ -29,9 +29,6 @@ $this->title = 'Lusitânia Travel';
                     <div class="row g-2">
                         <div class="col-md-10">
                             <div class="row g-2">
-                                <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'localizacao_alojamento')->textInput(['placeholder' => 'Localização'])->label(false) ?>
-                                </div>
                                 <div class="col-md-3">
                                     <?= $form->field($searchModel, 'checkin')->textInput(['type' => 'date'])->label(false) ?>
                                 </div>
@@ -68,7 +65,7 @@ $this->title = 'Lusitânia Travel';
 
         <div class="container">
             <div class="row">
-                <?php if (!$searchModel->validate() || !$dataProvider || !$searchModel->isFilled() || !$fornecedores) : ?>
+                <?php if (!$searchModel->validate() || !$dataProvider || !$fornecedores) : ?>
                     <?= ListView::widget([
                         'dataProvider' => $fornecedores,
                         'itemView' => '_item',

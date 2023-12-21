@@ -13,10 +13,10 @@ use Yii;
  * @property string $tipo
  * @property string $nome_alojamento
  * @property string $localizacao_alojamento
- * @property string|null $acomodacoes_alojamento
- * @property string|null $tipoquartos
- * @property int|null $numeroquartos
- * @property float|null $precopornoite
+ * @property string $acomodacoes_alojamento
+ * @property string $tipoquartos
+ * @property int $numeroquartos
+ * @property float $precopornoite
  *
  * @property Avaliacao[] $avaliacoes
  * @property Carrinho[] $carrinhos
