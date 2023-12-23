@@ -32,6 +32,24 @@ $script = <<< JS
                 $('#verificar-disponibilidade-btn').hide();
             }
         });
+
+        // Esconda todos os tipoquarto-campos inicialmente
+        $('.tipoquarto-campos').hide();
+
+        // Show/hide tipoquarto-campos based on the selected number of rooms
+        $('input[name="Reserva[numeroquartos]"]').change(function() {
+            var numeroquartos = parseInt($(this).val());
+
+            // Hide all tipoquarto-campos
+            $('.tipoquarto-campos').hide();
+
+            // Show tipoquarto-campos based on the selected number of rooms
+            if (numeroquartos > 0) {
+                for (var i = 1; i <= numeroquartos; i++) {
+                    $('.tipoquarto-campos[data-quarto-index="' + i + '"]').show();
+                }
+            }
+        });
     });
 JS;
 
@@ -60,6 +78,17 @@ $this->registerJs($script);
             <div class="col-md-3">
                 <?= $form->field($reserva, 'numeroquartos')->textInput(['type' => 'number', 'class' => 'form-control numeroquartos', 'min' => 1, 'max' => 6])->label('Número de Quartos') ?>
             </div>
+
+            <?php for ($i = 1; $i <= 6; $i++) : ?>
+                <div class="col-md-3 tipoquarto-campos" data-quarto-index="<?= $i ?>">
+                    <?= $form->field($reserva, "linhasreservas[{$item->reserva->id}][tipoquarto][$i]")->dropDownList(
+                        ['Quarto Individual' => 'Quarto Individual', 'Quarto Duplo' => 'Quarto Duplo', 'Quarto Triplo' => 'Quarto Triplo', 'Quarto Familiar' => 'Quarto Familiar', 'Villa' => 'Villa'],
+                        ['class' => 'form-control tipoquarto', 'prompt' => 'Seleciona o tipo de quarto']
+                    )->label("Tipo de Quarto {$i}") ?>
+
+                    <?= $form->field($reserva, "linhasreservas[{$item->reserva->id}][numerocamas][$i]")->textInput(['type' => 'number', 'class' => 'form-control numerocamas', 'min' => 1, 'max' => 6])->label('Número de Camas') ?>
+                </div>
+            <?php endfor; ?>
         </div>
     <?php endforeach; ?>
 

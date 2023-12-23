@@ -45,6 +45,7 @@ class Reserva extends \yii\db\ActiveRecord
             [['checkin', 'checkout', 'numeroquartos', 'numeroclientes', 'valor', 'cliente_id', 'funcionario_id', 'fornecedor_id'], 'required'],
             [['checkin', 'checkout'], 'safe'],
             [['numeroquartos', 'numeroclientes', 'cliente_id', 'funcionario_id', 'fornecedor_id'], 'integer'],
+            [['numeroquartos'], 'compare', 'compareAttribute' => 'numeroclientes', 'operator' => '<=', 'type' => 'integer', 'message' => 'Número de quartos não pode ser superior ao número de clientes'],
             [['valor'], 'number'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['cliente_id' => 'id']],
             [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],

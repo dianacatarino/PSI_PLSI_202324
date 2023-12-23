@@ -23,7 +23,6 @@ $this->title = 'Editar Linha de Reserva';
                     'Quarto Triplo' => 'Quarto Triplo',
                     'Quarto Familiar' => 'Quarto Familiar',
                     'Villa' => 'Villa',
-                    'Suite' => 'Suite',
                 ],
                 ['prompt' => 'Selecione o Tipo de Quarto']
             )->label('Tipo de Quarto') ?>

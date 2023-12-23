@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\Fornecedor;
+use common\models\Fornecedor;
 use common\models\Profile;
 use common\models\Reserva;
 use backend\models\Empresa;
@@ -15,11 +15,17 @@ $this->title = 'Criar nova Fatura';
     <div class="card-header">
         <h3 class="card-title">Criar nova Fatura</h3>
     </div>
-    <?php $form = ActiveForm::begin(['action' => ['faturas/show'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
+    <?php $form = ActiveForm::begin(['action' => ['faturas/pesquisa'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
-            <div class="col-md-8">
-                <?= $form->field($reservaModel, 'nome_alojamento')->textInput(['placeholder' => 'Pesquise Fornecedor, Cliente e Referência de reserva'])->label(false) ?>
-            </div>
+        <div class="col-md-8">
+            <?= $form->field($reservaModel, 'fornecedor_id')->textInput(['placeholder' => 'Pesquise Fornecedor'])->label(false) ?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($reservaModel, 'id')->textInput(['placeholder' => 'Pesquise Fornecedor'])->label(false) ?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($reservaModel, 'cliente_id')->textInput(['placeholder' => 'Pesquise Fornecedor'])->label(false) ?>
+        </div>
 
         <!--<div class="form-group">
             < ?= $form->field($fatura, 'reserva_id')->dropDownList(

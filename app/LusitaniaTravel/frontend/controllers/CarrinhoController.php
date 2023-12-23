@@ -33,7 +33,17 @@ class CarrinhoController extends \yii\web\Controller
             $selecionarReserva[] = $item->reserva_id;
         }
 
-        // Crie uma instância de Reserva (substitua isso pela lógica real)
+        // Obtém o ID do fornecedor da requisição
+        $fornecedorId = Yii::$app->request->get('fornecedorId');
+
+        // Obtém o fornecedor com base no ID
+        $fornecedor = Fornecedor::findOne($fornecedorId);
+
+        // Verifica se o fornecedor foi encontrado
+        if ($fornecedor === null) {
+            // Lógica para lidar com o fornecedor não encontrado (pode ser um redirecionamento ou uma mensagem de erro)
+        }
+
         $reserva = new Reserva();
 
         return $this->render('index', [
@@ -41,6 +51,7 @@ class CarrinhoController extends \yii\web\Controller
             'totalCarrinho' => $totalCarrinho,
             'reserva' => $reserva,
             'selecionarReserva' => $selecionarReserva,
+            'fornecedor' => $fornecedor,
         ]);
     }
 
@@ -98,7 +109,7 @@ class CarrinhoController extends \yii\web\Controller
             'cliente_id' => $clienteId,
             'quantidade' => 1,
             'preco' => $fornecedor->precopornoite,
-            'subtotal' => 0, // Você pode ajustar isso de acordo com a lógica desejada
+            'subtotal' => 0,
             'reserva_id' => $reservaId,
         ]);
 

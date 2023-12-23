@@ -103,8 +103,6 @@ class Linhasreserva extends \yii\db\ActiveRecord
                 return 4;
             case 'Villa':
                 return 6;
-            case 'Suite':
-                return 2;
             default:
                 return 1;
         }

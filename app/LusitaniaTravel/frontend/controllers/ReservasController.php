@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Fornecedor;
+use common\models\Linhasreserva;
 use common\models\Reserva;
 use DateTime;
 use frontend\models\Carrinho;
@@ -57,6 +58,8 @@ class ReservasController extends \yii\web\Controller
             $checkin = new \DateTime($reserva->checkin);
             $checkout = new \DateTime($reserva->checkout);
             $diasReserva = $checkout->diff($checkin)->days;
+            $tipoQuartoPost = Yii::$app->request->post("Reserva[linhasreservas][$reservaId][tipoquarto]");
+            $numeroCamasPost = Yii::$app->request->post("Reserva[linhasreservas][$reservaId][numerocamas]");
 
             // Verifique os itens do carrinho relacionados à reserva
             $itensCarrinho = Carrinho::find()->where(['reserva_id' => $reservaId])->all();
@@ -77,9 +80,19 @@ class ReservasController extends \yii\web\Controller
             // Atribuir o valor calculado à propriedade valor do modelo Reserva
             $reserva->valor = $total;
 
-
             // Salvar a reserva com o novo valor
             if ($reserva->save()) {
+                // Criar instâncias de LinhaReserva com base no número de quartos
+                for ($i = 0; $i < $reserva->numeroquartos; $i++) {
+                    $linhareserva = new Linhasreserva();
+                    $linhareserva->reservas_id = $reservaId;
+                    $linhareserva->tipoquarto = $tipoQuartoPost[$i + 1] ?? 'Null';
+                    $linhareserva->numeronoites = $diasReserva;
+                    $linhareserva->numerocamas = $numeroCamasPost[$i + 1] ?? 0;
+                    $linhareserva->subtotal = $reserva->valor / $diasReserva;
+                    $linhareserva->save();
+                }
+
                 // Verificação bem-sucedida, redirecione para a página de índice de reservas
                 Yii::$app->session->setFlash('success', 'Verificação bem-sucedida!');
                 return $this->redirect(['reservas/index']);
