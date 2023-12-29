@@ -3,11 +3,14 @@
 namespace frontend\controllers;
 
 use common\models\Confirmacao;
+use common\models\Fatura;
 use common\models\Fornecedor;
+use common\models\Linhasfatura;
 use common\models\Linhasreserva;
 use common\models\Reserva;
 use common\models\User;
 use frontend\models\Carrinho;
+use Mpdf\Mpdf;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -166,14 +169,128 @@ class CarrinhoController extends \yii\web\Controller
             }
         }
 
+        // Calcular o valor total com base nos itens do carrinho
+        $valorTotal = 0;
+        foreach ($itensCarrinho as $item) {
+            // Adicione a lógica do seu cálculo aqui
+            $valorTotal += $item->subtotal;
+        }
+
+        // Criar a entidade de Reserva
+        $reserva = new Reserva();
+        $reserva->valor = $valorTotal;
+        $reserva->entidade = 21223; // Valor fixo
+        $reserva->save();
+
+        // Associar a referência à entidade (usando o ID da reserva como referência)
+        $referencia = 'REF' . str_pad($reserva->id, 8, '0', STR_PAD_LEFT);
+        $reserva->referencia = $referencia;
+        $reserva->save();
+
+        // Cria a fatura associada à reserva
+        $fatura = new Fatura([
+            'totalf' => $reserva->valor,
+            'totalsi' => $reserva->valor - 0.23, // Ajuste conforme necessário
+            'iva' => 0.23, // Substitua 0.23 pela taxa de IVA apropriada
+            'empresa_id' => 1, // Substitua 1 pelo ID da empresa associada à fatura
+            'reserva_id' => $reserva->id,
+        ]);
+
+        // Salva a fatura
+        if (!$fatura->save()) {
+            Yii::error('Erro ao salvar a fatura: ' . print_r($fatura->errors, true));
+            throw new \Exception('Erro ao salvar a fatura.');
+        }
+
+        // Cria linhas de fatura com base na reserva
+        $linhaFatura = new Linhasfatura([
+            'quantidade' => 1, // Ajuste conforme necessário
+            'precounitario' => $reserva->valor, // Ajuste conforme necessário
+            'subtotal' => $reserva->valor,
+            'iva' => $reserva->valor * 0.23, // Substitua 0.23 pela taxa de IVA apropriada
+            'fatura_id' => $fatura->id,
+            'linhasreservas_id' => $reserva->id,
+        ]);
+
+        // Salva a linha de fatura
+        if (!$linhaFatura->save()) {
+            Yii::error('Erro ao salvar a linha de fatura: ' . print_r($linhaFatura->errors, true));
+            throw new \Exception('Erro ao salvar a linha de fatura.');
+        }
+
+        // Criar linhas de fatura com base nos itens do carrinho
+        foreach ($itensCarrinho as $item) {
+            $linhaFatura = new Linhasfatura();
+            $linhaFatura->quantidade = $item->quantidade;
+            $linhaFatura->precounitario = $item->fornecedor->precopornoite; // Supondo que há uma relação entre ItemCarrinho e Produto
+            $linhaFatura->subtotal = $item->subtotal;
+            $linhaFatura->iva = $item->subtotal * 0.23; // Substitua 0.23 pela taxa de IVA apropriada
+            $linhaFatura->fatura_id = $fatura->id;
+            $linhaFatura->linhasreservas_id = $item->reserva->id; // Supondo que há uma relação entre ItemCarrinho e Reserva
+            $linhaFatura->save();
+        }
+
+        // Remover itens do carrinho da base de dados
+        foreach ($itensCarrinho as $item) {
+            $item->delete();
+        }
+
         // Limpar o carrinho (remover itens da sessão)
         Yii::$app->session->remove('carrinho');
         Yii::$app->session->remove('totalCarrinho');
+
 
         // Exibir mensagem de sucesso (você pode redirecionar para uma página de confirmação, por exemplo)
         Yii::$app->session->setFlash('success', 'Compra finalizada com sucesso!');
 
         // Redirecionar para a página desejada após a finalização da compra
-        return $this->redirect(['site/index']);
+        return $this->redirect(['site/pagamento', 'id' => $reserva->id]);
+    }
+
+    public function actionPagamento($id)
+    {
+        $reserva = Reserva::findOne($id);
+
+        if ($reserva === null) {
+            throw new NotFoundHttpException('Reserva não encontrada.');
+        }
+
+        return $this->render('pagamento', [
+            'reserva' => $reserva,
+        ]);
+    }
+
+    public function actionDownload($id)
+    {
+        // Buscar a reserva pelo ID fornecido
+        $reserva = Reserva::findOne($id);
+
+        // Verificar se a reserva foi encontrada
+        if ($reserva === null) {
+            throw new NotFoundHttpException('Reserva não encontrada.');
+        }
+
+        // Configurar a instância do TCPDF
+        $mpdf = new Mpdf();
+
+        // Adicionar conteúdo ao PDF
+        $content = "
+        <div style='text-align: center;'>
+        <img src='/LusitaniaTravel/frontend/public/img/logo_vertical.png' alt='Logo' style='width: 200px; height: 200px;'>
+        <p>Entidade: 21223</p>
+        <p>Referência: REF" . str_pad($reserva->id, 8, '0', STR_PAD_LEFT) . "</p>
+        <p>Valor: " . Yii::$app->formatter->asCurrency($reserva->valor, 'EUR') . "</p>
+        </div>";
+
+        $mpdf->WriteHTML($content);
+
+
+        $filename = 'pagamento_' . $reserva->id . '.pdf';
+
+        // Saída para o navegador
+        $mpdf->Output($filename, 'D');
+
+        // Encerrar a execução
+        Yii::$app->end();
     }
 }

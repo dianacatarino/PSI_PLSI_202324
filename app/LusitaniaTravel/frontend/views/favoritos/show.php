@@ -32,7 +32,29 @@ $this->title = 'Detalhes do Favorito';
                 </tr>
                 <tr>
                     <th scope="row">Acomodações</th>
-                    <td><?= Html::encode($fornecedor->acomodacoes_alojamento) ?></td>
+                    <td>
+                        <?php
+                        $acomodacoes = explode(';', $fornecedor->acomodacoes_alojamento);
+                        foreach ($acomodacoes as $acomodacao) {
+                            echo Html::encode($acomodacao) . '<br>';
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Tipo Quartos</th>
+                    <td>
+                        <?php
+                        $tipoQuartos = explode(';', $fornecedor->tipoquartos);
+                        foreach ($tipoQuartos as $tipoQuarto) {
+                            echo Html::encode($tipoQuarto) . '<br>';
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Preço por Noite</th>
+                    <td><?= Html::encode($fornecedor->precopornoite) ?>€</td>
                 </tr>
                 </tbody>
             </table>

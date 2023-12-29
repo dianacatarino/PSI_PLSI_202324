@@ -54,6 +54,9 @@ $script = <<< JS
 JS;
 
 $this->registerJs($script);
+
+// Check if there are items in the cart
+$hasItemsInCart = !empty($itensCarrinho);
 ?>
 
 <div class="container mt-4">
@@ -93,7 +96,12 @@ $this->registerJs($script);
     <?php endforeach; ?>
 
     <div class="col-md-12 mt-2">
-        <?= Html::submitButton('Verificar Disponibilidade', ['class' => 'btn btn-primary']) ?>
+        <?php
+        // Show the button only if there are items in the cart
+        if ($hasItemsInCart) {
+            echo Html::submitButton('Verificar Disponibilidade', ['class' => 'btn btn-primary']);
+        }
+        ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -156,10 +164,36 @@ $this->registerJs($script);
                     </tr>
                     </tfoot>
                 </table>
+            <?php if ($hasItemsInCart) : ?>
+                <?php
+                // Verificar se há pelo menos um item no carrinho com estado diferente de "Confirmado"
+                $podeFinalizarCompra = true;
+                foreach ($itensCarrinho as $item) {
+                    $confirmacoes = $item->reserva->confirmacoes;
+                    if (!empty($confirmacoes)) {
+                        $ultimaConfirmacao = end($confirmacoes);
+                        if ($ultimaConfirmacao['estado'] !== 'Confirmado') {
+                            $podeFinalizarCompra = false;
+                            break; // Se pelo menos um item não estiver confirmado, não precisa verificar os outros
+                        }
+                    } else {
+                        $podeFinalizarCompra = false;
+                        break; // Se pelo menos um item não tiver confirmações, não precisa verificar os outros
+                    }
+                }
+                ?>
 
                 <div class="text-right p-3">
-                    <p class="font-weight-bold">Total a Pagar: <?= Yii::$app->formatter->asCurrency($totalCarrinho, 'EUR') ?></p>
-                    <?= Html::a('Finalizar Compra', ['carrinho/finalizarcompra'], ['class' => 'btn btn-success']) ?>
+                    <?php if ($podeFinalizarCompra) : ?>
+                        <p class="font-weight-bold">Total a Pagar: <?= Yii::$app->formatter->asCurrency($totalCarrinho, 'EUR') ?></p>
+                        <?= Html::a('Finalizar Compra', ['carrinho/pagamento', 'id' => !empty($itensCarrinho) ? $itensCarrinho[0]->reserva->id : null], ['class' => 'btn btn-success']) ?>
+                    <?php else : ?>
+                        <p class="text-danger">Não é possível finalizar a compra. O estado de pelo menos uma reserva não está confirmado.</p>
+                    <?php endif; ?>
+                </div>
+            <?php else : ?>
+                <p class="p-3 text-center">O carrinho está vazio.</p>
+            <?php endif; ?>
                 </div>
             <?php else : ?>
                 <p class="p-3 text-center">O carrinho está vazio.</p>

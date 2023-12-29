@@ -150,6 +150,11 @@ class SiteController extends Controller
         return $this->render('carrinho/index');
     }
 
+    public function actionPagamento()
+    {
+        return $this->render('carrinho/pagamento');
+    }
+
     public function actionReservas()
     {
         return $this->render('reservas/index');

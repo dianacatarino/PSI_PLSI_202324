@@ -17,7 +17,8 @@ $this->title = 'Favoritos';
                     <div class="card favorito-card">
                         <div class="card-body">
                             <h5 class="card-title"><?= Html::encode($fornecedor->nome_alojamento) ?></h5>
-                            <p class="card-text"><?= Html::encode($fornecedor->tipo) ?></p>
+                            <p class="card-text"><strong>Tipo:</strong> <?= Html::encode($fornecedor->tipo) ?></p>
+                            <p class="card-text"><strong>Localização:</strong> <?= Html::encode($fornecedor->localizacao_alojamento) ?></p>
                             <?= Html::a('Detalhes', ['favoritos/show', 'id' => $fornecedor->id], ['class' => 'btn btn-primary']) ?>
                             <?= Html::a('Remover dos Favoritos', ['favoritos/remover', 'fornecedorId' => $fornecedor->id], ['class' => 'btn btn-danger', 'data' => ['confirm' => 'Tem certeza que deseja remover dos favoritos?']]) ?>
                         </div>

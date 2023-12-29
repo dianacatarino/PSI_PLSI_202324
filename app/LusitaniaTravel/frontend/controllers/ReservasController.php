@@ -58,8 +58,6 @@ class ReservasController extends \yii\web\Controller
             $checkin = new \DateTime($reserva->checkin);
             $checkout = new \DateTime($reserva->checkout);
             $diasReserva = $checkout->diff($checkin)->days;
-            $tipoQuartoPost = Yii::$app->request->post("Reserva[linhasreservas][$reservaId][tipoquarto]");
-            $numeroCamasPost = Yii::$app->request->post("Reserva[linhasreservas][$reservaId][numerocamas]");
 
             // Verifique os itens do carrinho relacionados à reserva
             $itensCarrinho = Carrinho::find()->where(['reserva_id' => $reservaId])->all();
@@ -86,9 +84,18 @@ class ReservasController extends \yii\web\Controller
                 for ($i = 0; $i < $reserva->numeroquartos; $i++) {
                     $linhareserva = new Linhasreserva();
                     $linhareserva->reservas_id = $reservaId;
-                    $linhareserva->tipoquarto = $tipoQuartoPost[$i + 1] ?? 'Null';
+
+                    $postData = Yii::$app->request->post("Reserva") ?? [];
+                    $reservaData = $postData['linhasreservas'][$reservaId] ?? [];
+
+                    $tipoQuartoPost = $reservaData['tipoquarto'][1];
+                    $numeroCamasPost = $reservaData['numerocamas'][1];
+
+                    $linhareserva = new Linhasreserva();
+                    $linhareserva->reservas_id = $reservaId;
+                    $linhareserva->tipoquarto = $tipoQuartoPost;
                     $linhareserva->numeronoites = $diasReserva;
-                    $linhareserva->numerocamas = $numeroCamasPost[$i + 1] ?? 0;
+                    $linhareserva->numerocamas = $numeroCamasPost;
                     $linhareserva->subtotal = $reserva->valor / $diasReserva;
                     $linhareserva->save();
                 }
