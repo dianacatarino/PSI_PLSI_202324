@@ -40,7 +40,7 @@ CREATE TABLE `reservas` (
   CONSTRAINT `fk_reservas_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_reservas_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_reservas_funcionario` FOREIGN KEY (`funcionario_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES (1,'Presencial','2023-12-05','2023-12-08',1,2,267.00,44,48,1),(5,'Presencial','2023-12-06','2023-12-12',2,4,350.00,46,54,2),(6,'Presencial','2023-12-25','2023-12-28',1,4,140.00,47,49,8),(7,'Presencial','2023-12-21','2023-12-28',3,6,700.00,56,49,9),(8,'Presencial','2023-12-14','2023-12-18',3,5,100.00,46,49,4);
+INSERT INTO `reservas` VALUES (1,'Presencial','2023-12-05','2023-12-08',1,2,267.00,44,48,1),(5,'Presencial','2023-12-06','2023-12-12',2,4,350.00,46,54,2),(6,'Presencial','2023-12-25','2023-12-28',1,4,140.00,47,49,8),(7,'Presencial','2023-12-21','2023-12-28',3,6,700.00,56,49,9),(8,'Presencial','2023-12-14','2023-12-18',3,5,100.00,46,49,4),(30,'Online','2024-01-01','2024-01-09',1,2,1780.00,46,45,1),(31,'Online','2024-01-01','2024-01-05',2,4,356.00,44,45,1),(33,'Online','2023-12-29','2024-01-03',2,5,500.00,47,45,2),(35,'Online','2024-01-02','2024-01-05',1,2,300.00,55,45,2),(36,'Online','2023-12-30','2024-01-04',1,4,2314.00,44,45,1),(37,'Online','2023-12-30','2024-01-01',1,4,1155.00,44,45,4),(38,'Online','0000-00-00','0000-00-00',0,0,0.00,56,45,12),(39,'Online','2023-12-31','2024-01-04',1,4,2700.00,44,45,2);
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 20:30:26
+-- Dump completed on 2023-12-29 17:23:58

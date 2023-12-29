@@ -37,7 +37,7 @@ CREATE TABLE `carrinho` (
   CONSTRAINT `fk_carrinho_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_carrinho_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_carrinho_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `carrinho` (
 
 LOCK TABLES `carrinho` WRITE;
 /*!40000 ALTER TABLE `carrinho` DISABLE KEYS */;
-INSERT INTO `carrinho` VALUES (1,12,267.00,89.00,44,1,1);
+INSERT INTO `carrinho` VALUES (21,1,89.00,1780.00,46,1,30),(24,1,100.00,500.00,47,2,33),(26,1,100.00,300.00,55,2,35),(29,1,100.00,0.00,56,12,38),(30,1,100.00,2700.00,44,2,39);
 /*!40000 ALTER TABLE `carrinho` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 20:30:26
+-- Dump completed on 2023-12-29 17:23:58

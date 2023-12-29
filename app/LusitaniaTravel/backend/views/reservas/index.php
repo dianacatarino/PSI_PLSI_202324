@@ -79,7 +79,6 @@ $this->title = 'Gestão de Reservas';
                             <table>
                                 <thead>
                                 <tr>
-                                    <th style="width: 5%">Id</th>
                                     <th style="width: 5%">Tipo de Quarto</th>
                                     <th style="width: 5%">Nº Noites</th>
                                     <th style="width: 5%">Nº Camas</th>
@@ -90,7 +89,6 @@ $this->title = 'Gestão de Reservas';
                                 <tbody>
                                 <?php foreach ($reserva->linhasreservas as $linhareserva): ?>
                                     <tr>
-                                        <td><?= Html::encode($linhareserva->id) ?></td>
                                         <td><?= Html::encode($linhareserva->tipoquarto) ?></td>
                                         <td><?= Html::encode($linhareserva->numeronoites) ?></td>
                                         <td><?= Html::encode($linhareserva->numerocamas) ?></td>

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Confirmacao;
+use common\models\Linhasfatura;
 use common\models\Reserva;
 use common\models\Linhasreserva;
 use Yii;
@@ -108,10 +109,17 @@ class ReservasController extends \yii\web\Controller
     {
         $reserva = Reserva::findOne($id);
 
-        // Lógica para excluir uma reserva
+        if ($reserva === null) {
+            throw new NotFoundHttpException('A reserva não foi encontrada.');
+        }
 
+        // Encontrar e excluir as linhas associadas à reserva
+        Linhasreserva::deleteAll(['reservas_id' => $reserva->id]);
+
+        // Agora, você pode excluir a reserva sem violar a restrição de chave estrangeira
         $reserva->delete();
-        Yii::$app->session->setFlash('success', 'Reserva excluída com sucesso.');
+
+        Yii::$app->session->setFlash('success', 'Reserva e linhas associadas excluídas com sucesso.');
 
         return $this->redirect(['index']);
     }

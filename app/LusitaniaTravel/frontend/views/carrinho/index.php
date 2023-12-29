@@ -67,7 +67,12 @@ $hasItemsInCart = !empty($itensCarrinho);
     <?php $form = ActiveForm::begin(['method' => 'post', 'action' => ['reservas/verificar']]); ?>
 
     <?php foreach ($itensCarrinho as $item) : ?>
-        <div class="form-group row m-3 reserva-form" data-reserva-id="<?= $item->reserva->id ?>">
+        <?php
+        // Verifica se as linhas de reserva já foram criadas
+        $linhasReservasCriadas = !empty($item->reserva->linhasreservas);
+        ?>
+
+        <div class="form-group row m-3 reserva-form <?= $linhasReservasCriadas ? 'd-none' : '' ?>" data-reserva-id="<?= $item->reserva->id ?>">
             <div class="col-md-3">
                 <?= Html::hiddenInput('reservaId', $item->reserva->id) ?>
                 <?= $form->field($reserva, 'checkin')->textInput(['type' => 'date', 'class' => 'form-control checkin'])->label('Check-in') ?>

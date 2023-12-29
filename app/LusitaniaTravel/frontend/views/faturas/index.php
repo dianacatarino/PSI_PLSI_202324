@@ -20,24 +20,23 @@ $this->title = 'Faturas';
                 <table class="table faturas-table">
                     <tbody>
                     <tr>
-                        <th scope="row">Data</th>
+                        <th scope="row">Valor</th>
+                        <td><?= Html::encode($fatura->totalf) ?> €</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Reserva</th>
+                        <td><?= Html::encode($fatura->reserva_id) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Data Fatura</th>
                         <td><?= Html::encode($fatura->data) ?></td>
                     </tr>
-                    <tr>
-                        <th scope="row">Valor</th>
-                        <td><?= Html::encode($fatura->valor) ?> €</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">IVA</th>
-                        <td><?= Html::encode($fatura->iva) ?> €</td>
-                    </tr>
-
                     <tr>
                         <th scope="row">Download</th>
                         <td>
                             <?= Html::a(
                                 '<i class="fas fa-download"></i> Download',
-                                ['faturas/view', 'id' => $fatura->id],
+                                ['faturas/download', 'id' => $fatura->id],
                                 ['class' => 'btn btn-success']
                             ) ?>
                         </td>

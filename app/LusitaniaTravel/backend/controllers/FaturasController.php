@@ -55,18 +55,21 @@ class FaturasController extends \yii\web\Controller
     }
 
 
-    public function actionEdit($reserva_id)
+    public function actionEdit($id)
     {
-        $fatura = Fatura::findOne($reserva_id);
+        $fatura = Fatura::findOne($id);
 
-        // Lógica para editar uma reserva (pode envolver o uso de um formulário)
+        if ($fatura === null) {
+            throw new NotFoundHttpException('A fatura não foi encontrada.');
+        }
 
         if ($fatura->load(Yii::$app->request->post()) && $fatura->save()) {
             Yii::$app->session->setFlash('success', 'Fatura atualizada com sucesso.');
             return $this->redirect(['index']);
         }
 
-        return $this->render('edit', ['fatura' => $fatura]);
+        return $this->render('edit', ['fatura' => $fatura,
+         'selectReservas' => $fatura->selectReservas()]);
     }
 
 

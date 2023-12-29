@@ -148,105 +148,6 @@ class CarrinhoController extends \yii\web\Controller
         return $this->redirect(['carrinho/index']);
     }
 
-    public function actionFinalizarCompra()
-    {
-        // Obter os itens do carrinho
-        $itensCarrinho = Yii::$app->session->get('carrinho', []);
-
-        // Verificar o estado das reservas no carrinho
-        foreach ($itensCarrinho as $item) {
-            $confirmacoes = $item->reserva->confirmacoes;
-
-            // Ajuste esta parte para corresponder à estrutura real do array de confirmações
-            $ultimaConfirmacao = end($confirmacoes);
-
-            if ($ultimaConfirmacao['estado'] === 'Pendente') {
-                // Se o estado for pendente, não permitir a finalização da compra
-                throw new NotFoundHttpException('Não é possível finalizar a compra. O estado da reserva está pendente.');
-            } elseif ($ultimaConfirmacao['estado'] !== 'Confirmado') {
-                // Se o estado não for confirmado ou pendente, não permitir a finalização da compra
-                throw new NotFoundHttpException('Não é possível finalizar a compra. O estado da reserva não está confirmado.');
-            }
-        }
-
-        // Calcular o valor total com base nos itens do carrinho
-        $valorTotal = 0;
-        foreach ($itensCarrinho as $item) {
-            // Adicione a lógica do seu cálculo aqui
-            $valorTotal += $item->subtotal;
-        }
-
-        // Criar a entidade de Reserva
-        $reserva = new Reserva();
-        $reserva->valor = $valorTotal;
-        $reserva->entidade = 21223; // Valor fixo
-        $reserva->save();
-
-        // Associar a referência à entidade (usando o ID da reserva como referência)
-        $referencia = 'REF' . str_pad($reserva->id, 8, '0', STR_PAD_LEFT);
-        $reserva->referencia = $referencia;
-        $reserva->save();
-
-        // Cria a fatura associada à reserva
-        $fatura = new Fatura([
-            'totalf' => $reserva->valor,
-            'totalsi' => $reserva->valor - 0.23, // Ajuste conforme necessário
-            'iva' => 0.23, // Substitua 0.23 pela taxa de IVA apropriada
-            'empresa_id' => 1, // Substitua 1 pelo ID da empresa associada à fatura
-            'reserva_id' => $reserva->id,
-        ]);
-
-        // Salva a fatura
-        if (!$fatura->save()) {
-            Yii::error('Erro ao salvar a fatura: ' . print_r($fatura->errors, true));
-            throw new \Exception('Erro ao salvar a fatura.');
-        }
-
-        // Cria linhas de fatura com base na reserva
-        $linhaFatura = new Linhasfatura([
-            'quantidade' => 1, // Ajuste conforme necessário
-            'precounitario' => $reserva->valor, // Ajuste conforme necessário
-            'subtotal' => $reserva->valor,
-            'iva' => $reserva->valor * 0.23, // Substitua 0.23 pela taxa de IVA apropriada
-            'fatura_id' => $fatura->id,
-            'linhasreservas_id' => $reserva->id,
-        ]);
-
-        // Salva a linha de fatura
-        if (!$linhaFatura->save()) {
-            Yii::error('Erro ao salvar a linha de fatura: ' . print_r($linhaFatura->errors, true));
-            throw new \Exception('Erro ao salvar a linha de fatura.');
-        }
-
-        // Criar linhas de fatura com base nos itens do carrinho
-        foreach ($itensCarrinho as $item) {
-            $linhaFatura = new Linhasfatura();
-            $linhaFatura->quantidade = $item->quantidade;
-            $linhaFatura->precounitario = $item->fornecedor->precopornoite; // Supondo que há uma relação entre ItemCarrinho e Produto
-            $linhaFatura->subtotal = $item->subtotal;
-            $linhaFatura->iva = $item->subtotal * 0.23; // Substitua 0.23 pela taxa de IVA apropriada
-            $linhaFatura->fatura_id = $fatura->id;
-            $linhaFatura->linhasreservas_id = $item->reserva->id; // Supondo que há uma relação entre ItemCarrinho e Reserva
-            $linhaFatura->save();
-        }
-
-        // Remover itens do carrinho da base de dados
-        foreach ($itensCarrinho as $item) {
-            $item->delete();
-        }
-
-        // Limpar o carrinho (remover itens da sessão)
-        Yii::$app->session->remove('carrinho');
-        Yii::$app->session->remove('totalCarrinho');
-
-
-        // Exibir mensagem de sucesso (você pode redirecionar para uma página de confirmação, por exemplo)
-        Yii::$app->session->setFlash('success', 'Compra finalizada com sucesso!');
-
-        // Redirecionar para a página desejada após a finalização da compra
-        return $this->redirect(['site/pagamento', 'id' => $reserva->id]);
-    }
-
     public function actionPagamento($id)
     {
         $reserva = Reserva::findOne($id);
@@ -255,8 +156,46 @@ class CarrinhoController extends \yii\web\Controller
             throw new NotFoundHttpException('Reserva não encontrada.');
         }
 
+        // Lógica para limpar os itens do carrinho
+        $itensCarrinho = Yii::$app->session->get('carrinho', []);
+        foreach ($itensCarrinho as $item) {
+            $item->delete();
+        }
+
+        // Lógica para criar a fatura e as linhas de fatura
+        $fatura = new Fatura();
+        $fatura->totalf = $reserva->valor; // ou qualquer outra lógica de cálculo para o total da fatura
+        $fatura->totalsi = $reserva->valor - 0.23; // ou qualquer outra lógica de cálculo para o total da fatura
+        $fatura->iva = 0.23 * $reserva->valor; // por exemplo, 23% de IVA
+        $fatura->empresa_id = 1; // substitua pelo ID real da empresa
+        $fatura->reserva_id = $reserva->id; // associar à reserva
+        $fatura->data = date('Y-m-d'); // data atual
+        $fatura->save();
+
+        // Buscar as LinhasReservas associadas à reserva
+        $linhasReservas = LinhasReserva::findAll(['reservas_id' => $reserva->id]);
+
+        // Para cada item no carrinho, criar uma linha de fatura (LinhasFaturas)
+        foreach ($itensCarrinho as $item) {
+            foreach ($linhasReservas as $linhaReserva) {
+                $linhaFatura = new LinhasFatura();
+                $linhaFatura->quantidade = $item->quantidade;
+                $linhaFatura->precounitario = $item->preco; // ou qualquer outra lógica para o preço unitário
+                $linhaFatura->subtotal = $item->subtotal;
+                $linhaFatura->iva = 0.23; // por exemplo, 23% de IVA
+                $linhaFatura->fatura_id = $fatura->id; // associar à fatura
+                $linhaFatura->linhasreservas_id = $linhaReserva->id; // associar à LinhasReservas
+                $linhaFatura->save();
+            }
+        }
+
+        // Limpar o carrinho (remover itens da sessão)
+        Yii::$app->session->remove('carrinho');
+        Yii::$app->session->remove('totalCarrinho');
+
         return $this->render('pagamento', [
             'reserva' => $reserva,
+            'fatura' => $fatura,
         ]);
     }
 

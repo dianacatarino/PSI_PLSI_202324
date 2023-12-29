@@ -19,23 +19,52 @@ $this->title = 'Detalhes da Fatura';
             <table class="table detalhes-fatura-table">
                 <tbody>
                 <tr>
-                    <th scope="row">Total Fatura</th>
+                    <th scope="row">Valor</th>
                     <td><?= Html::encode($fatura->totalf) ?> €</td>
                 </tr>
                 <tr>
-                    <th scope="row">Total S/ IVA</th>
+                    <th scope="row">Valor Sem Iva</th>
                     <td><?= Html::encode($fatura->totalsi) ?> €</td>
                 </tr>
                 <tr>
-                    <th scope="row">IVA</th>
-                    <td><?= Html::encode($fatura->iva) ?> €</td>
+                    <th scope="row">Iva</th>
+                    <td><?= Html::encode($fatura->iva) ?> %</td>
                 </tr>
                 <tr>
-                    <th scope="row">Data da Fatura</th>
+                    <th scope="row">Empresa</th>
+                    <td><?= Html::encode($fatura->empresa->sede) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Reserva</th>
+                    <td><?= Html::encode($fatura->reserva_id) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Data Fatura</th>
                     <td><?= Html::encode($fatura->data) ?></td>
                 </tr>
+
                 </tbody>
             </table>
+
+            <table class="table detalhes-fatura-table">
+                <thead>
+                <tr>
+                    <th>Quantidade</th>
+                    <th>Preço Unitário</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($fatura->linhasfaturas as $linha): ?>
+                    <tr>
+                        <td><?= Html::encode($linha->quantidade) ?></td>
+                        <td><?= Html::encode($linha->precounitario) ?> €</td>
+                        <td><?= Html::encode($linha->subtotal) ?> €</td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
         </div>
     </div>
 

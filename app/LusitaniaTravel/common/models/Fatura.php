@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use common\models\Reserva;
 use backend\models\Empresa;
 use Yii;
 
@@ -15,6 +14,7 @@ use Yii;
  * @property float $iva
  * @property int $empresa_id
  * @property int $reserva_id
+ * @property string $data
  *
  * @property Empresa $empresa
  * @property Linhasfatura[] $linhasfaturas
@@ -36,9 +36,10 @@ class Fatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['totalf', 'totalsi', 'iva', 'empresa_id', 'reserva_id'], 'required'],
+            [['totalf', 'totalsi', 'iva', 'empresa_id', 'reserva_id', 'data'], 'required'],
             [['totalf', 'totalsi', 'iva'], 'number'],
             [['empresa_id', 'reserva_id'], 'integer'],
+            [['data'], 'safe'],
             [['empresa_id'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::class, 'targetAttribute' => ['empresa_id' => 'id']],
             [['reserva_id'], 'exist', 'skipOnError' => true, 'targetClass' => Reserva::class, 'targetAttribute' => ['reserva_id' => 'id']],
         ];
@@ -56,6 +57,7 @@ class Fatura extends \yii\db\ActiveRecord
             'iva' => 'Iva',
             'empresa_id' => 'Empresa ID',
             'reserva_id' => 'Reserva ID',
+            'data' => 'Data',
         ];
     }
 

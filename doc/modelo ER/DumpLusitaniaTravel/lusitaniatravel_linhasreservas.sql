@@ -32,7 +32,7 @@ CREATE TABLE `linhasreservas` (
   PRIMARY KEY (`id`),
   KEY `fk_linhasreservas_reservas` (`reservas_id`),
   CONSTRAINT `fk_linhasreservas_reservas` FOREIGN KEY (`reservas_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `linhasreservas` (
 
 LOCK TABLES `linhasreservas` WRITE;
 /*!40000 ALTER TABLE `linhasreservas` DISABLE KEYS */;
-INSERT INTO `linhasreservas` VALUES (1,'Quarto Duplo',3,2,89.00,1),(2,'Quarto Duplo',6,2,58.33,5),(3,'Quarto Duplo',6,2,58.33,5),(4,'Quarto Familiar',3,4,46.67,6),(6,'Quarto Duplo',7,2,100.00,7);
+INSERT INTO `linhasreservas` VALUES (1,'Quarto Duplo',3,2,89.00,1),(2,'Quarto Duplo',6,2,58.33,5),(3,'Quarto Duplo',6,2,58.33,5),(4,'Quarto Familiar',3,4,46.67,6),(6,'Quarto Duplo',7,2,100.00,7),(7,'Quarto Triplo',7,3,100.00,7),(8,'Quarto Individual',7,1,100.00,7),(10,'Quarto Duplo',4,2,25.00,8),(11,'Quarto Duplo',4,2,25.00,8),(12,'Quarto Duplo',4,2,25.00,8),(26,'Quarto Duplo',4,2,89.00,31),(27,'Quarto Duplo',4,2,89.00,31),(28,'Quarto Duplo',8,1,222.50,30),(29,'Quarto Triplo',5,2,100.00,33),(30,'Quarto Triplo',5,2,100.00,33),(33,'Quarto Duplo',3,1,100.00,35),(34,'Quarto Familiar',5,4,462.80,36),(35,'Quarto Familiar',5,2,165.00,37),(36,'Quarto Familiar',2,2,577.50,37),(37,'Quarto Familiar',4,4,675.00,39);
 /*!40000 ALTER TABLE `linhasreservas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 20:30:25
+-- Dump completed on 2023-12-29 17:23:58

@@ -29,12 +29,13 @@ CREATE TABLE `faturas` (
   `iva` decimal(4,2) NOT NULL,
   `empresa_id` int NOT NULL,
   `reserva_id` int NOT NULL,
+  `data` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_faturas_empresas` (`empresa_id`),
   KEY `fk_faturas_reservas` (`reserva_id`),
   CONSTRAINT `fk_faturas_empresas` FOREIGN KEY (`empresa_id`) REFERENCES `empresas` (`id`),
   CONSTRAINT `fk_faturas_reservas` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +44,7 @@ CREATE TABLE `faturas` (
 
 LOCK TABLES `faturas` WRITE;
 /*!40000 ALTER TABLE `faturas` DISABLE KEYS */;
+INSERT INTO `faturas` VALUES (1,2700.00,2699.77,0.23,1,39,'2023-12-29');
 /*!40000 ALTER TABLE `faturas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 20:30:25
+-- Dump completed on 2023-12-29 17:23:58

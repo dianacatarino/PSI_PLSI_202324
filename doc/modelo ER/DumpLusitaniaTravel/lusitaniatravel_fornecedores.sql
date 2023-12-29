@@ -42,7 +42,7 @@ CREATE TABLE `fornecedores` (
 
 LOCK TABLES `fornecedores` WRITE;
 /*!40000 ALTER TABLE `fornecedores` DISABLE KEYS */;
-INSERT INTO `fornecedores` VALUES (1,'Fornecedor','Alojamento','Casa Mar','Algarve','Cama de Solteiro;WC Privativa;Pequeno Almoço','Individual;Duplo',25,89.00),(2,'Fornecedor1','Hotel','Hotel Arizona','Lisboa','Cama de Casal;Cama de Solteiro;Wi-Fi;TV;Piscina','Individual;Duplo;Triplo;Familiares',10,100.00),(3,'Fornecedor1','Alojamento','Casa Rosa','Lisboa','Cama de Casal;Cama de Solteiro;TV;Estacionamento','Individual;Duplo;Triplo;Familiares',5,125.00),(4,'Fornecedor','Alojamento','Casa Rosa','Lisboa','Cama de Casal;TV;AC;Estacionamento','Individual;Duplo;Triplo;Familiares',5,165.00),(8,'Fornecedor1','Hotel','Selene Hotel','Porto','Cama de Casal;Cama de Solteiro;Wi-Fi;TV;AC;WC Privativa;Piscina','Individual;Duplo;Triplo;Familiares',15,55.00),(9,'Fornecedor1','Resort','Hotel Arizona','Porto','Cama de Solteiro;Wi-Fi;TV;WC Privativa','Individual;Duplo;Triplo;Familiares',5,100.00),(11,'Fornecedor','Hotel','Hotel Algarve','Algarve','Cama de Casal;Cama de Solteiro;Wi-Fi','Individual;Duplo;Triplo;Familiares',5,200.00),(12,'Fornecedor1','Resort','Hotel Arizona','Porto','Cama de Solteiro;AC;WC Privativa','Individual;Duplo;Triplo;Familiares',5,100.00);
+INSERT INTO `fornecedores` VALUES (1,'Fornecedor','Alojamento','Casa Mar','Algarve','Cama de Solteiro;WC Privativa;Pequeno Almoço','Individual;Duplo',25,89.00),(2,'Fornecedor1','Hotel','Hotel Arizona','Lisboa','Cama de Casal;Cama de Solteiro;Wi-Fi;TV;Piscina','Individual;Duplo;Triplo;Familiares',10,100.00),(3,'Fornecedor1','Alojamento','Casa Rosa','Lisboa','Cama de Casal;Cama de Solteiro;TV;Estacionamento','Individual;Duplo;Triplo;Familiares',5,125.00),(4,'Fornecedor','Alojamento','Casa Rosa','Lisboa','Cama de Casal;TV;AC;Estacionamento','Individual;Duplo;Triplo;Familiares',5,165.00),(8,'Fornecedor1','Hotel','Selene Hotel','Porto','Cama de Casal;Cama de Solteiro;Wi-Fi;TV;AC;WC Privativa;Piscina','Individual;Duplo;Triplo;Familiares',3,55.00),(9,'Fornecedor1','Resort','Hotel Porto','Porto','Cama de Casal;Cama de Solteiro;Wi-Fi;TV;WC Privativa','Individual;Duplo',5,100.00),(11,'Fornecedor','Hotel','Hotel Algarve','Algarve','Cama de Casal;Cama de Solteiro;Wi-Fi','Individual;Duplo;Triplo;Familiares',5,200.00),(12,'Fornecedor1','Resort','Hotel Oasis','Porto','Cama de Casal;Cama de Solteiro;Wi-Fi;AC;WC Privativa','Individual;Duplo;Triplo',5,100.00);
 /*!40000 ALTER TABLE `fornecedores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-20 20:30:25
+-- Dump completed on 2023-12-29 17:23:57

@@ -68,6 +68,7 @@ CREATE TABLE Faturas (
     iva DECIMAL(4, 2) NOT NULL,
     empresa_id INT NOT NULL,
     reserva_id INT NOT NULL,
+    data DATE NOT NULL,
     CONSTRAINT pk_faturas_id PRIMARY KEY (id),
     CONSTRAINT fk_faturas_empresas FOREIGN KEY (empresa_id) REFERENCES Empresas (id),
     CONSTRAINT fk_faturas_reservas FOREIGN KEY (reserva_id) REFERENCES Reservas (id)

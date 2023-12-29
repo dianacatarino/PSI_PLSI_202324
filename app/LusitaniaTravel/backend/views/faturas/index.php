@@ -29,10 +29,12 @@ $this->title = 'Gestão de Faturas';
             <table class="table table-striped projects">
                 <thead>
                 <tr>
-                    <th style="width: 5%">ID da Fatura</th>
-                    <th style="width: 5%">Total da Fatura</th>
-                    <th style="width: 5%">Total sem Iva</th>
-                    <th style="width: 5%">Percentagem de Iva</th>
+                    <th style="width: 5%">Id</th>
+                    <th style="width: 5%">Total </th>
+                    <th style="width: 5%">Total S/Iva</th>
+                    <th style="width: 5%">% de Iva</th>
+                    <th style="width: 5%">Reserva</th>
+                    <th style="width: 5%">Data</th>
                     <th style="width: 1%">Ações</th>
                 </tr>
                 </thead>
@@ -43,11 +45,13 @@ $this->title = 'Gestão de Faturas';
                         <td><?= Html::encode($fatura->totalf) ?></td>
                         <td><?= Html::encode($fatura->totalsi) ?></td>
                         <td><?= Html::encode($fatura->iva) ?></td>
+                        <td><?= Html::encode($fatura->reserva_id) ?></td>
+                        <td><?= Html::encode($fatura->data) ?></td>
                         <td class="project-actions text-right">
                             <div class="btn-group">
-                                <?= Html::a('<i class="fas fa-folder"></i>', ['faturas/show', 'id' => $reserva->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['faturas/edit', 'id' => $reserva->id], ['class' => 'btn btn-info btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['faturas/delete', 'id' => $reserva->id], [
+                                <?= Html::a('<i class="fas fa-folder"></i>', ['faturas/show', 'id' => $fatura->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['faturas/edit', 'id' => $fatura->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                <?= Html::a('<i class="fas fa-trash"></i>', ['faturas/delete', 'id' => $fatura->id], [
                                     'class' => 'btn btn-danger btn-sm',
                                     'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',
