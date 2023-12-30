@@ -156,8 +156,11 @@ class CarrinhoController extends \yii\web\Controller
             throw new NotFoundHttpException('Reserva não encontrada.');
         }
 
-        // Lógica para limpar os itens do carrinho
-        $itensCarrinho = Yii::$app->session->get('carrinho', []);
+        $clienteId = Yii::$app->user->id;
+
+        // Lógica para limpar os itens do carrinho associados ao cliente
+        $itensCarrinho = Carrinho::findAll(['cliente_id' => $clienteId]);
+
         foreach ($itensCarrinho as $item) {
             $item->delete();
         }
@@ -166,11 +169,12 @@ class CarrinhoController extends \yii\web\Controller
         $fatura = new Fatura();
         $fatura->totalf = $reserva->valor; // ou qualquer outra lógica de cálculo para o total da fatura
         $fatura->totalsi = $reserva->valor - 0.23; // ou qualquer outra lógica de cálculo para o total da fatura
-        $fatura->iva = 0.23 * $reserva->valor; // por exemplo, 23% de IVA
+        $fatura->iva = 0.23; // por exemplo, 23% de IVA
         $fatura->empresa_id = 1; // substitua pelo ID real da empresa
         $fatura->reserva_id = $reserva->id; // associar à reserva
         $fatura->data = date('Y-m-d'); // data atual
         $fatura->save();
+
 
         // Buscar as LinhasReservas associadas à reserva
         $linhasReservas = LinhasReserva::findAll(['reservas_id' => $reserva->id]);
@@ -188,10 +192,6 @@ class CarrinhoController extends \yii\web\Controller
                 $linhaFatura->save();
             }
         }
-
-        // Limpar o carrinho (remover itens da sessão)
-        Yii::$app->session->remove('carrinho');
-        Yii::$app->session->remove('totalCarrinho');
 
         return $this->render('pagamento', [
             'reserva' => $reserva,
