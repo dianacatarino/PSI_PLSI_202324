@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
-use common\models\Fatura;
-use common\models\Linhasfatura;
+use backend\models\Fatura;
+use backend\models\Linhasfatura;
 use backend\models\Empresa;
 use backend\models\ReservaSearch;
 use common\models\Reserva;
@@ -69,7 +69,7 @@ class FaturasController extends \yii\web\Controller
         }
 
         return $this->render('edit', ['fatura' => $fatura,
-         'selectReservas' => $fatura->selectReservas()]);
+            'selectReservas' => $fatura->selectReservas()]);
     }
 
 
