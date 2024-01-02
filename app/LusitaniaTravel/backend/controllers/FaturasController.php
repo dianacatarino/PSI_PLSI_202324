@@ -2,10 +2,11 @@
 
 namespace backend\controllers;
 
-use backend\models\Fatura;
-use backend\models\Linhasfatura;
+use common\models\Fatura;
+use common\models\Linhasfatura;
 use backend\models\Empresa;
 use backend\models\ReservaSearch;
+use common\models\Linhasreserva;
 use common\models\Reserva;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -14,7 +15,7 @@ class FaturasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $faturas = Fatura::find()->all();
+        $faturas = Fatura::find()->with('linhasfaturas')->all();
 
         return $this->render('index', ['faturas' => $faturas]);
     }
@@ -23,23 +24,12 @@ class FaturasController extends \yii\web\Controller
     {
         $fatura = new Fatura();
         $reservaModel = new ReservaSearch();
-        $dataProvider = null;
 
         if ($reservaModel->load(Yii::$app->request->post()) && $reservaModel->validate()) {
-            $nome = $reservaModel->nome; // Nome a ser pesquisado
-            $role = $reservaModel->role; // Papel (role) a ser considerado
-
-            // Realizar a pesquisa no modelo ReservaSearch
-            $dataProvider = $reservaModel->search([
-                'ReservaSearch' => [
-                    'nome' => $nome,
-                    'role' => $role,
-                ]
-            ]);
+            // Aqui você pode realizar qualquer ação necessária para a pesquisa, mas não use $dataProvider
         }
 
         if ($fatura->load(Yii::$app->request->post())) {
-
             $reservaId = Yii::$app->request->post('Fatura')['reserva_id'];
             $fatura->reserva_id = $reservaId;
 
@@ -51,7 +41,77 @@ class FaturasController extends \yii\web\Controller
             }
         }
 
-        return $this->render('create2', ['fatura' => $fatura,'reservaModel' => $reservaModel]);
+        return $this->render('create2', [
+            'fatura' => $fatura,
+            'reservaModel' => $reservaModel,
+            'selectReservas' => $fatura->selectReservas(),
+        ]);
+    }
+
+    public function actionGetReservaInfo($id)
+    {
+        $reserva = Reserva::findOne($id);
+
+        if ($reserva) {
+            $info = [
+                'fornecedor_nome_alojamento' => $reserva->fornecedor->nome_alojamento,
+                'cliente_profile_name' => $reserva->cliente->profile->name,
+            ];
+
+            return json_encode($info);
+        }
+
+        return json_encode(['error' => 'Reserva não encontrada']);
+    }
+
+
+    public function actionCreate($reservaId)
+    {
+        // Find the reserva model
+        $reservaModel = Reserva::findOne($reservaId);
+        $iva = 0.23;
+
+        if (!$reservaModel) {
+            throw new NotFoundHttpException('The requested reservation does not exist.');
+        }
+
+        // Create a new Fatura
+        $fatura = new Fatura([
+            'totalf' => $reservaModel->valor,
+            'totalsi' => $reservaModel->valor - $iva,
+            'iva' => $iva,
+            'reserva_id' => $reservaId,
+            'empresa_id' => 1,
+            'data' => date('Y-m-d'),
+        ]);
+
+        $fatura->save();
+
+        // Save the Fatura
+        if ($fatura->save()) {
+            // Fetch LinhasReserva for the given reservaId
+            $linhasReserva = LinhasReserva::findAll(['reserva_id' => $reservaId]);
+
+            foreach ($linhasReserva as $linhaReserva) {
+                $linhaFatura = new LinhasFatura([
+                    'quantidade' => 1,
+                    'precounitario' => $linhaReserva->subtotal,
+                    'subtotal' => $reservaModel->valor,
+                    'iva' => $iva,
+                    'fatura_id' => $fatura->id,
+                    'linhasreservas_id' => $linhaReserva->id,
+                ]);
+
+                $linhaFatura->save(); // Save each LinhasFatura
+            }
+
+            // Redirect or do something else
+            return $this->redirect(['faturas/index']);
+        } else {
+            // Handle the case where the Fatura could not be saved
+            Yii::$app->session->setFlash('error', 'Error creating the invoice.');
+            return $this->redirect(['faturas/index']);
+        }
     }
 
 
@@ -69,24 +129,27 @@ class FaturasController extends \yii\web\Controller
         }
 
         return $this->render('edit', ['fatura' => $fatura,
-            'selectReservas' => $fatura->selectReservas()]);
+         'selectReservas' => $fatura->selectReservas()]);
     }
 
 
     public function actionShow($id)
     {
         $fatura = new Fatura();
-        $id = Yii::$app->request->post('Fatura')['reserva_id'];
         $reserva = Reserva::findOne($id);
+        $empresa = Empresa::findOne(1); // Substitua 1 pelo ID da empresa que você deseja mostrar
 
-        if ($reserva) {
+        if ($reserva && $empresa) {
             $fatura->reserva_id = $id;
-
         } else {
-            Yii::$app->session->setFlash('error', 'Erro ao encontrar a resserva.');
+            Yii::$app->session->setFlash('error', 'Erro ao encontrar a reserva ou empresa.');
         }
 
-        return $this->render('show', ['fatura' => $fatura]);
+        return $this->render('show', [
+            'fatura' => $fatura,
+            'reserva' => $reserva,
+            'empresa' => $empresa, // Certifique-se de passar a variável $empresa para a visão
+        ]);
     }
 
 

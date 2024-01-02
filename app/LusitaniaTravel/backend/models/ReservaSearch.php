@@ -12,6 +12,9 @@ use yii\data\ActiveDataProvider;
 
 class ReservaSearch extends Reserva
 {
+    public $fornecedor_nome_alojamento;
+    public $cliente_profile_name;
+
     /**
      * {@inheritdoc}
      */
@@ -20,9 +23,9 @@ class ReservaSearch extends Reserva
         return [
             [['id'], 'integer'],
             [['tipo', 'checkin', 'checkout', 'numeroquartos', 'numeroclientes', 'valor'], 'safe'],
+            [['fornecedor_nome_alojamento', 'cliente_profile_name'], 'string'], // Adicionei as regras para os novos atributos
         ];
     }
-
 
     /**
      * {@inheritdoc}
@@ -43,36 +46,23 @@ class ReservaSearch extends Reserva
     public function search($params)
     {
         $query = Reserva::find();
-        $query->joinWith(['profile']); // Realiza JOIN com a tabela 'profile'
-
-        // Carrega os parâmetros de pesquisa com base no modelo
-        $this->load($params);
-
-        // Adiciona condições com base nos parâmetros de pesquisa
-        $query->andFilterWhere(['like', 'profile.name', $this->getAttribute('name')]); // Filtra pelo nome na tabela 'profile'
-
-        // Filtra pelo nome do funcionário apenas se o papel for funcionário
-        if ($this->getAttribute('role') === 'funcionario') {
-            $query->innerJoin('funcionario', 'funcionario.profile_id = profile.id')
-                ->andFilterWhere(['like', 'funcionario.nome', $this->getAttribute('nome_funcionario')]);
-        }
-
-        // Filtra pelo nome do cliente apenas se o papel for cliente
-        if ($this->getAttribute('role') === 'cliente') {
-            $query->innerJoin('cliente', 'cliente.profile_id = profile.id')
-                ->andFilterWhere(['like', 'cliente.nome', $this->getAttribute('nome_cliente')]);
-        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        // Validar antes de aplicar a pesquisa
+        $this->load($params);
+
         if (!$this->validate()) {
             return $dataProvider;
         }
 
-        // Retorna os dados completos do fornecedor
+        $query->andFilterWhere(['id' => $this->id]);
+
+        // Add conditions related to the search fields
+        $query->andFilterWhere(['like', 'fornecedor.nome_alojamento', $this->fornecedor_nome_alojamento])
+            ->andFilterWhere(['like', 'profile.name', $this->cliente_profile_name]);
+
         return $dataProvider;
     }
 

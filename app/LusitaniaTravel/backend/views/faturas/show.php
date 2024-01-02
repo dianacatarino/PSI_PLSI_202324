@@ -2,10 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\Fornecedor;
+use common\models\Fornecedor;
 use common\models\Profile;
 use common\models\Reserva;
-use common\models\Empresa;
+use backend\models\Empresa;
 
 $this->title = 'Fatura Emitida';
 

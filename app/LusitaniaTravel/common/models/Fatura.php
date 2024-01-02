@@ -93,6 +93,11 @@ class Fatura extends \yii\db\ActiveRecord
 
     public static function selectReservas()
     {
-        return Reserva::find()->select(['id'])->indexBy('id')->column();
+        return Reserva::find()
+            ->innerJoin('confirmacoes', 'confirmacoes.reserva_id = reservas.id')
+            ->andWhere(['confirmacoes.estado' => 'Confirmado'])
+            ->select(['reservas.id'])
+            ->indexBy('id')
+            ->column();
     }
 }

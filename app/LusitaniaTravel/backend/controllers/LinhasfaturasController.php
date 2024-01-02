@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 class LinhasfaturasController extends \yii\web\Controller
 {
 
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -39,7 +39,7 @@ class LinhasfaturasController extends \yii\web\Controller
                 ],
             ],
         ];
-    }*/
+    }
 
     public function actionIndex()
     {
@@ -49,33 +49,40 @@ class LinhasfaturasController extends \yii\web\Controller
 
     }
 
-    public function actionCreate()
-    {
-        return $this->render('create');
-    }
-
-    public function actionStore()
-    {
-        return $this->render('store');
-    }
-
-    public function actionEdit()
-    {
-        return $this->render('edit');
-    }
-
-    public function actionUpdate()
-    {
-        return $this->render('update');
-    }
-
     public function actionShow($id)
     {
-        return $this->render('show');
+        $linhafatura = Linhasfatura::findOne($id);
+
+        if ($linhafatura === null) {
+            throw new NotFoundHttpException('A página solicitada não existe.');
+        }
+
+        return $this->render('show', ['linhafatura' => $linhafatura]);
     }
 
-    public function actionDelete()
+    public function actionEdit($id)
     {
-        return $this->render('delete');
+        $linhafatura = Linhasfatura::findOne($id);
+
+        if ($linhafatura === null) {
+            throw new NotFoundHttpException('A página solicitada não existe.');
+        }
+
+        // Lógica de edição aqui
+
+        return $this->render('edit', ['linhafatura' => $linhafatura]);
+    }
+
+    public function actionDelete($id)
+    {
+        $linhafatura = Linhasfatura::findOne($id);
+
+        if ($linhafatura === null) {
+            throw new NotFoundHttpException('A página solicitada não existe.');
+        }
+
+        // Lógica de exclusão aqui
+
+        return $this->render('delete', ['linhafatura' => $linhafatura]);
     }
 }

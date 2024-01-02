@@ -141,6 +141,4 @@ class FaturasController extends \yii\web\Controller
 
         return $fileContent;
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 use yii\bootstrap5\Html;
 
-$this->title = 'Detalhes da Linha de Reserva';
+$this->title = 'Detalhes da Linha de Fatura';
 ?>
 <section class="content-header">
     <div class="container-fluid">
@@ -16,14 +16,14 @@ $this->title = 'Detalhes da Linha de Reserva';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Voltar', ['reservas/index'], ['class' => 'btn btn-secondary']) ?>
+        <?= Html::a('Voltar', ['faturas/index'], ['class' => 'btn btn-secondary']) ?>
     </p>
 </div>
 
 <section class="content">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Detalhes da Linha de Reserva <?= $linhasreserva->id ?></h3>
+            <h3 class="card-title">Detalhes da Linha de Fatura <?= $linhafatura->id ?></h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -32,32 +32,24 @@ $this->title = 'Detalhes da Linha de Reserva';
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Tipo de Quarto</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhasreserva->tipoquarto) ?></span>
+                                    <span class="info-box-text text-center text-muted">Quantidade</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhafatura->quantidade) ?></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Nº Noites</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhasreserva->numeronoites) ?></span>
+                                    <span class="info-box-text text-center text-muted">Preço Unitário</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhafatura->precounitario) ?>€</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-light">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Nº Camas</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhasreserva->numerocamas) ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-4">
-                            <div class="info-box bg-light">
-                                <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Subtotal</span>
-                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhasreserva->subtotal) ?>€</span>
+                                    <span class="info-box-text text-center text-muted">Id da Linha de Reserva</span>
+                                    <span class="info-box-number text-center text-muted mb-0"><?= Html::encode($linhafatura->linhasreservas_id) ?></span>
                                 </div>
                             </div>
                         </div>
@@ -67,4 +59,3 @@ $this->title = 'Detalhes da Linha de Reserva';
         </div>
     </div>
 </section>
-

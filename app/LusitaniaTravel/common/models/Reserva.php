@@ -154,4 +154,20 @@ class Reserva extends \yii\db\ActiveRecord
             ->indexBy('user_id')
             ->column();
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(Profile::class, ['id' => 'profile_id']);
+    }
+
+    public function getReservaDetails()
+    {
+        return [
+            'fornecedor' => $this->fornecedor->nome, // Ajuste conforme sua estrutura de banco de dados
+            'cliente' => $this->cliente->profile->name, // Ajuste conforme sua estrutura de banco de dados
+        ];
+    }
 }

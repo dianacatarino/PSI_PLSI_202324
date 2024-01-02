@@ -28,6 +28,58 @@ AppAsset::register($this);
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
+<?php
+$userRole = Yii::$app->user->isGuest ? null : Yii::$app->user->identity->profile->role;
+
+// Define as opções de exibição com base na função do usuário
+switch ($userRole) {
+    case 'fornecedor':
+        $alojamentosDisplay = '';
+        $confirmacoesDisplay = '';
+        $comentariosDisplay = '';
+        $avaliacoesDisplay = '';
+        $reservasDisplay = 'style="display: none;"';
+        $faturasDisplay = 'style="display: none;"';
+        $usersDisplay = 'style="display: none;"';
+        $empresaDisplay = 'style="display: none;"'; // Adicione esta linha para esconder a seção Empresa
+        break;
+
+    case 'funcionario':
+        $alojamentosDisplay = 'style="display: none;"';
+        $confirmacoesDisplay = '';
+        $comentariosDisplay = '';
+        $avaliacoesDisplay = '';
+        $reservasDisplay = '';
+        $faturasDisplay = '';
+        $usersDisplay = 'style="display: none;"';
+        $empresaDisplay = 'style="display: none;"'; // Adicione esta linha para esconder a seção Empresa
+        break;
+
+    case 'admin':
+        $alojamentosDisplay = '';
+        $confirmacoesDisplay = '';
+        $comentariosDisplay = '';
+        $avaliacoesDisplay = '';
+        $reservasDisplay = '';
+        $faturasDisplay = '';
+        $usersDisplay = ''; // Mantenha esta linha para mostrar a seção Users para o admin
+        $empresaDisplay = ''; // Mantenha esta linha para mostrar a seção Empresa para o admin
+        break;
+
+    default:
+        // Usuário não logado ou função desconhecida
+        $alojamentosDisplay = 'style="display: none;"';
+        $confirmacoesDisplay = 'style="display: none;"';
+        $comentariosDisplay = 'style="display: none;"';
+        $avaliacoesDisplay = 'style="display: none;"';
+        $reservasDisplay = 'style="display: none;"';
+        $faturasDisplay = 'style="display: none;"';
+        $usersDisplay = 'style="display: none;"';
+        $empresaDisplay = 'style="display: none;"';
+        break;
+}
+?>
+
 <header>
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -140,13 +192,13 @@ AppAsset::register($this);
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $empresaDisplay ?>>
                         <a href="<?= Url::to(['empresa/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-building"></i>
                             <p>Empresa</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $alojamentosDisplay ?>>
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-home"></i>
                             <p>
@@ -169,7 +221,7 @@ AppAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $reservasDisplay ?>>
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
@@ -192,7 +244,7 @@ AppAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $usersDisplay ?>>
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
@@ -215,13 +267,13 @@ AppAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $confirmacoesDisplay ?>>
                         <a href="<?= Url::to(['confirmacoes/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-check"></i>
                             <p>Confirmações</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $faturasDisplay ?>>
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-file-invoice"></i>
                             <p>
@@ -231,7 +283,7 @@ AppAsset::register($this);
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?= Url::to(['faturas/select-reserva']) ?>" class="nav-link">
+                                <a href="<?= Url::to(['faturas/create2']) ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Emitir Faturas</p>
                                 </a>
@@ -244,13 +296,13 @@ AppAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $comentariosDisplay ?>>
                         <a href="<?= Url::to(['comentarios/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-comment"></i>
                             <p>Comentários</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" <?= $avaliacoesDisplay ?>>
                         <a href="<?= Url::to(['avaliacoes/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-star"></i>
                             <p>Avaliações</p>
