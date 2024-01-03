@@ -283,7 +283,7 @@ switch ($userRole) {
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="<?= Url::to(['faturas/create2']) ?>" class="nav-link">
+                                <a href="<?= Url::to(['faturas/create']) ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Emitir Faturas</p>
                                 </a>

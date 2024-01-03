@@ -15,7 +15,14 @@ class FaturasController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $faturas = Fatura::find()->all();
+        // Obtenha o ID do usuário logado
+        $userId = Yii::$app->user->id;
+
+        // Modifique a consulta para incluir faturas associadas às reservas do usuário logado
+        $faturas = Fatura::find()
+            ->innerJoin('reservas', 'reservas.id = faturas.reserva_id')
+            ->andWhere(['reservas.cliente_id' => $userId])  // Filtrar pelo cliente_id do usuário logado
+            ->all();
 
         return $this->render('index', ['faturas' => $faturas]);
     }

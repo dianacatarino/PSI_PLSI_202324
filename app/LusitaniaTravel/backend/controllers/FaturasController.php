@@ -21,7 +21,7 @@ class FaturasController extends \yii\web\Controller
         return $this->render('index', ['faturas' => $faturas]);
     }
 
-    public function actionCreate2()
+    public function actionCreate()
     {
         $fatura = new Fatura();
         $reservaModel = new ReservaSearch();
@@ -68,7 +68,7 @@ class FaturasController extends \yii\web\Controller
 
                 // Redirecionar ou fazer algo mais
                 Yii::$app->session->setFlash('success', 'Fatura criada com sucesso.');
-                return $this->redirect(['faturas/show', 'id' => $fatura->id]);
+                return $this->redirect(['faturas/index']);
             } else {
                 // Lidar com o caso em que a Fatura não pôde ser salva
                 Yii::$app->session->setFlash('error', 'Erro ao criar a fatura.');
@@ -76,7 +76,7 @@ class FaturasController extends \yii\web\Controller
         }
 
         // Renderizar a visão com a lista de reservas
-        return $this->render('create2', [
+        return $this->render('create', [
             'fatura' => $fatura,
             'reservaModel' => $reservaModel,
             'selectReservas' => $fatura->selectReservas(), // Use o método selectReservas()
@@ -99,67 +99,6 @@ class FaturasController extends \yii\web\Controller
         } else {
             return ['error' => 'Reserva not found'];
         }
-    }
-
-    public function actionCreate()
-    {
-        $fatura = new Fatura();
-        $reserva = new Reserva();
-
-        // Se o formulário for enviado
-        if (Yii::$app->request->post()) {
-            $reservaId = Yii::$app->request->post('Reserva')['id'];
-
-            // Encontrar o modelo de Reserva
-            $reservaModel = Reserva::findOne($reservaId);
-            $iva = 0.23;
-
-            if (!$reservaModel) {
-                throw new NotFoundHttpException('A reserva solicitada não existe.');
-            }
-
-            // Criar uma nova Fatura
-            $fatura = new Fatura([
-                'totalf' => $reservaModel->valor,
-                'totalsi' => $reservaModel->valor - $iva,
-                'iva' => $iva,
-                'reserva_id' => $reservaId,
-                'empresa_id' => 1,
-                'data' => date('Y-m-d'),
-            ]);
-
-            // Salvar a Fatura
-            if ($fatura->save()) {
-                // Fetch LinhasReserva para o reservaId fornecido
-                $linhasReserva = LinhasReserva::findAll(['reserva_id' => $reservaId]);
-
-                foreach ($linhasReserva as $linhaReserva) {
-                    $linhaFatura = new LinhasFatura([
-                        'quantidade' => 1,
-                        'precounitario' => $linhaReserva->subtotal,
-                        'subtotal' => $reservaModel->valor,
-                        'iva' => $iva,
-                        'fatura_id' => $fatura->id,
-                        'linhasreservas_id' => $linhaReserva->id,
-                    ]);
-
-                    $linhaFatura->save(); // Salvar cada LinhasFatura
-                }
-
-                // Redirecionar ou fazer algo mais
-                return $this->redirect(['faturas/index']);
-            } else {
-                // Lidar com o caso em que a Fatura não pôde ser salva
-                Yii::$app->session->setFlash('error', 'Erro ao criar a fatura.');
-            }
-        }
-
-        // Renderizar a visão com a lista de reservas
-        return $this->render('create', [
-            'fatura' => $fatura,
-            'selectReservas' => Fatura::selectReservas(), // Use o método selectReservas()
-            'reserva' => $reserva,
-        ]);
     }
 
 

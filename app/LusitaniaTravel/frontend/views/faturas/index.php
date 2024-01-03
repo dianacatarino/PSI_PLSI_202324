@@ -13,7 +13,7 @@ $this->title = 'Faturas';
     <h3>Faturas</h3>
 
     <?php foreach ($faturas as $fatura): ?>
-        <div class="card">
+        <div class="card mb-3"> <!-- Adicionando a classe 'mb-3' para adicionar margem na parte inferior -->
             <div class="card-body">
                 <h5 class="card-title"><?= Html::encode('Fatura ' . $fatura->id) ?></h5>
 

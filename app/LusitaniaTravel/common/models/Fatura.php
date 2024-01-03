@@ -94,8 +94,10 @@ class Fatura extends \yii\db\ActiveRecord
     public static function selectReservas()
     {
         return Reserva::find()
-            ->innerJoin('confirmacoes', 'confirmacoes.reserva_id = reservas.id')
+            ->leftJoin('confirmacoes', 'confirmacoes.reserva_id = reservas.id')
+            ->leftJoin('faturas', 'faturas.reserva_id = reservas.id')
             ->andWhere(['confirmacoes.estado' => 'Confirmado'])
+            ->andWhere(['faturas.id' => null])  // Garante que não há faturas associadas
             ->select(['reservas.id'])
             ->indexBy('id')
             ->column();
