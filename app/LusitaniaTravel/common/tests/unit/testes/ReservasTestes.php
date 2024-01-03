@@ -2,6 +2,7 @@
 
 namespace common\tests\unit\testes;
 
+use common\models\Profile;
 use common\models\Reserva;
 use common\models\User;
 use common\models\Confirmacao;
@@ -259,6 +260,79 @@ class ReservasTestes extends \Codeception\Test\Unit {
 
         // Verificar se o resultado é o esperado
         $this->assertEquals(['Funcionário A', 'Funcionário B'], $result);
+    }
+
+    public function testGetProfile()
+    {
+        // Criação de um mock para a classe Profile
+        $profile = $this->getMockBuilder(Profile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        // Simulação do retorno para o método hasOne() com o mock de Profile
+        $reserva = $this->getMockBuilder(Reserva::class)
+            ->setMethods(['hasOne'])
+            ->getMock();
+
+        $reserva->expects($this->once())
+            ->method('hasOne')
+            ->with(
+                $this->equalTo(Profile::class),
+                $this->equalTo(['id' => 'profile_id'])
+            )
+            ->willReturn($profile);
+
+        // Chamar o método getProfile() para ativar a relação
+        $result = $reserva->getProfile();
+
+        // Verificar se a relação retornada é do tipo esperado (hasOne)
+        $this->assertInstanceOf(\yii\db\ActiveQuery::class, $result);
+    }
+
+
+    public function testGetReservaDetails(){
+
+        // Criação de mocks para Fornecedor, Cliente e Profile
+        $fornecedor = $this->getMockBuilder(Fornecedor::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $fornecedor->nome = 'Fornecedor X';
+
+
+        $profile = $this->getMockBuilder(Profile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $profile->name = 'Cliente Y';
+
+
+        $cliente = $this->getMockBuilder(Profile::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cliente->profile = $profile;
+
+        // Criação de um mock para a classe Reserva
+        $reserva = $this->getMockBuilder(Reserva::class)
+            ->setMethods(['getFornecedor', 'getCliente'])
+            ->getMock();
+
+        //Aqui são especificados os comportamentos esperados
+        $reserva->expects($this->once())
+            ->method('getFornecedor')
+            ->willReturn($fornecedor);
+
+        $reserva->expects($this->once())
+            ->method('getCliente')
+            ->willReturn($cliente);
+
+        $reservaDetalhes = $reserva->getReservaDetails();
+
+
+        $resultadosEsperados = [
+            'fornecedor' => 'Fornecedor X',
+            'cliente' => 'Cliente Y',
+        ];
+
+        $this->assertEquals($resultadosEsperados, $reservaDetalhes);
     }
 
 }
