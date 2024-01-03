@@ -23,6 +23,8 @@ $script = <<< JS
             success: function(data) {
                 $('#fornecedor-input').val(data.fornecedor_nome_alojamento);
                 $('#cliente-input').val(data.cliente_profile_name);
+                $('#cliente-id-input').val(data.cliente_id); 
+                $('#fornecedor-id-input').val(data.fornecedor_id); 
             },
             error: function() {
                 console.log('Erro ao obter informações da reserva.');
@@ -37,9 +39,11 @@ $this->registerJs($script);
     <div class="card-header">
         <h3 class="card-title">Criar nova Fatura</h3>
     </div>
-    <?php $form = ActiveForm::begin(['action' => ['faturas/create'], 'method' => 'get', 'options' => ['class' => 'container']]); ?>
+    <?php $form = ActiveForm::begin(['action' => ['faturas/create2'], 'method' => 'get', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
         <?= $form->field($reservaModel, 'id')->hiddenInput(['id' => 'reserva-id-input'])->label(false) ?>
+        <?= $form->field($reservaModel, 'cliente_id')->hiddenInput(['id' => 'cliente-id-input'])->label(false) ?> 
+        <?= $form->field($reservaModel, 'fornecedor_id')->hiddenInput(['id' => 'fornecedor-id-input'])->label(false) ?> 
         <div class="col-md-4">
             <?= $form->field($reservaModel, 'id')->dropDownList($selectReservas, [
                 'prompt' => 'Selecione uma reserva',
@@ -69,5 +73,3 @@ $this->registerJs($script);
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-
-

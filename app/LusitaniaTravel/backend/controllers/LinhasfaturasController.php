@@ -81,8 +81,8 @@ class LinhasfaturasController extends \yii\web\Controller
             throw new NotFoundHttpException('A página solicitada não existe.');
         }
 
-        // Lógica de exclusão aqui
+        $linhafatura->delete();
 
-        return $this->render('delete', ['linhafatura' => $linhafatura]);
+        return $this->redirect(['faturas/index']);
     }
 }

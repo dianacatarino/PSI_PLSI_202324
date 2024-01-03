@@ -16,7 +16,7 @@ $this->title = 'Gestão de Faturas';
 
 <div class="col-sm-6">
     <p>
-        <?= Html::a('Criar nova Fatura', ['faturas/create2'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Criar nova Fatura', ['faturas/create'], ['class' => 'btn btn-info']) ?>
     </p>
 </div>
 

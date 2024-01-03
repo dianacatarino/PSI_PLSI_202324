@@ -1,165 +1,74 @@
 <?php
-
+/*
+use common\models\Reserva;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Emitir Fatura';
+$this->title = 'Criar nova Fatura';
 
-?>
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1><?= Html::encode($this->title) ?></h1>
-            </div>
+$script = <<<JS
+$('#reserva-id').change(function() {
+    var reservaId = $(this).val();
+    $.ajax({
+        url: 'get-reserva-info?id=' + reservaId,
+        type: 'get',
+        success: function(response) {
+            // Preencher os campos associados à reserva automaticamente
+            $('#cliente-id').val(response.cliente_id).prop('readonly', true);
+            $('#cliente-nome').val(response.cliente_nome).prop('readonly', true);
+            
+            // Preencher os campos relacionados ao fornecedor
+            $('#fornecedor-id').val(response.fornecedor_id).prop('readonly', true);
+            $('#fornecedor-nome').val(response.fornecedor_nome).prop('readonly', true);
+        },
+        error: function() {
+            console.log('Erro ao obter detalhes da reserva.');
+        }
+    });
+});
+JS;
+
+$this->registerJs($script);
+*/?><!--
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Criar nova Fatura</h3>
+    </div>
+    <div class="card-body">
+        <?php /*$form = ActiveForm::begin(); */?>
+
+        <div class="col-md-4">
+            <?php /*= $form->field($reserva, 'id')->dropDownList($selectReservas, [
+                'prompt' => 'Selecione uma reserva',
+                'class' => 'form-control',
+                'id' => 'reserva-id',
+            ])->label('Reserva Id') */?>
         </div>
-    </div><!-- /.container-fluid -->
-</section>
 
-<section class="content">
-    <div class="container-fluid">
+        <div class="col-md-6">
+            <?php /*= $form->field($reserva, 'cliente_id')->textInput(['id' => 'cliente-id'])->label('ID do Cliente') */?>
+        </div>
+
+        <div class="col-md-6">
+            <?php /*= $form->field($reserva, 'fornecedor_id')->textInput(['id' => 'fornecedor-id'])->label('ID do Fornecedor') */?>
+
+        </div>
+
+        <?php /*ActiveForm::end(); */?>
+    </div>
+
+    <div class="card-footer">
         <div class="row">
             <div class="col-12">
-                <!-- Main content -->
-                <div class="invoice p-3 mb-3">
-                    <!-- title row -->
-                    <div class="row">
-                        <div class="col-12">
-                            <h4>
-                                <i class="fas fa-globe"></i> Fatura
-                                <small class="float-right"><?= date('d-m-Y') ?></small>
-                            </h4>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- info row -->
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
-                            From
-                            <address>
-                                <tr>
-                                    <strong><td><?= Html::encode($empresa->sede) ?></td></strong><br>
-                                    <td><?= Html::encode($empresa->capitalsocial) ?></td><br>
-                                    <td><?= Html::encode($empresa->email) ?></td><br>
-                                    <td><?= Html::encode($empresa->morada) ?></td><br>
-                                    <td><?= Html::encode($empresa->localidade) ?></td><br>
-                                    <td><?= Html::encode($empresa->nif) ?></td><br>
-                                </tr>
-                            </address>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            To
-                            <address>
-                                <label for="cliente_id">Selecione o Cliente:</label>
-                                <?= Html::dropDownList('cliente_id', null, $selectClientes, ['class' => 'form-control', 'prompt' => 'Selecione um cliente']) ?>
-                                <label for="reserva_id">Selecione a Reserva:</label>
-                                <?php foreach ($faturas as $fatura): ?>
-                                    <?= Html::dropDownList('reserva_id', null, $selectReservas, ['class' => 'form-control', 'prompt' => 'Selecione uma reserva']) ?>
-                                <?php endforeach; ?>
-                            </address>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            <?php foreach ($faturas as $fatura): ?>
-                                <b>Fatura Id</b><br>
-                                <br>
-                                <b><?= Html::encode($fatura->id) ?></b><br>
-                                <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
-                            <?php endforeach; ?>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- Table row -->
-                    <div class="row">
-                        <div class="col-12 table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Referência</th>
-                                    <th>Quantidade</th>
-                                    <th>Preço Unitário</th>
-                                    <th>Iva</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <?php foreach ($linhasfaturas as $linhasfatura): ?>
-                                        <th><?= Html::encode($linhasfatura->id) ?></th>
-                                        <th><?= Html::encode($linhasfatura->quantidade) ?></th>
-                                        <th><?= Html::encode($linhasfatura->precounitario) ?></th>
-                                        <th><?= Html::encode($linhasfatura->iva) ?></th>
-                                        <th><?= Html::encode($linhasfatura->subtotal) ?></th>
-                                    <?php endforeach; ?>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <div class="row">
-                        <!-- accepted payments column -->
-                        <div class="col-6">
-                            <p class="lead">Métodos de Pagamento:</p>
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/visa.png" alt="Visa">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/mastercard.png" alt="Mastercard">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/american-express.png" alt="American Express">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/paypal2.png" alt="Paypal">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-6">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <?php foreach ($faturas as $fatura): ?>
-                                        <tr>
-                                            <th>Total S/ Iva:</th>
-                                            <td><?= Html::encode($fatura->totalsi) ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Iva:</th>
-                                            <td><?= Html::encode($fatura->iva) ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total:</th>
-                                            <td><?= Html::encode($fatura->totalf) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-
-                    <!-- this row will not appear when printing -->
-                    <div class="row no-print">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submeter
-                            </button>
-                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                <i class="fas fa-download"></i> Generate PDF
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Rodapé -->
-                    <footer class="invoice-footer">
-                        <div class="row">
-                            <div class="col-12">
-                                <p>Emissão realizada por: <strong><?= Html::encode($reserva->funcionario_id) ?></strong></p>
-                            </div>
-                        </div>
-                    </footer>
+                <div class="float-left">
+                    <?php /*= Html::a('Cancelar', ['faturas/index'], ['class' => 'btn btn-secondary']) */?>
                 </div>
-                <!-- /.invoice -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-<!-- /.content-wrapper -->
+                <div class="float-right">
+                    <?php /*= Html::submitButton('Gerar Fatura', ['class' => 'btn btn-success']) */?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+-->
