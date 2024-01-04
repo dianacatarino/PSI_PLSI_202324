@@ -30,8 +30,9 @@ $this->title = 'Fatura Emitida';
                     <div class="row">
                         <div class="col-12">
                             <h4>
-                                <i class="fas fa-globe"></i> Fatura
-                                <small class="float-right"><?= date('d-m-Y') ?></small>
+                                <img src="/LusitaniaTravel/common/public/img/logo_icon.png" alt="Lusitania Travel" width="20" height="20">
+                                Fatura
+                                <small class="float-right"><?= $fatura->data ?></small>
                             </h4>
                         </div>
                         <!-- /.col -->
@@ -39,34 +40,37 @@ $this->title = 'Fatura Emitida';
                     <!-- info row -->
                     <div class="row invoice-info">
                         <div class="col-sm-4 invoice-col">
-                            From
+                            De
                             <address>
                                 <tr>
                                     <strong><td><?= Html::encode($empresa->sede) ?></td></strong><br>
-                                    <td><?= Html::encode($empresa->capitalsocial) ?></td><br>
                                     <td><?= Html::encode($empresa->email) ?></td><br>
-                                    <td><?= Html::encode($empresa->morada) ?></td><br>
-                                    <td><?= Html::encode($empresa->localidade) ?></td><br>
+                                    <td><?= Html::encode($empresa->morada) ?></td>
+                                    <td> - <?= Html::encode($empresa->localidade) ?></td><br>
                                     <td><?= Html::encode($empresa->nif) ?></td><br>
                                 </tr>
                             </address>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            To
+                            Para
                             <address>
-                                <strong>Cliente nº <?= Html::encode($reserva->cliente_id) ?></strong>
-                                <strong>Nome: <?= Html::encode($reserva->cliente->profile->name) ?></strong>
+                                <?php if ($reserva && $reserva->cliente): ?>
+                                    <tr>
+                                        <strong><td><?= Html::encode($reserva->cliente->profile->name) ?></td></strong><br>
+                                        <td><?= Html::encode($reserva->cliente->email) ?></td><br>
+                                        <td><?= Html::encode($reserva->cliente->profile->street) ?></td>
+                                        <td> - <?= Html::encode($reserva->cliente->profile->locale) ?></td><br>
+                                        <td><?= Html::encode($reserva->cliente->profile->postalCode) ?></td><br>
+                                    </tr>
+                                <?php else: ?>
+                                    <p>Cliente not found</p>
+                                <?php endif; ?>
                             </address>
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            <!-- ?php foreach ($faturas as $fatura): ? -->
-                            <b>Fatura #007612</b><br>
-                            <br>
-                            <b><!-- = Html::encode($fatura->id) ?--></b><br>
-                            <b>Data Pagamento: </b><?= date('d-m-Y') ?><br>
-                            <!-- ?php endforeach; ?-->
+                            <b>Fatura <?= $fatura->id ?></b><br>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -81,7 +85,6 @@ $this->title = 'Fatura Emitida';
                                     <th>Referência</th>
                                     <th>Quantidade</th>
                                     <th>Preço Unitário</th>
-                                    <th>Iva</th>
                                     <th>Subtotal</th>
                                 </tr>
                                 </thead>
@@ -92,9 +95,9 @@ $this->title = 'Fatura Emitida';
                                         return ;
                                     }
                                     foreach ($linhasfaturas as $linhasfatura): ?>
+                                        <th><?= Html::encode($linhasfatura->id) ?></th>
                                         <th><?= Html::encode($linhasfatura->quantidade) ?></th>
                                         <th><?= Html::encode($linhasfatura->precounitario) ?></th>
-                                        <th><?= Html::encode($linhasfatura->iva) ?></th>
                                         <th><?= Html::encode($linhasfatura->subtotal) ?></th>
                                     <?php endforeach; ?>
                                 </tr>
@@ -106,32 +109,21 @@ $this->title = 'Fatura Emitida';
                     <!-- /.row -->
 
                     <div class="row">
-                        <!-- accepted payments column -->
-                        <div class="col-6">
-                            <p class="lead">Métodos de Pagamento:</p>
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/visa.png" alt="Visa">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/mastercard.png" alt="Mastercard">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/american-express.png" alt="American Express">
-                            <img src="/LusitaniaTravel/backend/web/dist/img/credit/paypal2.png" alt="Paypal">
-                        </div>
-                        <!-- /.col -->
                         <div class="col-6">
                             <div class="table-responsive">
                                 <table class="table">
-                                    <?php foreach ($linhasfaturas as $linhasfatura): ?>
                                         <tr>
-                                            <th>Iva Total:</th>
-                                            <td><?= Html::encode($linhasfatura->subtotal) ?></td>
+                                            <th>Iva:</th>
+                                            <td><?= Html::encode($fatura->iva * 100) ?>%</td>
                                         </tr>
                                         <tr>
                                             <th>Valor Total:</th>
-                                            <td><?= Html::encode($linhasfatura->subtotal) ?></td>
+                                            <td><?= Html::encode($fatura->totalsi) ?>€</td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <td><?= Html::encode($linhasfatura->subtotal) ?></td>
+                                            <td><?= Html::encode($fatura->totalf) ?>€</td>
                                         </tr>
-                                    <?php endforeach; ?>
                                 </table>
                             </div>
                         </div>
@@ -142,11 +134,11 @@ $this->title = 'Fatura Emitida';
                     <!-- this row will not appear when printing -->
                     <div class="row no-print">
                         <div class="col-12">
-                            <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submeter
-                            </button>
-                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                <i class="fas fa-download"></i> Generate PDF
-                            </button>
+                            <?= Html::a(
+                                '<i class="fas fa-download"></i> Gerar PDF',
+                                ['faturas/download', 'id' => $fatura->id],
+                                ['class' => 'btn btn-primary float-right', 'style' => 'margin-right: 5px;', 'target' => '_blank']
+                            ) ?>
                         </div>
                     </div>
 
@@ -154,7 +146,7 @@ $this->title = 'Fatura Emitida';
                     <footer class="invoice-footer">
                         <div class="row">
                             <div class="col-12">
-                                <p>Emissão realizada por: <strong><?= Html::encode($reserva->funcionario_id) ?></strong></p>
+                                <p>Emissão realizada por: <strong><?= Html::encode($reserva->funcionario->profile->name) ?></strong></p>
                             </div>
                         </div>
                     </footer>

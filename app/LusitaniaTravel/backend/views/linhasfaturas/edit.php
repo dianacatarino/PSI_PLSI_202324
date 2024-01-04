@@ -24,7 +24,7 @@ $this->title = 'Editar Linha de Fatura';
         </div>
 
         <div class="form-group">
-            <?= Html::label('Id da Linha de Reserva', 'linhasreservas_id', ['class' => 'control-label']) ?>
+            <?= Html::label('Id Linha de Reserva', 'linhasreservas_id', ['class' => 'control-label']) ?>
             <?= Html::textInput('linhasreservas_id', $linhafatura->linhasreservas_id, ['class' => 'form-control', 'readonly' => true]) ?>
         </div>
     </div>

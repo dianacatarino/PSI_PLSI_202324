@@ -8,6 +8,7 @@ use backend\models\Empresa;
 use backend\models\ReservaSearch;
 use common\models\Linhasreserva;
 use common\models\Reserva;
+use Mpdf\Mpdf;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -122,21 +123,56 @@ class FaturasController extends \yii\web\Controller
 
     public function actionShow($id)
     {
-        $fatura = new Fatura();
-        $reserva = Reserva::findOne($id);
+        $fatura = Fatura::findOne($id);
+        $reserva = Reserva::findOne(['id' => $fatura->reserva_id]);
         $empresa = Empresa::findOne(1); // Substitua 1 pelo ID da empresa que você deseja mostrar
 
         if ($reserva && $empresa) {
-            $fatura->reserva_id = $id;
+            // Buscar as linhas de fatura associadas à fatura com o ID fornecido
+            $linhasfaturas = Linhasfatura::find()->where(['fatura_id' => $id])->all();
         } else {
             Yii::$app->session->setFlash('error', 'Erro ao encontrar a reserva ou empresa.');
+            $linhasfaturas = null; // Defina $linhasfaturas como null se houver um erro
         }
 
         return $this->render('show', [
             'fatura' => $fatura,
             'reserva' => $reserva,
-            'empresa' => $empresa, // Certifique-se de passar a variável $empresa para a visão
+            'empresa' => $empresa,
+            'linhasfaturas' => $linhasfaturas, // Passar as linhas de fatura para a visão
         ]);
+    }
+
+    public function actionDownload($id)
+    {
+        $fatura = Fatura::findOne($id);
+
+        if ($fatura === null) {
+            throw new NotFoundHttpException('Fatura não encontrada.');
+        }
+
+        // Configurar o cabeçalho da resposta para o download
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'application/pdf');
+        Yii::$app->response->headers->add('Content-Disposition', 'attachment; filename="fatura_' . $fatura->id . '.pdf"');
+
+        // Inicializar o mPDF
+        $mpdf = new Mpdf();
+
+        // Adicionar o HTML ao mPDF
+        $htmlContent = $this->renderPartial('show', [
+            'fatura' => $fatura,
+            'reserva' => Reserva::findOne(['id' => $fatura->reserva_id]),
+            'empresa' => Empresa::findOne(1),
+            'linhasfaturas' => Linhasfatura::find()->where(['fatura_id' => $id])->all(),
+        ]);
+
+        $mpdf->WriteHTML($htmlContent);
+
+        // Saída do PDF
+        Yii::$app->response->content = $mpdf->Output('', 'S');
+
+        return Yii::$app->response;
     }
 
 

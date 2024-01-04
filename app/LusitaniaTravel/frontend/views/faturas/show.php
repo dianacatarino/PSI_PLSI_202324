@@ -28,7 +28,7 @@ $this->title = 'Detalhes da Fatura';
                 </tr>
                 <tr>
                     <th scope="row">Iva</th>
-                    <td><?= Html::encode($fatura->iva) ?> %</td>
+                    <td><?= Html::encode($fatura->iva * 100) ?>%</td>
                 </tr>
                 <tr>
                     <th scope="row">Empresa</th>
