@@ -28,7 +28,7 @@ $this->title = 'Alojamentos';
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title text-center text-primary text-uppercase">Nossos Alojamentos</h6>
+                <h6 class="section-title text-center text-primary text-uppercase">Os Nossos Alojamentos</h6>
                 <h1 class="mb-5">Explore os nossos <span class="text-primary text-uppercase">Alojamentos</span></h1>
             </div>
             <div class="row g-4">

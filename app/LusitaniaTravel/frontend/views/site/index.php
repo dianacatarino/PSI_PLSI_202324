@@ -19,47 +19,10 @@ $this->title = 'Lusitânia Travel';
         </div>
 
 
-        <!-- Booking Start -->
-        <div class="container-fluid booking pb-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container">
-                <div class="bg-white shadow" style="padding: 35px;">
-
-                    <?php $form = ActiveForm::begin(); ?>
-
-                    <div class="row g-2">
-                        <div class="col-md-10">
-                            <div class="row g-2">
-                                <div class="col-md-3">
-                                    <?= $form->field($searchModel, 'checkin')->textInput(['type' => 'date'])->label(false) ?>
-                                </div>
-                                <div class="col-md-3">
-                                    <?= $form->field($searchModel, 'checkout')->textInput(['type' => 'date'])->label(false) ?>
-                                </div>
-                                <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'numeroclientes')->dropDownList(
-                                        ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10' => '10'],
-                                        ['prompt' => 'Pessoas']
-                                    )->label(false) ?>
-                                </div>
-                                <div class="col-md-2">
-                                    <?= $form->field($searchModel, 'numeroquartos')->dropDownList(
-                                        ['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'],
-                                        ['prompt' => 'Quartos']
-                                    )->label(false) ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary w-100']) ?>
-                        </div>
-                    </div>
-
-                    <?php ActiveForm::end(); ?>
-
-                </div>
-            </div>
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title text-center text-primary text-uppercase">Os Nossos Alojamentos</h6>
+            <h1 class="mb-5">Explore os nossos <span class="text-primary text-uppercase">Alojamentos</span></h1>
         </div>
-        <!-- Booking End -->
 
         <div style="height: 20px;"></div>
 

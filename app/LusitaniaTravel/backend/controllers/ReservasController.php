@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use common\models\Confirmacao;
+use common\models\Fornecedor;
 use common\models\Linhasfatura;
 use common\models\Reserva;
 use common\models\Linhasreserva;
+use DateTime;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -55,28 +57,46 @@ class ReservasController extends \yii\web\Controller
         $reserva = new Reserva();
 
         if ($reserva->load(Yii::$app->request->post())) {
-            if ($reserva->save()) {
-                $confirmacao = new Confirmacao();
-                $confirmacao->estado = 'Pendente'; // Estado pendente
-                $confirmacao->dataconfirmacao = null; // Data de confirmação nula
+            // Calcula a diferença em dias entre checkin e checkout
+            $checkin = new DateTime($reserva->checkin);
+            $checkout = new DateTime($reserva->checkout);
+            $diferencaDias = $checkout->diff($checkin)->days;
 
-                // Atribui a reserva associada à confirmação
-                $confirmacao->reserva_id = $reserva->id;
-                $confirmacao->fornecedor_id = $reserva->fornecedor_id;
-                $confirmacao->save();
+            // Obtém o fornecedor
+            $fornecedor = Fornecedor::findOne($reserva->fornecedor_id);
 
-                Yii::$app->session->setFlash('success', 'Reserva criada com sucesso.');
-                return $this->redirect(['index']);
+            if ($fornecedor) {
+                // Calcula o valor total da reserva
+                $reserva->valor = $diferencaDias * $fornecedor->precopornoite;
+
+                if ($reserva->save()) {
+                    // Restante do código para criar a confirmação e redirecionar
+                    $confirmacao = new Confirmacao();
+                    $confirmacao->estado = 'Pendente'; // Estado pendente
+                    $confirmacao->dataconfirmacao = null; // Data de confirmação nula
+
+                    // Atribui a reserva associada à confirmação
+                    $confirmacao->reserva_id = $reserva->id;
+                    $confirmacao->fornecedor_id = $reserva->fornecedor_id;
+                    $confirmacao->save();
+
+                    Yii::$app->session->setFlash('success', 'Reserva criada com sucesso.');
+                    return $this->redirect(['index']);
+                } else {
+                    Yii::error('Error saving reserva to database.');
+                    Yii::error($reserva->errors);
+                }
             } else {
-                Yii::error('Error saving reserva to database.');
-                Yii::error($reserva->errors);
+                Yii::$app->session->setFlash('error', 'Fornecedor não encontrado.');
             }
         }
 
-        return $this->render('create', ['reserva' => $reserva,
-        'selectAlojamentos' => $reserva->selectAlojamentos(),
-        'selectClientes' => $reserva->selectClientes(),
-        'selectFuncionarios' => $reserva->selectFuncionarios()]);
+        return $this->render('create', [
+            'reserva' => $reserva,
+            'selectAlojamentos' => $reserva->selectAlojamentos(),
+            'selectClientes' => $reserva->selectClientes(),
+            'selectFuncionarios' => $reserva->selectFuncionarios(),
+        ]);
     }
 
     public function actionEdit($id)

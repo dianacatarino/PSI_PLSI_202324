@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 
 class AvaliacoesController extends \yii\web\Controller
 {
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -17,7 +17,7 @@ class AvaliacoesController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password','create','edit','show','delete'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -38,7 +38,7 @@ class AvaliacoesController extends \yii\web\Controller
                 ],
             ],
         ];
-    }*/
+    }
 
     public function actionIndex()
     {

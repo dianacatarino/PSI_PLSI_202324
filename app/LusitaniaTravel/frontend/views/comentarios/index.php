@@ -25,24 +25,31 @@ $this->title = 'Comentários';
                         <th scope="row">Comentário</th>
                         <td><?= Html::encode($comentario->descricao) ?></td>
                     </tr>
-                    <?php foreach ($avaliacoes as $avaliacao): ?>
+                    <?php $fornecedorId = $comentario->fornecedor_id; ?>
+                    <?php if (isset($avaliacoes[$fornecedorId])): ?>
+                        <?php $primeiraAvaliacao = reset($avaliacoes[$fornecedorId]); ?>
                         <tr>
                             <th scope="row"> Avaliação </th>
                             <td>
                                 <?php
                                 for ($i = 1; $i <= 5; $i++) {
-                                    echo ($i <= $avaliacao->classificacao) ? '★' : '☆';
+                                    echo ($i <= $primeiraAvaliacao->classificacao) ? '★' : '☆';
                                 }
                                 ?>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                        <!-- Outros detalhes da avaliação -->
+                    <?php else: ?>
+                        <tr>
+                            <th scope="row"> Avaliação </th>
+                            <td>Sem avaliação</td>
+                        </tr>
+                    <?php endif; ?>
                     </tbody>
                 </table>
                 <?= Html::a('Detalhes', ['comentarios/show', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Editar', ['comentarios/edit', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Editar', ['comentarios/edit', 'fornecedor_id' => $comentario->fornecedor_id, 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     <?php endforeach; ?>
 </div>
-

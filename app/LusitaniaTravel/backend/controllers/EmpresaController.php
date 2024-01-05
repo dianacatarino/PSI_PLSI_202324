@@ -10,7 +10,7 @@ use Yii;
 
 class EmpresaController extends \yii\web\Controller
 {
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -18,7 +18,7 @@ class EmpresaController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password','create','store','edit','update','show','delete'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -39,7 +39,7 @@ class EmpresaController extends \yii\web\Controller
                 ],
             ],
         ];
-    }*/
+    }
 
     public function actionIndex()
     {

@@ -13,45 +13,103 @@ class ComentariosController extends \yii\web\Controller
     {
         $userId = Yii::$app->user->id;
 
+        // Buscar todos os comentários do usuário
         $comentarios = Comentario::find()
             ->where(['cliente_id' => $userId])
             ->all();
 
+        // Buscar todas as avaliações do usuário
         $avaliacoes = Avaliacao::find()
             ->where(['cliente_id' => $userId])
             ->all();
 
-        return $this->render('index', ['comentarios' => $comentarios, 'avaliacoes' => $avaliacoes]);
+        // Organizar as avaliações por fornecedor para facilitar o processamento
+        $avaliacoesPorFornecedor = [];
+        foreach ($avaliacoes as $avaliacao) {
+            $avaliacoesPorFornecedor[$avaliacao->fornecedor_id][] = $avaliacao;
+        }
+
+        // Passar os dados organizados para a visualização
+        return $this->render('index', [
+            'comentarios' => $comentarios,
+            'avaliacoes' => $avaliacoesPorFornecedor,
+        ]);
     }
 
     public function actionCreate($fornecedor_id)
     {
-        $comentario = new Comentario();
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('error', 'Você precisa estar logado para adicionar um comentário e avaliação.');
+            return $this->redirect(['site/login']); // Altere para a ação correta de login se necessário
+        }
 
-        if ($comentario->load(Yii::$app->request->post())) {
+        $comentario = new Comentario();
+        $avaliacao = new Avaliacao();
+
+        if ($comentario->load(Yii::$app->request->post()) && $avaliacao->load(Yii::$app->request->post())) {
             $comentario->cliente_id = Yii::$app->user->id;
             $comentario->fornecedor_id = $fornecedor_id;
+            $comentario->data_comentario = date('Y-m-d');
 
-            if ($comentario->validate()) {
+            $avaliacao->cliente_id = Yii::$app->user->id;
+            $avaliacao->fornecedor_id = $fornecedor_id;
+            $avaliacao->data_avaliacao = date('Y-m-d');
+
+            if ($comentario->validate() && $avaliacao->validate()) {
                 // Salvar o Comentário
                 $comentario->save();
 
-                Yii::$app->session->setFlash('success', 'Comentário criado com sucesso.');
+                // Salvar a Avaliação
+                $avaliacao->save();
+
+                Yii::$app->session->setFlash('success', 'Comentário e Avaliação criados com sucesso.');
                 return $this->redirect(Yii::$app->request->referrer ?: ['alojamentos/show', 'id' => $fornecedor_id]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Erro ao validar o Comentário e Avaliação.');
             }
         }
 
-        return $this->render('create', ['comentario' => $comentario]);
+        return $this->render('create', [
+            'comentario' => $comentario,
+            'avaliacao' => $avaliacao,
+        ]);
     }
 
-    public function actionEdit($id)
+    public function actionEdit($fornecedor_id)
     {
-        $comentario = Comentario::findOne($id);
-        $avaliacoes = Avaliacao::find()->where(['id' => $comentario->id])->all();
+        $comentario = Comentario::findOne(['fornecedor_id' => $fornecedor_id, 'cliente_id' => Yii::$app->user->id]);
 
-        if ($comentario->load(Yii::$app->request->post()) && $comentario->save()) {
-            Yii::$app->session->setFlash('success', 'Confirmação atualizada com sucesso.');
+        // Busca todas as avaliações relacionadas ao fornecedor
+        $avaliacoes = Avaliacao::find()->where(['fornecedor_id' => $fornecedor_id, 'cliente_id' => Yii::$app->user->id])->all();
+
+        // Verifica se o comentário pertence ao usuário logado
+        if (!$comentario) {
+            Yii::$app->session->setFlash('error', 'Comentário não encontrado ou você não tem permissão para editar.');
             return $this->redirect(['index']);
+        }
+
+        // Verifica se o comentário e as avaliações podem ser carregados
+        if ($comentario->load(Yii::$app->request->post())) {
+            // Atualiza a data_comentario
+            $comentario->data_comentario = date('Y-m-d');
+
+            // Salva o comentário
+            if ($comentario->save()) {
+                foreach ($avaliacoes as $index => $avaliacao) {
+                    // Carrega os dados da avaliação do formulário e salva
+                    if ($avaliacao->load(Yii::$app->request->post()) && $avaliacao->save()) {
+                        // Salvar alterações na avaliação
+                    } else {
+                        Yii::$app->session->setFlash('error', 'Erro ao salvar as alterações na avaliação.');
+                        return $this->redirect(['index']);
+                    }
+                }
+
+                Yii::$app->session->setFlash('success', 'Comentário e Avaliações atualizadas com sucesso.');
+                return $this->redirect(['index']);
+            } else {
+                Yii::$app->session->setFlash('error', 'Erro ao salvar as alterações no comentário.');
+            }
         }
 
         return $this->render('edit', [

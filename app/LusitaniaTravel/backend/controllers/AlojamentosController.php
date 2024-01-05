@@ -11,7 +11,7 @@ use yii\web\UploadedFile;
 
 class AlojamentosController extends \yii\web\Controller
 {
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -40,7 +40,7 @@ class AlojamentosController extends \yii\web\Controller
                 ],
             ],
         ];
-    }*/
+    }
 
     public function actionIndex()
     {

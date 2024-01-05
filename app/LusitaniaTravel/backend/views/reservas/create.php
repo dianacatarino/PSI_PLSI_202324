@@ -6,7 +6,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->title = 'Criar nova Reserva';
-
 ?>
 
 <div class="card card-primary">
@@ -46,9 +45,6 @@ $this->title = 'Criar nova Reserva';
             ])->label('Numero de Clientes') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($reserva, 'valor')->textInput(['class' => 'form-control'])->label('Valor Total') ?>
-        </div>
-        <div class="form-group">
             <?= $form->field($reserva, 'fornecedor_id')->dropDownList(
                 $selectAlojamentos,
                 ['prompt' => 'Selecione um alojamento', 'class' => 'form-control']
@@ -63,10 +59,7 @@ $this->title = 'Criar nova Reserva';
         </div>
 
         <div class="form-group">
-            <?= $form->field($reserva, 'funcionario_id')->dropDownList(
-                $selectFuncionarios,
-                ['prompt' => 'Selecione um funcionário', 'class' => 'form-control']
-            )->label('Funcionário') ?>
+            <?= $form->field($reserva, 'funcionario_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false) ?>
         </div>
     </div>
     <div class="card-footer">

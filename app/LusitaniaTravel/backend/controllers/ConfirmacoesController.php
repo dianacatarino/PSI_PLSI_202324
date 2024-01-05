@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 
 class ConfirmacoesController extends \yii\web\Controller
 {
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
@@ -18,7 +18,7 @@ class ConfirmacoesController extends \yii\web\Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password'],
+                        'actions' => ['index', 'login', 'error', 'contact', 'register', 'perfil', 'definicoes', 'forgot-password','create','edit','show','delete'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -39,7 +39,7 @@ class ConfirmacoesController extends \yii\web\Controller
                 ],
             ],
         ];
-    }*/
+    }
 
     public function actionIndex()
     {
@@ -67,14 +67,24 @@ class ConfirmacoesController extends \yii\web\Controller
         // Lógica para editar uma confirmação específica
         $confirmacao = Confirmacao::findOne($id);
 
-        if ($confirmacao->load(Yii::$app->request->post()) && $confirmacao->save()) {
-            Yii::$app->session->setFlash('success', 'Confirmação atualizada com sucesso.');
-            return $this->redirect(['index']);
+        if ($confirmacao->load(Yii::$app->request->post())) {
+            // Verificar se o estado foi alterado para Confirmado ou Cancelado
+            if ($confirmacao->estado == 'Confirmado' || $confirmacao->estado == 'Cancelado') {
+                // Atualizar a data de confirmação automaticamente
+                $confirmacao->dataconfirmacao = date('Y-m-d');
+            }
+
+            if ($confirmacao->save()) {
+                Yii::$app->session->setFlash('success', 'Confirmação atualizada com sucesso.');
+                return $this->redirect(['index']);
+            }
         }
 
-        return $this->render('edit', ['confirmacao' => $confirmacao,
-        'selectAlojamentos' => $confirmacao->selectAlojamentos(),
-            'selectReservas' => $confirmacao->selectReservas()]);
+        return $this->render('edit', [
+            'confirmacao' => $confirmacao,
+            'selectAlojamentos' => $confirmacao->selectAlojamentos(),
+            'selectReservas' => $confirmacao->selectReservas(),
+        ]);
     }
 
     public function actionShow($id)

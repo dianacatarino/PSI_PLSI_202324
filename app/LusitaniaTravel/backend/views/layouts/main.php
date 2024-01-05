@@ -62,8 +62,8 @@ switch ($userRole) {
         $avaliacoesDisplay = '';
         $reservasDisplay = '';
         $faturasDisplay = '';
-        $usersDisplay = ''; // Mantenha esta linha para mostrar a seção Users para o admin
-        $empresaDisplay = ''; // Mantenha esta linha para mostrar a seção Empresa para o admin
+        $usersDisplay = '';
+        $empresaDisplay = '';
         break;
 
     default:
@@ -186,12 +186,14 @@ switch ($userRole) {
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item menu-open">
-                        <a href="<?= Url::to(['site/index']) ?>" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
+                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->profile->role === 'admin'): ?>
+                        <li class="nav-item">
+                            <a href="<?= Url::to(['site/index']) ?>" class="nav-link active">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item" <?= $empresaDisplay ?>>
                         <a href="<?= Url::to(['empresa/index']) ?>" class="nav-link">
                             <i class="nav-icon fas fa-building"></i>

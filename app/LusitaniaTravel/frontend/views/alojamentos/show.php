@@ -87,48 +87,57 @@ $this->title = 'Detalhes do Alojamento';
     <div style="height: 20px;"></div>
 
     <div class="mt-3">
-        <h5>Adicionar Comentário e Avaliação</h5>
-        <?php $formComentario = ActiveForm::begin(['action' => ['comentarios/create', 'fornecedor_id' => $fornecedor->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
-        <div class="mb-3">
-            <?= $formComentario->field($comentario, 'titulo')->textInput(['class' => 'form-control'])->label('Título') ?>
-        </div>
+        <?php
+        $userJaComentouAvaliou = false;
 
-        <div class="mb-3">
-            <?= $formComentario->field($comentario, 'descricao')->textInput(['class' => 'form-control'])->label('Descrição') ?>
-        </div>
+        // Verifica se o usuário já criou um comentário e uma avaliação
+        foreach ($fornecedor->comentarios as $comentario) {
+            if ($comentario->cliente_id == Yii::$app->user->id) {
+                $userJaComentouAvaliou = true;
+                break;
+            }
+        }
 
-        <div class="mb-3">
-            <?= $formComentario->field($comentario, 'data_comentario')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
-        </div>
+        if (!$userJaComentouAvaliou) :
+            ?>
+            <h5>Adicionar Comentário e Avaliação</h5>
+            <?php $form = ActiveForm::begin(['action' => ['comentarios/create', 'fornecedor_id' => $fornecedor->id], 'options' => ['class' => 'container']]); ?>
+            <div class="mb-3">
+                <?= $form->field($comentario, 'titulo')->textInput(['class' => 'form-control'])->label('Título') ?>
+            </div>
 
-        <div class="d-flex justify-content-between">
-            <?= Html::submitButton('Adicionar Comentário', ['class' => 'btn btn-primary btn-sm']) ?>
-        </div>
-        <?php ActiveForm::end(); ?>
+            <div class="mb-3">
+                <?= $form->field($comentario, 'descricao')->textInput(['class' => 'form-control'])->label('Descrição') ?>
+            </div>
 
-        <br><br>
-        <?php $formAvaliacao = ActiveForm::begin(['action' => ['avaliacoes/create', 'fornecedor_id' => $fornecedor->id], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
-        <div class="mb-3">
-            <?= $formAvaliacao->field($avaliacao, 'classificacao')->dropDownList(
-                [
-                    1 => '★☆☆☆☆', // Uma estrela
-                    2 => '★★☆☆☆', // Duas estrelas
-                    3 => '★★★☆☆', // Três estrelas
-                    4 => '★★★★☆', // Quatro estrelas
-                    5 => '★★★★★', // Cinco estrelas
-                ],
-                ['prompt' => 'Selecione uma avaliação', 'class' => 'form-control']
-            )->label('Avaliação') ?>
-        </div>
+            <div class="mb-3">
+                <?= $form->field($comentario, 'data_comentario')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
+            </div>
 
-        <div class="mb-3">
-            <?= $formAvaliacao->field($avaliacao, 'data_avaliacao')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
-        </div>
+            <div class="mb-3">
+                <?= $form->field($avaliacao, 'classificacao')->dropDownList(
+                    [
+                        1 => '★☆☆☆☆', // Uma estrela
+                        2 => '★★☆☆☆', // Duas estrelas
+                        3 => '★★★☆☆', // Três estrelas
+                        4 => '★★★★☆', // Quatro estrelas
+                        5 => '★★★★★', // Cinco estrelas
+                    ],
+                    ['prompt' => 'Selecione uma avaliação', 'class' => 'form-control']
+                )->label('Avaliação') ?>
+            </div>
 
-        <div class="d-flex justify-content-between">
-            <?= Html::submitButton('Adicionar Avaliação', ['class' => 'btn btn-primary btn-sm']) ?>
-        </div>
-        <?php ActiveForm::end(); ?>
+            <div class="mb-3">
+                <?= $form->field($avaliacao, 'data_avaliacao')->hiddenInput(['value' => date('Y-m-d')])->label(false) ?>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <?= Html::submitButton('Adicionar Comentário e Avaliação', ['class' => 'btn btn-primary btn-sm']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        <?php else : ?>
+            <p>Você já adicionou um comentário e uma avaliação para este alojamento.</p>
+        <?php endif; ?>
 
         <br><br>
 
@@ -178,5 +187,7 @@ $this->title = 'Detalhes do Alojamento';
         </div>
         <div style="height: 20px;"></div>
     </div>
+
+    <div style="height: 20px;"></div>
 
 </div>

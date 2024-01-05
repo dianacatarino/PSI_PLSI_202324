@@ -56,7 +56,6 @@ class LinhasreservasController extends \yii\web\Controller
     public function actionCreate($reservas_id)
     {
         $linhasreserva = new Linhasreserva();
-        $linhasfatura = new Linhasfatura();
 
         // Obter a reserva
         $reserva = Reserva::findOne($reservas_id);
@@ -67,34 +66,19 @@ class LinhasreservasController extends \yii\web\Controller
             $linhasreserva->numerocamas = $linhasreserva->calcularNumeroCamas($linhasreserva->tipoquarto);
             $linhasreserva->subtotal = $linhasreserva->calcularSubtotal($reserva);
             $linhasreserva->reservas_id = $reservas_id;
-            return $this->redirect(['reservas/index']);
 
-            /*if ($linhasreserva->save()) {
-                // Configurar propriedades da linha de fatura
-                $linhasfatura->linhasreservas_id = $linhasreserva->id;
-                $linhasfatura->quantidade = $linhasreserva->numeronoites;
-                $linhasfatura->precounitario = $reserva->valor;
-                $linhasfatura->subtotal = $linhasreserva->subtotal;
-                $linhasfatura->iva = $linhasfatura->calcularIva($linhasfatura->subtotal);
-
-                // Salvar linha de fatura
-                if ($linhasfatura->save()) {
-                    return $this->redirect(['index']);
-                } else {
-                    Yii::error('Erro ao salvar a linha de fatura.');
-                    Yii::error($linhasfatura->errors);
-                }
+            if ($linhasreserva->save()) {
+                return $this->redirect(['reservas/index']);
             } else {
                 Yii::error('Erro ao salvar a linha de reserva.');
                 Yii::error($linhasreserva->errors);
-            }*/
+            }
         }
 
         return $this->render('create', [
             'linhasreserva' => $linhasreserva,
-            'linhasfatura' => $linhasfatura,
+            'reservas_id' => $reservas_id, // Adicione esta linha
             'reserva' => $reserva,
-            'reservas_id' => $reservas_id,
         ]);
     }
 

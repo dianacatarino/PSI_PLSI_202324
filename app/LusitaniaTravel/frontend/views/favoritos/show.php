@@ -14,7 +14,15 @@ $this->title = 'Detalhes do Favorito';
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title"><?= Html::encode($fornecedor->nome_alojamento) ?></h5>
+            <h5 class="card-title"><?= Html::encode($fornecedor->nome_alojamento) ?> </h5>
+            <!-- Exibir todas as imagens associadas -->
+            <div class="row">
+                <?php foreach ($fornecedor->imagens as $imagem): ?>
+                    <div class="col-md-3 mb-3">
+                        <?= Html::img($imagem->filename, ['class' => 'img-thumbnail', 'alt' => 'Imagem do Fornecedor']) ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
             <table class="table detalhes-favorito-table">
                 <tbody>
@@ -60,5 +68,7 @@ $this->title = 'Detalhes do Favorito';
             </table>
         </div>
     </div>
+
+    <div style="height: 20px;"></div>
 </div>
 

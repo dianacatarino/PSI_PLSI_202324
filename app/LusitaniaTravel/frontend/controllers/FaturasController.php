@@ -66,16 +66,20 @@ class FaturasController extends \yii\web\Controller
 
         // Conteúdo do PDF
         $pdfContent = '<div>';
-        $pdfContent .= '<h1 style="float: left; margin-bottom: 20px;">Fatura ' . $fatura->id . '</h1>';
-        $pdfContent .= '<p style="float: right; margin-bottom: 20px;">' . $fatura->data . '</p>';
+        $pdfContent .= '<div style="float: left; margin-bottom: 20px;">';
+        $pdfContent .= '<img src="/LusitaniaTravel/frontend/public/img/logo_icon.png" alt="Imagem da Empresa" style="width: 100px; height: auto; margin-right: 20px;">';
+        $pdfContent .= '<h1>Fatura ' . $fatura->id . '</h1>';
+        $pdfContent .= '</div>';
+        $pdfContent .= '<div style="clear: both;"></div>'; // Limpar flutuações
+        $pdfContent .= '<div style="float: right; margin-top: 10px;">' . $fatura->data . '</div>';
+        $pdfContent .= '</div>';
 
         // Adiciona detalhes da empresa (lado esquerdo)
         $empresa = Empresa::findOne($fatura->empresa_id);
         if ($empresa !== null) {
             $pdfContent .= '<div style="float: left; width: 50%; text-align: left;">';
-            $pdfContent .= '<img src="/LusitaniaTravel/frontend/public/img/logo_vertical.png" alt="Imagem da Empresa" style="width: 100px; height: auto;">';
+            $enderecoEmpresa = $empresa->morada . ', ' . $empresa->localidade;
             $pdfContent .= '<p>' . $empresa->sede . '</p>';
-            $enderecoEmpresa = $empresa->morada. ', ' . $empresa->localidade;
             $pdfContent .= '<p>' . $empresa->morada . '</p>';
             $pdfContent .= '<p>' . $enderecoEmpresa . '</p>';
             $pdfContent .= '<p>' . $empresa->email . '</p>';
@@ -104,8 +108,6 @@ class FaturasController extends \yii\web\Controller
         $pdfContent .= '<th>Quantidade</th>';
         $pdfContent .= '<th>Preço Unitário</th>';
         $pdfContent .= '<th>Subtotal</th>';
-        $pdfContent .= '<th>IVA</th>';
-        // Adicione outros cabeçalhos de coluna conforme necessário
         $pdfContent .= '</tr>';
 
         // Obtenha as linhas de fatura associadas a esta fatura
@@ -113,10 +115,8 @@ class FaturasController extends \yii\web\Controller
         foreach ($linhasFatura as $linha) {
             $pdfContent .= '<tr>';
             $pdfContent .= '<td>' . $linha->quantidade . '</td>';
-            $pdfContent .= '<td>' . $linha->precounitario . '</td>';
-            $pdfContent .= '<td>' . $linha->subtotal . '</td>';
-            $pdfContent .= '<td>' . $linha->iva . '</td>';
-            // Adicione outros campos de linha conforme necessário
+            $pdfContent .= '<td>' . $linha->precounitario . '€</td>';
+            $pdfContent .= '<td>' . $linha->subtotal . '€</td>';
             $pdfContent .= '</tr>';
         }
 
@@ -127,14 +127,13 @@ class FaturasController extends \yii\web\Controller
         $pdfContent .= '<div style="clear: both; margin-top: 20px;">';
         $pdfContent .= '<p><strong>Total: </strong>' . $fatura->totalf . '€</p>';
         $pdfContent .= '<p><strong>Total sem IVA: </strong>' . $fatura->totalsi . '€</p>';
-        $pdfContent .= '<p><strong>IVA: </strong>' . $fatura->iva . '%</p>';
+        $pdfContent .= '<p><strong>IVA: </strong>' . $fatura->iva * 100 . '%</p>';
         // Adicione outros campos da tabela Faturas conforme necessário
         $pdfContent .= '</div>';
 
         // Adiciona o nome do funcionário
         $pdfContent .= '<div style="margin-top: 20px;">';
         $pdfContent .= '<p><strong>Funcionário: </strong>' . $reserva->funcionario->profile->name . '</p>';
-        // Adicione outros campos do funcionário conforme necessário
         $pdfContent .= '</div>';
 
         $pdfContent .= '<div style="clear: both;"></div>'; // Limpar flutuações

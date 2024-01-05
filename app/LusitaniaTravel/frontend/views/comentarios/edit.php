@@ -16,28 +16,34 @@ $this->title = 'Comentários';
         <div class="card-body">
             <h5 class="card-title">Editar</h5>
 
-            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+            <?php $form = ActiveForm::begin(['action' => ['comentarios/edit', 'fornecedor_id' => $comentario->fornecedor_id], 'method' => 'post']); ?>
 
-            <?= $form->field($comentario->fornecedor, 'nome_alojamento')->textInput(['placeholder' => 'Alojamento', 'disabled' => true])?>
-            <?= $form->field($comentario, 'descricao')->textInput(['placeholder' => 'Descrição']) ?>
+            <?= $form->field($comentario->fornecedor, 'nome_alojamento')->textInput(['placeholder' => 'Alojamento', 'disabled' => true]) ?>
+
+            <?= $form->field($comentario, 'titulo')->textInput(['placeholder' => 'Título do Comentário'])->label('Título') ?>
+            <?= $form->field($comentario, 'descricao')->textInput(['placeholder' => 'Descrição do Comentário'])->label('Descrição') ?>
+            <?= $form->field($comentario, "data_comentario")->textInput(['type' => 'date', 'disabled' => true])->label('Data Comentário') ?>
 
             <?php foreach ($avaliacoes as $index => $avaliacao): ?>
-                <tr>
-                    <th scope="row">Avaliação</th>
-                    <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Avaliação <?= $index + 1 ?></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <?= $form->field($avaliacao, "[$index]classificacao")->dropDownList([
                             1 => '★',
                             2 => '★★',
                             3 => '★★★',
                             4 => '★★★★',
                             5 => '★★★★★',
-                        ])->label(false) ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Data Avaliação</th>
-                    <td><?= Html::encode($avaliacao->data_avaliacao) ?></td>
-                </tr>
+                        ])->label('Classificação') ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?= $form->field($avaliacao, "[$index]data_avaliacao")->textInput(['type' => 'date', 'disabled' => true])->label('Data Avaliação') ?>
+                    </div>
+                </div>
             <?php endforeach; ?>
 
             <div style="height: 20px;"></div>
@@ -46,6 +52,7 @@ $this->title = 'Comentários';
             </div>
 
             <?php ActiveForm::end(); ?>
+
         </div>
     </div>
     <div style="height: 20px;"></div>

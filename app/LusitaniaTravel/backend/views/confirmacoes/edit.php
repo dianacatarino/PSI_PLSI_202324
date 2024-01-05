@@ -17,9 +17,6 @@ $this->title = 'Editar Confirmação';
             <?= $form->field($confirmacao, 'estado')->dropDownList(['Pendente' => 'Pendente', 'Confirmado' => 'Confirmado', 'Cancelado' => 'Cancelado'], ['class' => 'form-control'])->label('Estado da Confirmação') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($confirmacao, 'dataconfirmacao')->input('date',['class' => 'form-control'])->label('Data da Confirmação') ?>
-        </div>
-        <div class="form-group">
             <?= $form->field($confirmacao, 'reserva_id')->dropDownList(
                 $selectReservas,
                 ['prompt' => 'Selecione uma reserva', 'class' => 'form-control']

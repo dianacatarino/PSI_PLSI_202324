@@ -53,7 +53,7 @@ $this->title = 'Detalhes do Comentário';
                 <?php endforeach; ?>
                 </tbody>
             </table>
-            <?= Html::a('Editar', ['comentarios/edit', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Editar', ['comentarios/edit', 'fornecedor_id' => $comentario->fornecedor_id, 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 </div>

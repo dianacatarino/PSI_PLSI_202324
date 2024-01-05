@@ -31,7 +31,7 @@ $this->title = 'Fatura Emitida';
                         <div class="col-12">
                             <h4>
                                 <img src="/LusitaniaTravel/common/public/img/logo_icon.png" alt="Lusitania Travel" width="20" height="20">
-                                Fatura
+                                Fatura <?= $fatura->id ?>
                                 <small class="float-right"><?= $fatura->data ?></small>
                             </h4>
                         </div>
@@ -67,10 +67,6 @@ $this->title = 'Fatura Emitida';
                                     <p>Cliente not found</p>
                                 <?php endif; ?>
                             </address>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            <b>Fatura <?= $fatura->id ?></b><br>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -135,9 +131,14 @@ $this->title = 'Fatura Emitida';
                     <div class="row no-print">
                         <div class="col-12">
                             <?= Html::a(
+                                'Voltar',
+                                ['faturas/index'],
+                                ['class' => 'btn btn-secondary', 'style' => 'margin-right: 5px;']
+                            ) ?>
+                            <?= Html::a(
                                 '<i class="fas fa-download"></i> Gerar PDF',
                                 ['faturas/download', 'id' => $fatura->id],
-                                ['class' => 'btn btn-primary float-right', 'style' => 'margin-right: 5px;', 'target' => '_blank']
+                                ['class' => 'btn btn-primary float-right', 'style' => 'margin-right: 5px;']
                             ) ?>
                         </div>
                     </div>
