@@ -40,6 +40,7 @@ $this->title = 'Comentários';
                     </tbody>
                 </table>
                 <?= Html::a('Detalhes', ['comentarios/show', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Editar', ['comentarios/edit', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     <?php endforeach; ?>

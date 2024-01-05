@@ -46,13 +46,15 @@ $this->title = 'Detalhes do Comentário';
                             ?>
                         </td>
                     </tr>
-                <tr>
-                    <th scope="row">Data Avaliação</th>
-                    <td><?= Html::encode($avaliacao->data_avaliacao) ?></td>
-                </tr>
+                    <tr>
+                        <th scope="row">Data Avaliação</th>
+                        <td><?= Html::encode($avaliacao->data_avaliacao) ?></td>
+                    </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= Html::a('Editar', ['comentarios/edit', 'id' => $comentario->id], ['class' => 'btn btn-primary']) ?>
         </div>
     </div>
 </div>
+
