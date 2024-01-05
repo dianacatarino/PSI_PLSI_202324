@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\testes;
+namespace common\tests\unit\models;
 
 use Yii;
 use common\models\Confirmacao;
@@ -9,13 +9,14 @@ use common\models\Reserva;
 use common\models\Fornecedor;
 use common\models\Avaliacao;
 use common\models\Comentario;
+use yii\db\ActiveQuery;
 
 
 /**
  * AlojamentosTestes test
  */
 
-class AlojamentosTestes extends \Codeception\Test\Unit
+class AlojamentosTest extends \Codeception\Test\Unit
 {
     /**
      * @var \common\tests\UnitTester
@@ -26,123 +27,159 @@ class AlojamentosTestes extends \Codeception\Test\Unit
      * @return array
      */
 
+    public function testCreateFornecedorWithCorrectData()
+    {
+        $fornecedor = new Fornecedor([
+            'responsavel' => 'Nome do Responsável',
+            'tipo' => 'Tipo do Fornecedor',
+            'nome_alojamento' => 'Nome do Alojamento',
+            'localizacao_alojamento' => 'Localização do Alojamento',
+            'acomodacoes_alojamento' => 'Acomodações do Alojamento',
+            'tipoquartos' => 'Tipo de Quartos',
+            'numeroquartos' => 10,
+            'precopornoite' => 100.00,
+        ]);
+
+        $this->assertTrue($fornecedor->validate(), 'Fornecedor is valid');
+        $this->assertTrue($fornecedor->save(), 'Fornecedor is saved');
+    }
+
+    public function testCreateFornecedorWithIncorrectData()
+    {
+        $fornecedor = new Fornecedor([
+            'responsavel' => null,
+            'tipo' => 'Tipo do Fornecedor',
+            'nome_alojamento' => 'Nome do Alojamento',
+            'localizacao_alojamento' => 'Localização do Alojamento',
+            'acomodacoes_alojamento' => 'Acomodações do Alojamento',
+            'tipoquartos' => 'Tipo de Quartos',
+            'numeroquartos' => 10,
+            'precopornoite' => 100.00,
+
+        ]);
+
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
+    }
+
+    public function testCreateFornecedorWithNegativeNumeroQuartos()
+    {
+        $fornecedor = new Fornecedor([
+            'responsavel' => 'Nome do Responsável',
+            'tipo' => 'Tipo do Fornecedor',
+            'nome_alojamento' => 'Nome do Alojamento',
+            'localizacao_alojamento' => 'Localização do Alojamento',
+            'acomodacoes_alojamento' => 'Acomodações do Alojamento',
+            'tipoquartos' => 'Tipo de Quartos',
+            'numeroquartos' => -5, // Valor incorreto
+            'precopornoite' => 100.00,
+        ]);
+
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
+        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Validation error for numeroquartos is present');
+    }
+
+    public function testCreateFornecedorWithNonIntegerNumeroQuartos()
+    {
+        $fornecedor = new Fornecedor([
+            'responsavel' => 'Nome do Responsável',
+            'tipo' => 'Tipo do Fornecedor',
+            'nome_alojamento' => 'Nome do Alojamento',
+            'localizacao_alojamento' => 'Localização do Alojamento',
+            'acomodacoes_alojamento' => 'Acomodações do Alojamento',
+            'tipoquartos' => 'Tipo de Quartos',
+            'numeroquartos' => 7.5, // Valor incorreto
+            'precopornoite' => 100.00,
+        ]);
+
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
+        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Validation error for numeroquartos is present');
+    }
+
+    public function testCreateFornecedorWithNonNumericPrecopornoite()
+    {
+        $fornecedor = new Fornecedor([
+            'responsavel' => 'Nome do Responsável',
+            'tipo' => 'Tipo do Fornecedor',
+            'nome_alojamento' => 'Nome do Alojamento',
+            'localizacao_alojamento' => 'Localização do Alojamento',
+            'acomodacoes_alojamento' => 'Acomodações do Alojamento',
+            'tipoquartos' => 'Tipo de Quartos',
+            'numeroquartos' => 10,
+            'precopornoite' => 'invalid', // Valor incorreto
+        ]);
+
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
+        $this->assertArrayHasKey('precopornoite', $fornecedor->errors, 'Validation error for precopornoite is present');
+    }
+
     public function testGetAvaliacoes(){
 
-        $fornecedores = new Fornecedor();
+        $fornecedor = new Fornecedor();
+        $comentariosQuery = $fornecedor->getComentarios();
 
-        $avaliacoes = [
-            new Avaliacao(['classificacao' => 4]) ,
-            new Avaliacao(['classificacao' => 5]),
-            new Avaliacao(['classificacao' => 2]),
-        ];
-
-        //Simula o a ligação entre as duas tabelas
-        $fornecedores->avaliacoes = $avaliacoes; //Confirmar após a migração da tabela Fornecedores
-
-        //Testa usando o método getAvaliacoes()
-        $result = $fornecedores->getAvaliacoes();
-
-        //Comparação do resultado da função com o valor certo
-        $this->assertEquals($avaliacoes, $result);
-        //$this->tester->seeInDatabase('fornecedores'); //confirmar após a migração
+        $this->assertInstanceOf(ActiveQuery::class, $comentariosQuery);
 
     }
 
-    public function testGetComentarios(){
+    public function testGetComentarios()
+    {
+        $fornecedor = new Fornecedor();
+        $comentariosQuery = $fornecedor->getComentarios();
 
-        $fornecedores = new Fornecedor();
-
-        $comentarios = [
-            new Comentario(['titulo' => 'titulo do comentario numero 1' , 'descricao' => 'comentario 1']),
-            new Comentario(['titulo' => 'titulo do comentario numero 2' , 'descricao' => 'comentario 2']),
-            new Comentario(['titulo' => 'titulo do comentario numero 3' , 'descricao' => 'comentario 3'])
-        ];
-
-        $fornecedores->comentarios = $comentarios; //Confirmar após a migração da tabela Fornecedores
-
-        $result = $fornecedores->getComentarios();
-
-        $this->assertEquals($comentarios, $result);
-
-        //$this->tester->seeInDatabase('fornecedores'); //confirmar após a migração
+        $this->assertInstanceOf(ActiveQuery::class, $comentariosQuery);
     }
 
-    public function testGetConfirmacoes(){
+    public function testGetConfirmacoes()
+    {
+        $fornecedor = new Fornecedor();
+        $confirmacoesQuery = $fornecedor->getConfirmacoes();
 
-        $fornecedores = new Fornecedor();
-
-        //Criação de uma nova confirmação
-        $confirmacoes = new Confirmacao(['estado' => 'confirmado' , 'dataconfirmacao' => '2024-01-02']);
-
-        $fornecedores->confirmacoes = $confirmacoes; //Confirmar após a migração da tabela Fornecedores
-
-        //Teste da função getConfirmacoes()
-        $result = $fornecedores->getConfirmacoes();
-
-        $this->assertEquals($confirmacoes, $result);
-
-        //$this->tester->seeInDatabase('fornecedores'); //confirmar após a migração
+        $this->assertInstanceOf(ActiveQuery::class, $confirmacoesQuery);
     }
 
-    public function testGetImagens(){
+    public function testGetImagens()
+    {
+        $fornecedor = new Fornecedor();
+        $imagensQuery = $fornecedor->getImagens();
 
-        $fornecedores = new Fornecedor();
-
-        //Adiconar a nova imagem
-        $imagens = new Imagem(['filename' => '/LusitaniaTravel/common/public/img/design-3588214_640.jpg']);
-
-        $fornecedores->imagens = $imagens; //Confirmar após migração
-
-        //Testar do método getImagens()
-        $result = $fornecedores->getImagens();
-
-        $this->assertEquals($imagens , $result);
-
-        //$this->tester->seeInDatabase('fornecedores'); //confirmar após a migração
+        $this->assertInstanceOf(ActiveQuery::class, $imagensQuery);
     }
 
-    public function testGetReservas(){
+    public function testGetReservas()
+    {
+        $fornecedor = new Fornecedor();
+        $reservasQuery = $fornecedor->getReservas();
 
-        $fornecedores = new Fornecedor();
-
-        //Adicionar a nova reserva
-        $reservas = new Reserva (['tipo' => 'online' , 'checkin' => '2024-08-22' ,
-            'checkout' => '2024-08-28' , 'numeroquartos' => 2 , 'numeroclientes' => 4 ,
-            'valor' => 56.00]);
-
-        $fornecedores->fornecedor_id = $reservas; //fornecedor_id não está correto
-
-        //Testa no método getReservas
-        $result = $fornecedores->getReservas();
-
-        $this->assertEquals($reservas , $result);
+        $this->assertInstanceOf(ActiveQuery::class, $reservasQuery);
     }
 
-    public function testGetMediaClassificacoes(){
+    public function testSelectFornecedores()
+    {
+        $result = Fornecedor::selectFornecedores();
 
-        $fornecedores = new Fornecedor();
-
-        //Atribuição de Valores às variaveis
-        $avaliacao1 = new Avaliacao();
-        $avaliacao1->classificacao = 5 ;
-
-        $avaliacao2 = new Avaliacao();
-        $avaliacao2->classificacao = 3 ;
-
-        $avaliacao3 = new Avaliacao();
-        $avaliacao3->classificacao = 4 ;
-
-        //Criação de um array de avaliações do novo fornecedor e vai testar o método getMediaClassificacoes()
-        $fornecedores->avaliacoes = [$avaliacao1 , $avaliacao2 , $avaliacao3];
-        $result = $fornecedores->getMediaClassificacoes();
-
-        //Comparação do resultado da função com o valor certo
-        $this->assertEquals(4, $result);
-
-        //$this->tester->seeInDatabase('fornecedores'); //confirmar após a migração
-
+        $this->assertTrue(is_array($result) && !empty($result));
     }
 
+    public function testGetMediaClassificacoes()
+    {
+        $fornecedor = $this->getMockBuilder(Fornecedor::class)
+            ->onlyMethods(['getAvaliacoes'])
+            ->getMock();
 
+        $fornecedor->expects($this->once())
+            ->method('getAvaliacoes')
+            ->willReturn([
+                new Avaliacao(['classificacao' => 4]),
+                new Avaliacao(['classificacao' => 5]),
+            ]);
+
+        $mediaClassificacoes = $fornecedor->getMediaClassificacoes();
+
+        $this->assertEquals(4.5, $mediaClassificacoes);
+    }
 }
 

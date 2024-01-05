@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\testes;
+namespace common\tests\unit\models;
 
 use common\models\Reserva;
 use common\models\Fatura;
@@ -14,7 +14,7 @@ use backend\models\ReservaSearch;
  * FaturasTestes test
  */
 
-class FaturasTestes extends \Codeception\Test\Unit {
+class FaturasTest extends \Codeception\Test\Unit {
 
     /**
      * @var \common\tests\UnitTester

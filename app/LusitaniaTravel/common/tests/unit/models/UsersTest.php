@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\testes;
+namespace common\tests\unit\models;
 
 use common\models\Profile;
 use common\models\User;
@@ -11,7 +11,7 @@ use Yii;
  * UserTestes test
  */
 
-class UsersTestes extends \Codeception\Test\Unit {
+class UsersTest extends \Codeception\Test\Unit {
 
     /**
      * @var \common\tests\UnitTester

@@ -166,8 +166,8 @@ class Reserva extends \yii\db\ActiveRecord
     public function getReservaDetails()
     {
         return [
-            'fornecedor' => $this->fornecedor->nome, // Ajuste conforme sua estrutura de banco de dados
-            'cliente' => $this->cliente->profile->name, // Ajuste conforme sua estrutura de banco de dados
+            'fornecedor' => $this->fornecedor->nome,
+            'cliente' => $this->cliente->profile->name,
         ];
     }
 }

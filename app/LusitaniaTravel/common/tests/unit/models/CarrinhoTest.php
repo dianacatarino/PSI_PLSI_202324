@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests\unit\testes;
+namespace common\tests\unit\models;
 
 use Yii;
 use common\models\Reserva;
@@ -13,7 +13,7 @@ use common\models\Fornecedor;
  * CarrinhoTestes test
  */
 
-class CarrinhosTestes extends \Codeception\Test\Unit {
+class CarrinhoTest extends \Codeception\Test\Unit {
 
 
     /**
