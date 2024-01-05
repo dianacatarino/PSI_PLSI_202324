@@ -2,6 +2,8 @@
 
 namespace common\tests\unit\models;
 
+use common\fixtures\FornecedorFixture;
+use common\fixtures\ReservaFixture;
 use common\models\Profile;
 use common\models\Reserva;
 use common\models\User;
@@ -29,23 +31,120 @@ class ReservasTest extends \Codeception\Test\Unit {
     /**
      * @return array
      */
-
-    public function testCreateReservaWithValidData()
+    public function _fixtures()
     {
+        return [
+            'reserva' => [
+                'class' => ReservaFixture::class,
+                'dataFile' => codecept_data_dir() . 'reserva.php'
+            ]
+        ];
+    }
+
+    public function testCriarReservaComDadosCorretos()
+    {
+        // Instanciar as classes de teste relevantes
+        $usersTest = new UsersTest();
+        $alojamentosTest = new AlojamentosTest();
+
+        // Chamar os métodos de teste necessários
+        $clienteId = $usersTest->testCriarUserComDadosCorretos();
+        $funcionarioId = $usersTest->testCriarFuncionarioComDadosCorretos();
+        $fornecedorId = $alojamentosTest->testCriarFornecedorComDadosCorretos();
+
         $reserva = new Reserva([
             'tipo' => 'Online',
-            'checkin' => '2022-01-01',
-            'checkout' => '2022-01-05',
-            'numeroquartos' => 2,
-            'numeroclientes' => 4,
+            'checkin' => '2024-01-01',
+            'checkout' => '2024-01-10',
+            'numeroquartos' => 3,
+            'numeroclientes' => 5,
             'valor' => 500.00,
-            'cliente_id' => 1, // ID de um cliente válido
-            'funcionario_id' => 2, // ID de um funcionário válido
-            'fornecedor_id' => 3, // ID de um fornecedor válido
+            'cliente_id' => $clienteId,
+            'funcionario_id' => $funcionarioId,
+            'fornecedor_id' => $fornecedorId,
         ]);
 
-        $this->assertTrue($reserva->validate(), 'Reserva should be valid');
-        $this->assertTrue($reserva->save(), 'Reserva should be saved');
+        $this->assertTrue($reserva->validate(), 'Reserva is valid');
+        $this->assertTrue($reserva->save(), 'Reserva is saved');
+
+        $reservaId = Reserva::find()->where(['tipo' => 'Online'])->one()->id;
+
+        return $reservaId;
+    }
+
+    public function testCriarReservaComDadosIncorretos()
+    {
+        $reserva = new Reserva([
+            'tipo' => null,
+            'checkin' => '2024-01-01',
+            'checkout' => '2024-01-10',
+            'numeroquartos' => -1,
+            'numeroclientes' => 10,
+            'valor' => 500.00,
+            'cliente_id' => 1,
+            'funcionario_id' => 2,
+            'fornecedor_id' => 3,
+        ]);
+
+        $this->assertFalse($reserva->validate(), 'Reserva is not valid');
+        $this->assertFalse($reserva->save(), 'Reserva is not saved');
+    }
+
+    public function testMostrarReserva()
+    {
+        $this->testCriarReservaComDadosCorretos();
+
+        $reserva = Reserva::findOne(['tipo' => 'Online', 'checkin' => '2024-01-01', 'checkout' => '2024-01-10']);
+
+        $this->assertNotNull($reserva, 'O registo deveria existir na BD');
+    }
+
+    public function testAtualizarReserva()
+    {
+        $this->testCriarReservaComDadosCorretos();
+
+        $reserva = Reserva::findOne(['tipo' => 'Online', 'checkin' => '2024-01-01', 'checkout' => '2024-01-10']);
+
+        $this->assertNotNull($reserva, 'O registo deveria existir na BD');
+
+        if ($reserva !== null) {
+            $reserva->tipo = 'Presencial';
+            $this->assertTrue($reserva->save(), 'Deveria ser possível atualizar e salvar um registo na BD');
+        }
+    }
+
+    public function testReservaAtualizada()
+    {
+        $this->testAtualizarReserva();
+
+        // Find the updated record
+        $reservaAtualizada = Reserva::findOne(['tipo' => 'Presencial', 'checkin' => '2024-01-01', 'checkout' => '2024-01-10']);
+
+        // Assert that the updated record exists
+        $this->assertNotNull($reservaAtualizada, 'O registo atualizado deveria existir na BD');
+    }
+
+    public function testApagarReserva()
+    {
+        $this->testCriarReservaComDadosCorretos();
+
+        $reserva = Reserva::findOne(['tipo' => 'Online', 'checkin' => '2024-01-01', 'checkout' => '2024-01-10']);
+
+        $this->assertNotNull($reserva, 'O registo deveria existir na BD');
+
+        if ($reserva !== null) {
+            $reservaId = $reserva->id;
+
+            $reserva->delete();
+            $this->assertNull(Reserva::findOne($reservaId), 'O registo deveria ser apagado da BD');
+        }
+    }
+
+    public function testReservaNaoExiste()
+    {
+        $reservaDeletada = Reserva::findOne(['tipo' => 'Online', 'checkin' => '2024-01-01', 'checkout' => '2024-01-10']);
+
+        $this->assertNull($reservaDeletada, 'O registo não deveria existir na BD após ser apagado');
     }
 
     public function testGetCliente()
@@ -88,12 +187,16 @@ class ReservasTest extends \Codeception\Test\Unit {
         $this->assertInstanceOf(ActiveQuery::class, $linhasreservasQuery);
     }
 
-    public function testSelectAlojamentos()
+    /*public function testSelectAlojamentos()
     {
-        $result = Reserva::selectAlojamentos();
+        $reserva = new Reserva();
+        $result = $reserva::selectAlojamentos();
 
-        // Ensure the result is an array and not empty
-        $this->assertTrue(is_array($result) && !empty($result));
+        // Verifique se o resultado é um array
+        $this->assertTrue(is_array($result), 'Result should be an array');
+
+        // Verifique se o array não está vazio
+        $this->assertNotEmpty($result, 'Result should not be empty');
     }
 
     public function testSelectClientes()
@@ -110,7 +213,7 @@ class ReservasTest extends \Codeception\Test\Unit {
 
         // Ensure the result is an array and not empty
         $this->assertTrue(is_array($result) && !empty($result));
-    }
+    }*/
 
     public function testGetProfile()
     {

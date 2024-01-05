@@ -103,6 +103,5 @@ class Carrinho extends \yii\db\ActiveRecord
     public function getConfirmacao()
     {
         return $this->hasOne(Confirmacao::class, ['carrinho_id' => 'id']);
-        // Substitua Confirmacao::class pelo nome da classe de confirmação e 'carrinho_id' pelo nome real da chave estrangeira
     }
 }

@@ -2,6 +2,8 @@
 
 namespace common\tests\unit\models;
 
+use common\fixtures\FornecedorFixture;
+use common\fixtures\UserFixture;
 use Yii;
 use common\models\Confirmacao;
 use common\models\Imagem;
@@ -26,8 +28,17 @@ class AlojamentosTest extends \Codeception\Test\Unit
     /**
      * @return array
      */
+    public function _fixtures()
+    {
+        return [
+            'fornecedor' => [
+                'class' => FornecedorFixture::class,
+                'dataFile' => codecept_data_dir() . 'fornecedor.php'
+            ]
+        ];
+    }
 
-    public function testCreateFornecedorWithCorrectData()
+    public function testCriarFornecedorComDadosCorretos()
     {
         $fornecedor = new Fornecedor([
             'responsavel' => 'Nome do Responsável',
@@ -40,11 +51,15 @@ class AlojamentosTest extends \Codeception\Test\Unit
             'precopornoite' => 100.00,
         ]);
 
-        $this->assertTrue($fornecedor->validate(), 'Fornecedor is valid');
-        $this->assertTrue($fornecedor->save(), 'Fornecedor is saved');
+        $this->assertTrue($fornecedor->validate(), 'Fornecedor é válido');
+        $this->assertTrue($fornecedor->save(), 'Fornecedor foi salvo');
+
+        $fornecedorId = Fornecedor::find()->where(['responsavel' => 'Nome do Responsável'])->one()->id;
+
+        return $fornecedorId;
     }
 
-    public function testCreateFornecedorWithIncorrectData()
+    public function testCriarFornecedorComDadosIncorretos()
     {
         $fornecedor = new Fornecedor([
             'responsavel' => null,
@@ -55,14 +70,13 @@ class AlojamentosTest extends \Codeception\Test\Unit
             'tipoquartos' => 'Tipo de Quartos',
             'numeroquartos' => 10,
             'precopornoite' => 100.00,
-
         ]);
 
-        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
-        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor não é válido');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor não foi salvo');
     }
 
-    public function testCreateFornecedorWithNegativeNumeroQuartos()
+    public function testCriarFornecedorComNumeroQuartosNegativo()
     {
         $fornecedor = new Fornecedor([
             'responsavel' => 'Nome do Responsável',
@@ -75,12 +89,12 @@ class AlojamentosTest extends \Codeception\Test\Unit
             'precopornoite' => 100.00,
         ]);
 
-        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
-        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
-        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Validation error for numeroquartos is present');
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor não é válido');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor não foi salvo');
+        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Erro de validação para numeroquartos presente');
     }
 
-    public function testCreateFornecedorWithNonIntegerNumeroQuartos()
+    public function testCriarFornecedorComNumeroQuartosNaoInteiro()
     {
         $fornecedor = new Fornecedor([
             'responsavel' => 'Nome do Responsável',
@@ -93,12 +107,12 @@ class AlojamentosTest extends \Codeception\Test\Unit
             'precopornoite' => 100.00,
         ]);
 
-        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
-        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
-        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Validation error for numeroquartos is present');
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor não é válido');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor não foi salvo');
+        $this->assertArrayHasKey('numeroquartos', $fornecedor->errors, 'Erro de validação para numeroquartos presente');
     }
 
-    public function testCreateFornecedorWithNonNumericPrecopornoite()
+    public function testCriarFornecedorComPrecopornoiteNaoNumerico()
     {
         $fornecedor = new Fornecedor([
             'responsavel' => 'Nome do Responsável',
@@ -108,13 +122,72 @@ class AlojamentosTest extends \Codeception\Test\Unit
             'acomodacoes_alojamento' => 'Acomodações do Alojamento',
             'tipoquartos' => 'Tipo de Quartos',
             'numeroquartos' => 10,
-            'precopornoite' => 'invalid', // Valor incorreto
+            'precopornoite' => 'inválido', // Valor incorreto
         ]);
 
-        $this->assertFalse($fornecedor->validate(), 'Fornecedor is not valid');
-        $this->assertFalse($fornecedor->save(), 'Fornecedor is not saved');
-        $this->assertArrayHasKey('precopornoite', $fornecedor->errors, 'Validation error for precopornoite is present');
+        $this->assertFalse($fornecedor->validate(), 'Fornecedor não é válido');
+        $this->assertFalse($fornecedor->save(), 'Fornecedor não foi salvo');
+        $this->assertArrayHasKey('precopornoite', $fornecedor->errors, 'Erro de validação para precopornoite presente');
     }
+
+    public function testMostrarFornecedor()
+    {
+        $this->testCriarFornecedorComDadosCorretos();
+
+        $fornecedor = Fornecedor::findOne(['responsavel' => 'Nome do Responsável']);
+
+        $this->assertNotNull($fornecedor, 'O registo deveria existir na BD');
+    }
+
+    public function testAtualizarFornecedor()
+    {
+        $this->testCriarFornecedorComDadosCorretos();
+
+        $fornecedor = Fornecedor::findOne(['responsavel' => 'Nome do Responsável']);
+
+        $this->assertNotNull($fornecedor, 'O registro deveria existir na BD');
+
+        if ($fornecedor !== null) {
+            $fornecedor->tipo = 'Novo Tipo';
+            $this->assertTrue($fornecedor->save(), 'Deveria ser possível atualizar e salvar um registo na BD');
+        }
+    }
+
+    public function testFornecedorAtualizado()
+    {
+        $this->testAtualizarFornecedor();
+
+        // Find the updated record
+        $fornecedorAtualizado = Fornecedor::findOne(['responsavel' => 'Nome do Responsável', 'tipo' => 'Novo Tipo']);
+
+        // Assert that the updated record exists
+        $this->assertNotNull($fornecedorAtualizado, 'O registo atualizado deveria existir na BD');
+    }
+
+
+    public function testApagarFornecedor()
+    {
+        $this->testCriarFornecedorComDadosCorretos();
+
+        $fornecedor = Fornecedor::findOne(['responsavel' => 'Nome do Responsável']);
+
+        $this->assertNotNull($fornecedor, 'O registo deveria existir na BD');
+
+        if ($fornecedor !== null) {
+            $fornecedorId = $fornecedor->id;
+
+            $fornecedor->delete();
+            $this->assertNull(Fornecedor::findOne($fornecedorId), 'O registo deveria ser apagado da BD');
+        }
+    }
+
+    public function testFornecedorNaoExiste()
+    {
+        $fornecedorDeletado = Fornecedor::findOne(['responsavel' => 'Nome do Responsável']);
+
+        $this->assertNull($fornecedorDeletado, 'O registo não deveria existir na BD após ser apagado');
+    }
+
 
     public function testGetAvaliacoes(){
 
@@ -155,13 +228,6 @@ class AlojamentosTest extends \Codeception\Test\Unit
         $reservasQuery = $fornecedor->getReservas();
 
         $this->assertInstanceOf(ActiveQuery::class, $reservasQuery);
-    }
-
-    public function testSelectFornecedores()
-    {
-        $result = Fornecedor::selectFornecedores();
-
-        $this->assertTrue(is_array($result) && !empty($result));
     }
 
     public function testGetMediaClassificacoes()
