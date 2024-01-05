@@ -46,16 +46,18 @@ class ComentariosController extends \yii\web\Controller
 
     public function actionEdit($id)
     {
-        // Lógica para editar um comentário específico
         $comentario = Comentario::findOne($id);
+        $avaliacoes = Avaliacao::find()->where(['id' => $comentario->id])->all();
 
         if ($comentario->load(Yii::$app->request->post()) && $comentario->save()) {
             Yii::$app->session->setFlash('success', 'Confirmação atualizada com sucesso.');
             return $this->redirect(['index']);
         }
 
-        return $this->render('edit', ['comentario' => $comentario]);
-
+        return $this->render('edit', [
+            'comentario' => $comentario,
+            'avaliacoes' => $avaliacoes,
+        ]);
     }
 
     public function actionShow($id)
@@ -88,6 +90,6 @@ class ComentariosController extends \yii\web\Controller
 
         return $this->redirect(['index']);
     }
-    
+
 
 }
