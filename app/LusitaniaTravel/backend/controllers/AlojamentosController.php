@@ -90,6 +90,11 @@ class AlojamentosController extends \yii\web\Controller
                 $fornecedor->acomodacoes_alojamento = implode(';', $fornecedor->acomodacoes_alojamento);
             }
 
+            // Processar as opções de tipoquartos selecionadas
+            if (!empty($fornecedor->tipoquartos)) {
+                $fornecedor->tipoquartos = implode(';', $fornecedor->tipoquartos);
+            }
+
             if ($fornecedor->save()) {
                 $this->enviarImagens($fornecedor);
                 // O modelo foi salvo com sucesso

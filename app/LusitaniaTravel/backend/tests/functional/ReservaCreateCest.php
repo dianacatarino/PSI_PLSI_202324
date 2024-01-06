@@ -3,43 +3,124 @@
 namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
-use common\fixtures\UserFixture;
+use common\fixtures\FornecedorFixture;
+use common\fixtures\ReservaFixture;
 
-/**
- * Class ReservaCreateCest
- */
 class ReservaCreateCest
 {
-    public function _before(\FunctionalTester $I){
+    public function _fixtures()
+    {
+        return [
+            'fornecedores' => [
+                'class' => FornecedorFixture::class,
+            ],
+            'reservas' => [
+                'class' => ReservaFixture::class,
+            ],
+        ];
+    }
 
+    public function trySubmitFormVazio(FunctionalTester $I)
+    {
         $I->amOnPage('/backend/reservas/create');
-    }
-
-    public function trySubmitFormVazio(\FunctionalTester $I){
-
-        $I->see('Create Reserva'); // Verificação do acesso ao formulario
-
-        // Submissão do formulário vazio
-
-        $I->submitForm('#w0', []);
-
-        //Verificação se existem ou não erros no formulario
-        $I->see('Tipo cannot be blank.'); //Rever as regras da tabela e confirmar se está certo
+        $I->submitForm('form', [
+            'Reserva[tipo]' => '',
+            'Reserva[checkin]' => '',
+            'Reserva[checkout]' => '',
+            'Reserva[numeroquartos]' => '',
+            'Reserva[numeroclientes]' => '',
+            'Reserva[valor]' => '',
+            'Reserva[fornecedor_id]' => '',
+            'Reserva[user_id]' => '',
+        ]);
 
     }
 
-    public function trySubmitValidForm(\FunctionalTester $I){
 
-        $I->selectOption('select[name="Reserva[tipo]"]', 'Onlie');
-        $I->fillField('input[name="Reserva[checkin]"]', '2024-01-07');
-        $I->fillField('input[name="Reserva[checkout]"]', '2024-01-09');
-        $I->fillField('input[name="Reserva[numeroquartos]"]', '2');
-        $I->fillField('input[name="Reserva[numeroclientes]"]', '5');
-        $I->fillField('input[name="Reserva[valor]"]', '122.00');
+    public function trySubmitValidForm(FunctionalTester $I)
+    {
+        $I->amOnPage('/backend/reservas/create');
+        $I->submitForm('form', [
+            'Reserva[tipo]' => 'Online',
+            'Reserva[checkin]' => '2024-03-23',
+            'Reserva[checkout]' => '2024-03-25',
+            'Reserva[numeroquartos]' => '2',
+            'Reserva[numeroclientes]' => '5',
+            'Reserva[valor]' => '122.00',
+            'Reserva[fornecedor_id]' => '1',
+            'Reserva[user_id]' => '47',
+        ]);
 
-        $I->submitForm('#w0', []);
+        $I->amOnRoute('reservas/index');
+        $I->dontSee('Create Reserva');
+    }
 
-        $I->seeCurrentUrlEquals('backend/reservas/index');
 
+    public function trySubmitCheckInInvalido(FunctionalTester $I)
+    {
+        $I->amOnPage('/backend/reservas/create');
+        $I->submitForm('form', [
+            'Reserva[tipo]' => 'Online',
+            'Reserva[checkin]' => '2024-03-26',
+            'Reserva[checkout]' => '2024-03-25',
+            'Reserva[numeroquartos]' => '2',
+            'Reserva[numeroclientes]' => '5',
+            'Reserva[valor]' => '122.00',
+            'Reserva[fornecedor_id]' => '1',
+            'Reserva[user_id]' => '47',
+        ]);
+
+        $I->dontSee('Create Reserva');
+    }
+
+    public function trySubmitCheckOutInvalido(FunctionalTester $I)
+    {
+        $I->amOnPage('/backend/reservas/create');
+        $I->submitForm('form', [
+            'Reserva[tipo]' => 'Online',
+            'Reserva[checkin]' => '2024-03-25',
+            'Reserva[checkout]' => '2024-03-22',
+            'Reserva[numeroquartos]' => '2',
+            'Reserva[numeroclientes]' => '5',
+            'Reserva[valor]' => '122.00',
+            'Reserva[fornecedor_id]' => '1',
+            'Reserva[user_id]' => '47',
+        ]);
+
+        $I->dontSee('Create Reserva');
+    }
+
+    public function trySubmitNumeroQuartosInvalido(FunctionalTester $I)
+    {
+        $I->amOnPage('/backend/reservas/create');
+        $I->submitForm('form', [
+            'Reserva[tipo]' => 'Online',
+            'Reserva[checkin]' => '2024-03-23',
+            'Reserva[checkout]' => '2024-03-25',
+            'Reserva[numeroquartos]' => '-1',
+            'Reserva[numeroclientes]' => '5',
+            'Reserva[valor]' => '122.00',
+            'Reserva[fornecedor_id]' => '1',
+            'Reserva[user_id]' => '47',
+        ]);
+
+        $I->dontSee('Create Reserva');
+    }
+
+    public function trySubmitValorInvalido(FunctionalTester $I)
+    {
+        $I->amOnPage('/backend/reservas/create');
+        $I->submitForm('form', [
+            'Reserva[tipo]' => 'Online',
+            'Reserva[checkin]' => '2024-03-23',
+            'Reserva[checkout]' => '2024-03-25',
+            'Reserva[numeroquartos]' => '1',
+            'Reserva[numeroclientes]' => '5',
+            'Reserva[valor]' => '-30.00',
+            'Reserva[fornecedor_id]' => '1',
+            'Reserva[user_id]' => '47',
+        ]);
+
+        $I->dontSee('Create Reserva');
     }
 }

@@ -6,5 +6,5 @@ use yii\test\ActiveFixture;
 
 class FaturaFixture extends ActiveFixture
 {
-    public $modelClass = 'backend\models\Fatura';
+    public $modelClass = 'common\models\Fatura';
 }

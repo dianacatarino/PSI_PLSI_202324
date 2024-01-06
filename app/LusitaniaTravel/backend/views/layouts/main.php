@@ -121,11 +121,13 @@ switch ($userRole) {
             </li>
         </ul>
         <!-- Logout Button/Link -->
-            <?= Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<a href="' . Yii::$app->urlManager->createUrl(['/site/logout']) . '" class="nav-link" data-method="post">Logout (' . Yii::$app->user->identity->username . ')</a>'
-            ) ?>
+            <?php if (!Yii::$app->user->isGuest) {
+                echo Html::a(
+                    'Logout (' . Html::encode(Yii::$app->user->identity->username) . ')',
+                    ['/site/logout'],
+                    ['class' => 'nav-link', 'data-method' => 'post']
+                );
+            } ?>
     </nav>
     <!-- /.navbar -->
 

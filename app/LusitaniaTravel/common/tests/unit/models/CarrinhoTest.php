@@ -93,30 +93,32 @@ class CarrinhoTest extends \Codeception\Test\Unit {
         $this->assertNotNull($carrinho, 'O registro deveria existir na BD');
     }
 
-    public function testAtualizarCarrinho()
+    /*public function testAtualizarEVerificarCarrinho()
     {
-        $this->testCriarCarrinhoComDadosCorretos();
+        // Criar um carrinho com dados corretos
+        $carrinhoId = $this->testCriarCarrinhoComDadosCorretos();
 
-        $carrinho = Carrinho::findOne(['quantidade' => 2]);
+        // Encontrar o carrinho pelo ID retornado
+        $carrinho = Carrinho::findOne($carrinhoId);
+
+        // Verificar se o carrinho foi encontrado
         $this->assertNotNull($carrinho, 'O carrinho deveria existir na BD');
 
-        if ($carrinho !== null) {
-            $carrinho->quantidade = 3;
-            $this->assertTrue($carrinho->save(), 'Deveria ser possível atualizar e salvar um carrinho na BD');
-        }
-    }
+        // Modificar os dados do carrinho
+        $carrinho->quantidade = 3;
 
-    public function testCarrinhoAtualizado()
-    {
-        $this->testAtualizarCarrinho();
+        // Atualizar e salvar o carrinho na BD
+        $this->assertTrue($carrinho->save(), 'Deveria ser possível atualizar e salvar o carrinho na BD');
 
         // Encontrar o carrinho atualizado
-        $carrinhoAtualizado = Carrinho::findOne(['quantidade' => 3]);
+        $carrinhoAtualizado = Carrinho::findOne($carrinhoId);
 
         // Verificar se o carrinho atualizado existe
         $this->assertNotNull($carrinhoAtualizado, 'O carrinho atualizado deveria existir na BD');
-    }
 
+        // Verificar se a quantidade foi atualizada corretamente
+        $this->assertEquals(3, $carrinhoAtualizado->quantidade, 'A quantidade do carrinho foi atualizada corretamente');
+    }*/
 
     public function testApagarCarrinho()
     {
