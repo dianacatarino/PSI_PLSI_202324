@@ -201,7 +201,24 @@ class SiteController extends Controller
 
     public function actionDefinicoes()
     {
-        return $this->render('definicoes');
+        $user = Yii::$app->user->identity;
+        $profile = $user->profile;
+
+        if (Yii::$app->request->isPost) {
+            $profile->load(Yii::$app->request->post());
+
+            // Lógica para salvar as alterações no perfil
+            if ($profile->save()) {
+                Yii::$app->session->setFlash('success', 'Alterações salvas com sucesso.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Erro ao salvar as alterações.');
+            }
+
+            // Redirecionar para o user index após salvar as alterações
+            return $this->redirect(['site/perfil']);
+        }
+
+        return $this->render('definicoes', ['user' => $user, 'profile' => $profile]);
     }
 
     public function actionAlojamentos()

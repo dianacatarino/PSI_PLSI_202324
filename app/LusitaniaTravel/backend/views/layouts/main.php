@@ -41,18 +41,18 @@ switch ($userRole) {
         $reservasDisplay = 'style="display: none;"';
         $faturasDisplay = 'style="display: none;"';
         $usersDisplay = 'style="display: none;"';
-        $empresaDisplay = 'style="display: none;"'; // Adicione esta linha para esconder a seção Empresa
+        $empresaDisplay = 'style="display: none;"';
         break;
 
     case 'funcionario':
-        $alojamentosDisplay = 'style="display: none;"';
+        $alojamentosDisplay = '';
         $confirmacoesDisplay = '';
         $comentariosDisplay = '';
         $avaliacoesDisplay = '';
         $reservasDisplay = '';
         $faturasDisplay = '';
         $usersDisplay = 'style="display: none;"';
-        $empresaDisplay = 'style="display: none;"'; // Adicione esta linha para esconder a seção Empresa
+        $empresaDisplay = 'style="display: none;"';
         break;
 
     case 'admin':
@@ -88,9 +88,11 @@ switch ($userRole) {
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
+            <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->profile->role === 'admin'): ?>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="index.php" class="nav-link">Home</a>
             </li>
+            <?php endif; ?>
             <li class="nav-item d-none d-sm-inline-block">
                 <a href="<?= Url::to(['site/contact']) ?>" class="nav-link">Contacto</a>
             </li>
@@ -211,12 +213,14 @@ switch ($userRole) {
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            <?php if ($userRole === 'fornecedor'): ?>
                             <li class="nav-item">
                                 <a href="<?= Url::to(['alojamentos/create']) ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Criar Alojamentos</p>
                                 </a>
                             </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <a href="<?= Url::to(['alojamentos/index']) ?>" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>

@@ -14,11 +14,13 @@ $this->title = 'Gestão dos Alojamentos';
     </div><!-- /.container-fluid -->
 </section>
 
+<?php if(Yii::$app->user->identity->profile->role === 'fornecedor'): ?>
 <div class="col-sm-6">
     <p>
         <?= Html::a('Criar novo Alojamento', ['alojamentos/create'], ['class' => 'btn btn-info']) ?>
     </p>
 </div>
+<?php endif; ?>
 
 <section class="content">
     <div class="card" >

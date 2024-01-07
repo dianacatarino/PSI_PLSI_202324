@@ -120,55 +120,55 @@ $hasItemsInCart = !empty($itensCarrinho);
         </div>
         <div class="card-body p-0">
             <?php if (!empty($itensCarrinho)) : ?>
-                <table class="table mb-0">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Reserva</th>
-                        <th>Quantidade</th>
-                        <th>Preço por Noite</th>
-                        <th>Preço Total</th>
-                        <th></th>
-                        <th>Estado</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($itensCarrinho as $item) : ?>
-                        <tr>
-                            <td>
-                                <?= Html::checkbox('selecionarReserva[]', false, ['value' => $item->reserva->id]) ?>
-                                <?= Html::encode($item->reserva->id) ?>
-                            </td>
-                            <td><?= Html::encode($item->quantidade) ?></td>
-                            <td><?= Yii::$app->formatter->asCurrency($item->preco, 'EUR') ?></td>
-                            <td><?= Yii::$app->formatter->asCurrency($item->subtotal, 'EUR') ?></td>
-                            <td>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['carrinho/remover', 'id' => $item->id], ['class' => 'btn btn-danger btn-sm']) ?>
-                            </td>
-                            <td>
-                                <?php
-                                // Obtém o modelo de confirmação associado ao item do carrinho
-                                $confirmacoes = $item->reserva->confirmacoes;
-                                if (!empty($confirmacoes)) {
-                                    // Ajuste esta parte para corresponder à estrutura real do array de confirmações
-                                    $ultimaConfirmacao = end($confirmacoes); // assumindo que o array de confirmações é ordenado e queremos a última
-                                    echo Html::encode($ultimaConfirmacao['estado']);
-                                } else {
-                                    echo 'Não Confirmado';
-                                }
-                                ?>
-                            </td>
-                            <?php endforeach; ?>
+            <table class="table mb-0">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Reserva</th>
+                    <th>Quantidade</th>
+                    <th>Preço por Noite</th>
+                    <th>Preço Total</th>
+                    <th></th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($itensCarrinho as $item) : ?>
+                <tr>
+                    <td>
+                        <?= Html::checkbox('selecionarReserva[]', false, ['value' => $item->reserva->id]) ?>
+                        <?= Html::encode($item->reserva->id) ?>
+                    </td>
+                    <td><?= Html::encode($item->quantidade) ?></td>
+                    <td><?= Yii::$app->formatter->asCurrency($item->preco, 'EUR') ?></td>
+                    <td><?= Yii::$app->formatter->asCurrency($item->subtotal, 'EUR') ?></td>
+                    <td>
+                        <?= Html::a('<i class="fas fa-trash"></i>', ['carrinho/remover', 'id' => $item->id], ['class' => 'btn btn-danger btn-sm']) ?>
+                    </td>
+                    <td>
+                        <?php
+                        // Obtém o modelo de confirmação associado ao item do carrinho
+                        $confirmacoes = $item->reserva->confirmacoes;
+                        if (!empty($confirmacoes)) {
+                            // Ajuste esta parte para corresponder à estrutura real do array de confirmações
+                            $ultimaConfirmacao = end($confirmacoes); // assumindo que o array de confirmações é ordenado e queremos a última
+                            echo Html::encode($ultimaConfirmacao['estado']);
+                        } else {
+                            echo 'Não Confirmado';
+                        }
+                        ?>
+                    </td>
+                    <?php endforeach; ?>
 
-                        </tr>
+                </tr>
 
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th colspan="3">Total</th>
-                        <td><?= Yii::$app->formatter->asCurrency($totalCarrinho, 'EUR') ?></td>
-                    </tr>
-                    </tfoot>
-                </table>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3">Total</th>
+                    <td><?= Yii::$app->formatter->asCurrency($totalCarrinho, 'EUR') ?></td>
+                </tr>
+                </tfoot>
+            </table>
             <?php if ($hasItemsInCart) : ?>
                 <?php
                 // Verificar se há pelo menos um item no carrinho com estado diferente de "Confirmado"
@@ -199,12 +199,12 @@ $hasItemsInCart = !empty($itensCarrinho);
             <?php else : ?>
                 <p class="p-3 text-center">O carrinho está vazio.</p>
             <?php endif; ?>
-                </div>
-            <?php else : ?>
-                <p class="p-3 text-center">O carrinho está vazio.</p>
-            <?php endif; ?>
         </div>
-        <div style="height: 20px;"></div>
+        <?php else : ?>
+            <p class="p-3 text-center">O carrinho está vazio.</p>
+        <?php endif; ?>
     </div>
     <div style="height: 20px;"></div>
+</div>
+<div style="height: 20px;"></div>
 </div>

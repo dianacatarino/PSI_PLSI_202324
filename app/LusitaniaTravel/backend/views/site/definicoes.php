@@ -20,68 +20,32 @@ $this->title = 'Definições';
                     <!-- /.card-header -->
 
                     <!-- Definições Form Content -->
-                    <div class="card-body">
-                        <form>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+
+                            <?= $form->field($user, 'username')->textInput(['placeholder' => 'Nome de Utilizador']) ?>
+
+                            <?= $form->field($profile, 'name')->textInput(['placeholder' => 'Nome']) ?>
+
+                            <?= $form->field($user, 'email')->textInput(['placeholder' => 'Email']) ?>
+
+                            <?= $form->field($profile, 'mobile')->textInput(['placeholder' => 'Telefone']) ?>
+
+                            <?= $form->field($profile, 'street')->textInput(['placeholder' => 'Morada']) ?>
+
+                            <?= $form->field($profile, 'locale')->textInput(['placeholder' => 'Localidade']) ?>
+
+                            <?= $form->field($profile, 'postalCode')->textInput(['placeholder' => 'Código Postal']) ?>
+
+                            <div style="height: 20px;"></div>
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Username">
+                                <?= Html::submitButton('Salvar Alterações', ['class' => 'btn btn-primary']) ?>
                             </div>
 
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" id="nome" placeholder="Nome">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Email">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="senhaAtual">Senha Atual</label>
-                                <input type="password" class="form-control" id="senhaAtual" placeholder="Senha Atual">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="novaSenha">Nova Senha</label>
-                                <input type="password" class="form-control" id="novaSenha" placeholder="Nova Senha">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="confirmarSenha">Confirmar Nova Senha</label>
-                                <input type="password" class="form-control" id="confirmarSenha" placeholder="Confirmar Nova Senha">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefone">Telefone</label>
-                                <input type="text" class="form-control" id="telefone" placeholder="Telefone">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="morada">Morada</label>
-                                <input type="text" class="form-control" id="morada" placeholder="Morada">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="localidade">Localidade</label>
-                                <input type="text" class="form-control" id="localidade" placeholder="Localidade">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="codigoPostal">Código Postal</label>
-                                <input type="text" class="form-control" id="codigoPostal" placeholder="Código Postal">
-                            </div>
-
-                            <div class="form-group">
-                                <div class="float-left">
-                                    <?= Html::a('Cancelar', ['site/perfil'], ['class' => 'btn btn-secondary']) ?>
-                                </div>
-                                <div class="float-right">
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                </div>
-
-                            </div>
-                        </form>
+                            <?php ActiveForm::end(); ?>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

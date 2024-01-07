@@ -15,12 +15,6 @@ $this->title = 'Criar novo Alojamento';
     <?php $form = ActiveForm::begin(['action' => ['alojamentos/create'], 'method' => 'post', 'options' => ['class' => 'container']]); ?>
     <div class="card-body">
         <div class="form-group">
-            <?= $form->field($fornecedor, 'responsavel')->dropDownList(
-                $selectFornecedores,
-                ['prompt' => 'Selecione um fornecedor', 'class' => 'form-control']
-            )->label('Responsável') ?>
-        </div>
-        <div class="form-group">
             <?= $form->field($fornecedor, 'tipo')->dropDownList(
                 [
                     'Hotel' => 'Hotel',
