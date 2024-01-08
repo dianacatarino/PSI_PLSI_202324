@@ -7,6 +7,13 @@ use yii\helpers\Url;
 
 class ReservaCreateCest
 {
+    public function _before(AcceptanceTester $I)
+    {
+        $I->haveFixtures([
+            'reserva' => \common\fixtures\ReservaFixture::class,
+        ]);
+    }
+
     public function testCriarReserva(AcceptanceTester $I)
     {
         $I->wantTo('Criação de uma reserva no frontend');

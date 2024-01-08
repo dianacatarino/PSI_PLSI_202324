@@ -81,12 +81,12 @@ class AlojamentosController extends \yii\web\Controller
     public function actionCreate()
     {
         $fornecedor = new Fornecedor();
-        $user = Yii::$app->user->identity; // Obtenha o usuário logado
+        $user = Yii::$app->user->identity; // Obtenha o user logado
 
         if (Yii::$app->request->isPost) {
             $fornecedor->load(Yii::$app->request->post());
 
-            // Preencher automaticamente o campo "responsavel" com o nome do usuário logado
+            // Preencher automaticamente o campo "responsavel" com o nome do user logado
             $fornecedor->responsavel = $user->profile->name;
 
             // Processar as opções de acomodações selecionadas
