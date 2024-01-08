@@ -47,7 +47,7 @@ composer install
 ```
 composer require mpdf/mpdf
 ```
-4. Correr o sql da estrutura e de dados.
+4. Correr o sql da estrutura e de dados(LusitaniaTravel.sql e os sql's da pasta DumpLusitaniaTravel).
 
 
 ## Utilização
