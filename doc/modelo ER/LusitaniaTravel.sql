@@ -1,6 +1,9 @@
 CREATE DATABASE LusitaniaTravel;
 USE LusitaniaTravel;
 
+CREATE DATABASE LusitaniaTravel_test;
+USE LusitaniaTravel_test;
+
 CREATE TABLE Empresas (
     id INT AUTO_INCREMENT,
     sede VARCHAR(50) NOT NULL,
