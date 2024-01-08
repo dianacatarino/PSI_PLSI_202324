@@ -40,8 +40,14 @@ Perfil Fornecedor:
 ## Instalação
 1. Clone o repositório do projeto do GitHub.
 2. Certifique-se de ter o servidor web (por exemplo, Apache) configurado e apontando para o diretório público do projeto.
-3. No terminal, navegue até o diretório do projeto e execute o comando composer install para instalar as dependências.
-4. Correr o sql da estrutura e de dados.
+3. No terminal, navegue até o diretório do projeto e execute os seguintes comandos para instalar as dependências e Mpdf:
+```
+composer install
+```
+```
+composer require mpdf/mpdf
+```
+4. Correr o sql da estrutura e de dados (LusitaniaTravel.sql e os sql's da pasta DumpLusitaniaTravel).
 
 
 ## Utilização
