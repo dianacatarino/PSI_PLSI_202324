@@ -45,7 +45,7 @@ $this->title = 'Editar User';
             )->label('Status') ?>
         </div>
         <div class="form-group">
-            <?= $form->field($profile, 'role')->dropDownList(['admin' => 'Admin', 'funcionario' => 'Funcionario', 'fornecedor' => 'Fornecedor', 'cliente' => 'Cliente'], ['prompt' => 'Seleciona um', 'class' => 'form-control custom-select'])->label('Role') ?>
+            <?= $form->field($profile, 'role')->dropDownList(['funcionario' => 'Funcionario', 'fornecedor' => 'Fornecedor', 'cliente' => 'Cliente'], ['prompt' => 'Seleciona um', 'class' => 'form-control custom-select'])->label('Role') ?>
         </div>
     </div>
     <div class="card-footer">

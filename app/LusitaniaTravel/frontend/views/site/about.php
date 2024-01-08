@@ -28,14 +28,14 @@ $this->title = 'Sobre';
             <div class="col-lg-6">
                 <h6 class="section-title text-start text-primary text-uppercase">Sobre nós</h6>
                 <h1 class="mb-4">Bem-vindo ao <span class="text-primary text-uppercase">Lusitânia Travel</span></h1>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                <p class="mb-4">Na Lusitânia Travel, estamos empenhados em proporcionar experiências de viagem excecionais. A nossa missão é tornar cada jornada memorável, oferecendo não apenas alojamentos de alta qualidade, mas também serviços personalizados para satisfazer as suas necessidades. Convidamo-lo a explorar Portugal connosco e descobrir o verdadeiro significado de uma viagem inesquecível.</p>
                 <div class="row g-3 pb-4">
                     <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s">
                         <div class="border rounded p-1">
                             <div class="border rounded text-center p-4">
                                 <i class="fa fa-hotel fa-2x text-primary mb-2"></i>
-                                <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                <p class="mb-0">Rooms</p>
+                                <h2 class="mb-1" data-toggle="counter-up"><?= $novosAlojamentos ?></h2>
+                                <p class="mb-0">Alojamentos</p>
                             </div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@ $this->title = 'Sobre';
                         <div class="border rounded p-1">
                             <div class="border rounded text-center p-4">
                                 <i class="fa fa-users-cog fa-2x text-primary mb-2"></i>
-                                <h2 class="mb-1" data-toggle="counter-up">1234</h2>
+                                <h2 class="mb-1" data-toggle="counter-up"><?= $novosFuncionarios ?></h2>
                                 <p class="mb-0">Staffs</p>
                             </div>
                         </div>
@@ -52,8 +52,8 @@ $this->title = 'Sobre';
                         <div class="border rounded p-1">
                             <div class="border rounded text-center p-4">
                                 <i class="fa fa-users fa-2x text-primary mb-2"></i>
-                                <h2 class="mb-1" data-toggle="counter-up">1234</h2>
-                                <p class="mb-0">Clients</p>
+                                <h2 class="mb-1" data-toggle="counter-up"><?= $novosClientes ?></h2>
+                                <p class="mb-0">Clientes</p>
                             </div>
                         </div>
                     </div>

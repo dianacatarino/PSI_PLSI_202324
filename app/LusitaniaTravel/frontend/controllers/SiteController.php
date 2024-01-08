@@ -225,7 +225,20 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        // Count de novos alojamentos
+        $novosAlojamentos = Fornecedor::find()->count();
+
+        // Count de novos clientes (usuários com a função 'cliente' no perfil)
+        $novosClientes = User::find()->joinWith('profile')->where(['profile.role' => 'cliente'])->count();
+
+        // Count de novos funcionários (usuários com a função 'funcionario' no perfil)
+        $novosFuncionarios = User::find()->joinWith('profile')->where(['profile.role' => 'funcionario'])->count();
+
+        return $this->render('about', [
+            'novosAlojamentos' => $novosAlojamentos,
+            'novosClientes' => $novosClientes,
+            'novosFuncionarios' => $novosFuncionarios,
+        ]);
     }
 
     /**
