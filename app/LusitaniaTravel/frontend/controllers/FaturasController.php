@@ -80,7 +80,6 @@ class FaturasController extends \yii\web\Controller
             $pdfContent .= '<div style="float: left; width: 50%; text-align: left;">';
             $enderecoEmpresa = $empresa->morada . ', ' . $empresa->localidade;
             $pdfContent .= '<p>' . $empresa->sede . '</p>';
-            $pdfContent .= '<p>' . $empresa->morada . '</p>';
             $pdfContent .= '<p>' . $enderecoEmpresa . '</p>';
             $pdfContent .= '<p>' . $empresa->email . '</p>';
             $pdfContent .= '<p>' . $empresa->nif . '</p>';

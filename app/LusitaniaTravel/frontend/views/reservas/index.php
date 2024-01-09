@@ -40,6 +40,10 @@ $this->title = 'As Minhas Reservas';
                                 <th scope="row">Estado</th>
                                 <td><?= $temConfirmacoes ? $reserva->confirmacoes[0]->estado : 'Sem confirmações' ?></td>
                             </tr>
+                            <tr>
+                                <th scope="row">Alojamento</th>
+                                <td><?= $reserva->fornecedor->nome_alojamento?></td>
+                            </tr>
                             </tbody>
                         </table>
 
