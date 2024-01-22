@@ -67,10 +67,11 @@ class ReservasController extends \yii\web\Controller
             foreach ($itensCarrinho as $item) {
                 // Adicione a lógica do seu cálculo aqui
                 $total += $diasReserva * $item->fornecedor->precopornoite;
-                // Adicione o subtotal do carrinho ao total
-                $total += $item->subtotal;
 
-                // Atribuir o subtotal ao item do carrinho (opcional, se desejar atualizar no banco de dados)
+                // Adicione o subtotal do carrinho multiplicado pelo número de linhasreservas ao total
+                $total += $item->subtotal * count($reserva->linhasreservas);
+
+                // Atribuir o subtotal multiplicado ao item do carrinho
                 $item->subtotal = $item->subtotal + $diasReserva * $item->fornecedor->precopornoite;
                 $item->save(); // Salvar as alterações no banco de dados
             }

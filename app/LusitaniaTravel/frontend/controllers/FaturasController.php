@@ -5,9 +5,11 @@ namespace frontend\controllers;
 use backend\models\Empresa;
 use common\models\Fatura;
 use common\models\Linhasfatura;
+use common\models\Prestacao;
 use common\models\Reserva;
 use Mpdf\Mpdf;
 use Yii;
+use yii\db\Expression;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
@@ -24,7 +26,8 @@ class FaturasController extends \yii\web\Controller
             ->andWhere(['reservas.cliente_id' => $userId])  // Filtrar pelo cliente_id do usuário logado
             ->all();
 
-        return $this->render('index', ['faturas' => $faturas]);
+        return $this->render('index', ['faturas' => $faturas,
+            'userId' => $userId,]);
     }
 
     public function actionShow($id)
@@ -37,6 +40,7 @@ class FaturasController extends \yii\web\Controller
 
         return $this->render('show', ['fatura' => $fatura]);
     }
+
 
     public function actionDownload($id)
     {

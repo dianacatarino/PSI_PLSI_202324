@@ -7,6 +7,7 @@ use common\models\Fatura;
 use common\models\Fornecedor;
 use common\models\Linhasfatura;
 use common\models\Linhasreserva;
+use common\models\Prestacao;
 use common\models\Reserva;
 use common\models\User;
 use frontend\models\Carrinho;
@@ -175,22 +176,24 @@ class CarrinhoController extends \yii\web\Controller
         $fatura->data = date('Y-m-d'); // data atual
         $fatura->save();
 
-
         // Buscar as LinhasReservas associadas à reserva
         $linhasReservas = LinhasReserva::findAll(['reservas_id' => $reserva->id]);
 
         // Para cada item no carrinho, criar uma linha de fatura (LinhasFaturas)
         foreach ($itensCarrinho as $item) {
+            $linhaFatura = new LinhasFatura();
+            $linhaFatura->quantidade = count($linhasReservas); // Quantidade é a contagem de LinhasReservas
+            $linhaFatura->precounitario = $item->preco; // ou qualquer outra lógica para o preço unitário
+            $linhaFatura->subtotal = $item->subtotal;
+            $linhaFatura->iva = 0.23; // por exemplo, 23% de IVA
+            $linhaFatura->fatura_id = $fatura->id; // associar à fatura
+
+            // Associar a cada LinhasReservas
             foreach ($linhasReservas as $linhaReserva) {
-                $linhaFatura = new LinhasFatura();
-                $linhaFatura->quantidade = $item->quantidade;
-                $linhaFatura->precounitario = $item->preco; // ou qualquer outra lógica para o preço unitário
-                $linhaFatura->subtotal = $item->subtotal;
-                $linhaFatura->iva = 0.23; // por exemplo, 23% de IVA
-                $linhaFatura->fatura_id = $fatura->id; // associar à fatura
-                $linhaFatura->linhasreservas_id = $linhaReserva->id; // associar à LinhasReservas
-                $linhaFatura->save();
+                $linhaFatura->link('linhasreservas', $linhaReserva);
             }
+
+            $linhaFatura->save();
         }
 
         return $this->render('pagamento', [

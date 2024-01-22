@@ -8,6 +8,7 @@ use common\models\Linhasfatura;
 use common\models\Reserva;
 use common\models\Linhasreserva;
 use DateTime;
+use frontend\models\Carrinho;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -67,7 +68,7 @@ class ReservasController extends \yii\web\Controller
 
             if ($fornecedor) {
                 // Calcula o valor total da reserva
-                $reserva->valor = $diferencaDias * $fornecedor->precopornoite;
+                $reserva->valor = $diferencaDias * $fornecedor->precopornoite * $reserva->numeroquartos;
 
                 if ($reserva->save()) {
                     // Restante do código para criar a confirmação e redirecionar
@@ -133,13 +134,30 @@ class ReservasController extends \yii\web\Controller
             throw new NotFoundHttpException('A reserva não foi encontrada.');
         }
 
+        // Verificar se há uma reserva associada ao carrinho
+        $carrinhoComReserva = Carrinho::find()->where(['reserva_id' => $reserva->id])->exists();
+
+        if ($carrinhoComReserva) {
+            Yii::$app->session->setFlash('error', 'Não é possível excluir a reserva, pois ela está associada ao carrinho.');
+            return $this->redirect(['index']);
+        }
+
+        // Encontrar a confirmação associada à reserva
+        $confirmacoes = $reserva->confirmacoes;
+
         // Encontrar e excluir as linhas associadas à reserva
         Linhasreserva::deleteAll(['reservas_id' => $reserva->id]);
 
-        // Agora, você pode excluir a reserva sem violar a restrição de chave estrangeira
+        // Agora, você pode excluir a confirmação e a reserva sem violar a restrição de chave estrangeira
+        if (!empty($confirmacoes)) {
+            foreach ($confirmacoes as $confirmacao) {
+                $confirmacao->delete();
+            }
+        }
+
         $reserva->delete();
 
-        Yii::$app->session->setFlash('success', 'Reserva e linhas associadas excluídas com sucesso.');
+        Yii::$app->session->setFlash('success', 'Reserva eliminada com sucesso.');
 
         return $this->redirect(['index']);
     }
