@@ -68,28 +68,6 @@ class SiteController extends Controller
         ];
     }
 
-    /*private function configureLayout()
-    {
-        if (!Yii::$app->user->isGuest) {
-            $userRole = Yii::$app->user->identity->profile->role;
-
-            switch ($userRole) {
-                case 'admin':
-                    $this->layout = 'main';
-                    break;
-                case 'fornecedor':
-                    $this->layout = 'fornecedor';
-                    break;
-                case 'funcionario':
-                    $this->layout = 'funcionario';
-                    break;
-                default:
-                    $this->layout = 'blank';
-                    break;
-            }
-        }
-    }*/
-
 
     /**
      * Displays homepage.

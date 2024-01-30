@@ -31,10 +31,6 @@ $this->title = 'Detalhes da Fatura';
                     <td><?= Html::encode($fatura->iva * 100) ?>%</td>
                 </tr>
                 <tr>
-                    <th scope="row">Empresa</th>
-                    <td><?= Html::encode($fatura->empresa->sede) ?></td>
-                </tr>
-                <tr>
                     <th scope="row">Reserva</th>
                     <td><?= Html::encode($fatura->reserva_id) ?></td>
                 </tr>

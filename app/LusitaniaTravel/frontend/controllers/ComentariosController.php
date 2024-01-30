@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Avaliacao;
 use common\models\Comentario;
+use common\models\Reserva;
 use Yii;
 use yii\web\NotFoundHttpException;
 
@@ -41,6 +42,17 @@ class ComentariosController extends \yii\web\Controller
         if (Yii::$app->user->isGuest) {
             Yii::$app->session->setFlash('error', 'Você precisa estar logado para adicionar um comentário e avaliação.');
             return $this->redirect(['site/login']); // Altere para a ação correta de login se necessário
+        }
+
+        // Verificar se o user fez uma reserva com o fornecedor associado
+        $reservaExistente = Reserva::find()
+            ->where(['cliente_id' => Yii::$app->user->id])
+            ->andWhere(['fornecedor_id' => $fornecedor_id])
+            ->exists();
+
+        if (!$reservaExistente) {
+            Yii::$app->session->setFlash('error', 'Você precisa de fazer uma reserva neste alojamento para poder adicionar um comentário e avaliação.');
+            return $this->redirect(Yii::$app->request->referrer ?: ['alojamentos/show', 'id' => $fornecedor_id]);
         }
 
         $comentario = new Comentario();
