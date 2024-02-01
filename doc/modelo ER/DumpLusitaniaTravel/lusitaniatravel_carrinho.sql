@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: lusitaniatravel
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `carrinho` (
   CONSTRAINT `fk_carrinho_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_carrinho_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`),
   CONSTRAINT `fk_carrinho_reserva` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `carrinho` (
 
 LOCK TABLES `carrinho` WRITE;
 /*!40000 ALTER TABLE `carrinho` DISABLE KEYS */;
-INSERT INTO `carrinho` VALUES (21,1,89.00,1780.00,46,1,30),(24,1,100.00,500.00,47,2,33),(26,1,100.00,300.00,55,2,35),(29,1,100.00,0.00,56,12,38),(30,1,100.00,2700.00,44,2,39);
+INSERT INTO `carrinho` VALUES (21,1,89.00,1780.00,46,1,30),(29,1,100.00,1000.00,56,12,38),(37,1,125.00,500.00,55,3,46),(38,1,165.00,495.00,47,4,47),(47,1,89.00,267.00,56,1,56),(49,1,125.00,250.00,46,3,58),(50,1,100.00,600.00,44,2,40);
 /*!40000 ALTER TABLE `carrinho` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-29 17:23:58
+-- Dump completed on 2024-02-01 19:12:33

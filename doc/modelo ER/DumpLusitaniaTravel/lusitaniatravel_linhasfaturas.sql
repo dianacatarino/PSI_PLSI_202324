@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: lusitaniatravel
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `linhasfaturas` (
   KEY `fk_linhasfaturas_linhasreservas` (`linhasreservas_id`),
   CONSTRAINT `fk_linhasfaturas_faturas` FOREIGN KEY (`fatura_id`) REFERENCES `faturas` (`id`),
   CONSTRAINT `fk_linhasfaturas_linhasreservas` FOREIGN KEY (`linhasreservas_id`) REFERENCES `linhasreservas` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `linhasfaturas` (
 
 LOCK TABLES `linhasfaturas` WRITE;
 /*!40000 ALTER TABLE `linhasfaturas` DISABLE KEYS */;
+INSERT INTO `linhasfaturas` VALUES (1,1,89.00,267.00,0.23,3,1),(2,1,46.67,140.00,0.23,8,4),(3,1,100.00,700.00,0.23,9,6),(4,1,100.00,700.00,0.23,9,7),(5,1,100.00,700.00,0.23,9,8),(6,1,25.00,100.00,0.23,10,10),(7,1,25.00,100.00,0.23,10,11),(8,1,25.00,100.00,0.23,10,12),(9,1,675.00,2700.00,0.23,11,37);
 /*!40000 ALTER TABLE `linhasfaturas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-29 17:23:57
+-- Dump completed on 2024-02-01 19:12:32

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: lusitaniatravel
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `profile` (
   PRIMARY KEY (`id`),
   KEY `pk_profile_user_id` (`user_id`),
   CONSTRAINT `pk_profile_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `profile` (
 
 LOCK TABLES `profile` WRITE;
 /*!40000 ALTER TABLE `profile` DISABLE KEYS */;
-INSERT INTO `profile` VALUES (1,'Diana','912123012','Rua da Flor','Leiria','2101-021','cliente',44,'[\"9\",\"1\"]'),(2,'Lusitania Travel','912123123','Rua','Leiria','2132-012','admin',45,NULL),(3,'Maria','912301123','Rua','Leiria','2301-021','cliente',46,'[\"8\"]'),(4,'User','912301123','Rua','Leiria','2301-021','cliente',47,'[\"3\"]'),(5,'Funcionario','912301123','Rua','Leiria','2312-012','funcionario',48,NULL),(6,'Funcionario1','912301123','Rua','Leiria','2312-012','funcionario',49,NULL),(9,'Fornecedor','912301123','Rua do Fornecedor','Leiria','2101-012','fornecedor',52,NULL),(10,'Funcionario2','912342123','Rua do Funcionario','Leiria','2123-012','funcionario',54,NULL),(11,'User1','912301123','Rua do User1','Leiria','2101-021','cliente',55,'[\"2\"]'),(12,'User2','912342123','Rua ','Leiria','2312-012','cliente',56,NULL),(13,'Fornecedor1','912123123','Rua do Fornecedor 1','Leiria','2312-034','fornecedor',57,NULL);
+INSERT INTO `profile` VALUES (1,'Diana','912123012','Rua da Flor','Leiria','2101-021','cliente',44,'[\"9\",\"1\"]'),(2,'Lusitania Travel','912123123','Rua','Leiria','2132-012','admin',45,NULL),(3,'Maria','912301123','Rua','Leiria','2301-021','cliente',46,'[\"8\"]'),(4,'User','912301123','Rua','Leiria','2301-021','cliente',47,'[\"3\"]'),(5,'Funcionario','912301123','Rua','Leiria','2312-012','funcionario',48,NULL),(6,'Funcionario1','912301123','Rua','Leiria','2312-012','funcionario',49,NULL),(9,'Fornecedor','912301123','Rua do Fornecedor','Leiria','2101-012','fornecedor',52,NULL),(10,'Funcionario2','912342123','Rua do Funcionario','Leiria','2123-012','funcionario',54,NULL),(11,'User1','912301123','Rua do User1','Leiria','2101-021','cliente',55,'[\"2\"]'),(12,'User2','912342123','Rua ','Leiria','2312-012','cliente',56,NULL),(13,'Fornecedor1','912123123','Rua do Fornecedor 1','Leiria','2312-034','fornecedor',57,NULL),(14,'User6','987654321','Rua Azul','Leiria','2312-012','cliente',58,NULL),(15,'User7','965807124','Rua','Leiria','2312-012','cliente',59,NULL);
 /*!40000 ALTER TABLE `profile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-29 17:23:57
+-- Dump completed on 2024-02-01 19:12:31
