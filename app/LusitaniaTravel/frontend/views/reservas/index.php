@@ -9,7 +9,7 @@ $this->title = 'As Minhas Reservas';
     <h3>Reservas</h3>
 
     <?php if (empty($reservas)): ?>
-        <p>Você não possui nenhuma reserva no momento.</p>
+        <p>Não existem reservas criadas no momento.</p>
     <?php else: ?>
         <?php foreach ($reservas as $reserva): ?>
             <?php

@@ -13,40 +13,44 @@ $this->title = 'Faturas';
     </div>
     <h3>Faturas</h3>
 
-    <?php foreach ($faturas as $fatura): ?>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title"><?= Html::encode('Fatura ' . $fatura->id) ?></h5>
+    <?php if (empty($faturas)): ?>
+        <p>Não existem faturas criadas no momento.</p>
+    <?php else: ?>
+        <?php foreach ($faturas as $fatura): ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><?= Html::encode('Fatura ' . $fatura->id) ?></h5>
 
-                <table class="table faturas-table">
-                    <tbody>
-                    <tr>
-                        <th scope="row">Valor</th>
-                        <td><?= Html::encode($fatura->totalf) ?> €</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Reserva</th>
-                        <td><?= Html::encode($fatura->reserva_id) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Data Fatura</th>
-                        <td><?= Html::encode($fatura->data) ?></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Download</th>
-                        <td>
-                            <?= Html::a(
-                                '<i class="fas fa-download"></i> Download',
-                                ['faturas/download', 'id' => $fatura->id],
-                                ['class' => 'btn btn-success']
-                            ) ?>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <table class="table faturas-table">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Valor</th>
+                            <td><?= Html::encode($fatura->totalf) ?> €</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Reserva</th>
+                            <td><?= Html::encode($fatura->reserva_id) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Data Fatura</th>
+                            <td><?= Html::encode($fatura->data) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Download</th>
+                            <td>
+                                <?= Html::a(
+                                    '<i class="fas fa-download"></i> Download',
+                                    ['faturas/download', 'id' => $fatura->id],
+                                    ['class' => 'btn btn-success']
+                                ) ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <?= Html::a('Detalhes', ['faturas/show', 'id' => $fatura->id], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Detalhes', ['faturas/show', 'id' => $fatura->id], ['class' => 'btn btn-primary']) ?>
+                </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>

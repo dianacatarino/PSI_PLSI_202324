@@ -28,7 +28,9 @@ $this->title = 'Gestão das Confirmações';
                     <th style="width: 10%">Data da Confirmação</th>
                     <th style="width: 10%">Id da Reserva</th>
                     <th style="width: 10%">Alojamento</th>
+                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->profile->role !== 'funcionario'): ?>
                     <th style="width: 1%">Ações</th>
+                    <?php endif; ?>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,19 +41,23 @@ $this->title = 'Gestão das Confirmações';
                         <td><?= Html::encode($confirmacao->dataconfirmacao) ?></td>
                         <td><?= Html::encode($confirmacao->reserva_id) ?></td>
                         <td><?= Html::encode($confirmacao->fornecedor->nome_alojamento) ?></td>
+                        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->profile->role !== 'funcionario'): ?>
                         <td class="project-actions text-right">
                             <div class="btn-group">
-                                <?= Html::a('<i class="fas fa-folder"></i>', ['confirmacoes/show', 'id' => $confirmacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['confirmacoes/edit', 'id' => $confirmacao->id], ['class' => 'btn btn-info btn-sm']) ?>
-                                <?= Html::a('<i class="fas fa-trash"></i>', ['confirmacoes/delete', 'id' => $confirmacao->id], [
-                                    'class' => 'btn btn-danger btn-sm',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this item?',
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
+
+                                    <?= Html::a('<i class="fas fa-folder"></i>', ['confirmacoes/show', 'id' => $confirmacao->id], ['class' => 'btn btn-primary btn-sm']) ?>
+                                    <?= Html::a('<i class="fas fa-pencil-alt"></i>', ['confirmacoes/edit', 'id' => $confirmacao->id], ['class' => 'btn btn-info btn-sm']) ?>
+                                    <?= Html::a('<i class="fas fa-trash"></i>', ['confirmacoes/delete', 'id' => $confirmacao->id], [
+                                        'class' => 'btn btn-danger btn-sm',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to delete this item?',
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+
                             </div>
                         </td>
+                        <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

@@ -9,13 +9,13 @@ $this->title = 'Favoritos';
     <h3 class="mb-4">Os Meus Favoritos</h3>
 
     <?php if (empty($favoritos)): ?>
-        <p>Você não tem nenhum favorito no momento.</p>
+        <p>Não existem favoritos adicionados no momento.</p>
     <?php else: ?>
         <div class="row">
             <?php foreach ($favoritos as $fornecedor): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card favorito-card">
-                        <div class="card-body text-center"> <!-- Adicionado 'text-center' para centralizar o conteúdo -->
+                        <div class="card-body text-center">
                             <?php
                             $imagens = $fornecedor->imagens;
 
