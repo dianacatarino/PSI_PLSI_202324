@@ -2,7 +2,6 @@
 
 namespace common\tests\functional;
 
-//use tests\FunctionalTester;
 use common\fixtures\FornecedorFixture;
 use common\fixtures\ProfileFixture;
 use common\fixtures\ReservaFixture;
@@ -10,6 +9,7 @@ use common\models\Reserva;
 use common\models\Fornecedor;
 use common\models\Fatura;
 use common\models\Profile;
+use backend\tests\FunctionalTester;
 
 class FaturaCreateCest{
 
@@ -27,12 +27,12 @@ class FaturaCreateCest{
             ];
     }
 
-    public function _before(\FunctionalTester $I){
+    public function _before(FunctionalTester $I){
 
         $I->amOnPage('/backend/faturas/create');
     }
 
-    public function trySubmitFormVazio(\FunctionalTester $I){
+    public function trySubmitFormVazio(FunctionalTester $I){
 
         $I->see('Create Fatura'); // Verificação do acesso ao formulario
 
@@ -43,7 +43,7 @@ class FaturaCreateCest{
 
     }
 
-    public function trySubmitValidForm(\FunctionalTester $I){
+    public function trySubmitValidForm(FunctionalTester $I){
 
         $I->selectOption('select[name="Reserva[id]"]', '2'); //Substituir pelo id da reserva desejada, restandos atributos tem de bater certo
         $I->fillField('input[name="Fornecedor[nome]"]', 'Selene Hotel');
@@ -59,7 +59,7 @@ class FaturaCreateCest{
 
     }
 
-    public function trySubmitInvalidForm(\FunctionalTester $I){
+    public function trySubmitInvalidForm(FunctionalTester $I){
 
         $I->selectOption('select[name="Reserva[id]"]', '3');
         $I->fillField('input[name="Fornecedor[nome]"]', 'Selene Hotel'); //vai fazer não estar correto
@@ -74,7 +74,7 @@ class FaturaCreateCest{
 
     }
 
-    public function _after(\FunctionalTester $I){ //Serve para reverter todas as alteracoes depois dos testes serem executados
+    public function _after(FunctionalTester $I){ //Serve para reverter todas as alteracoes depois dos testes serem executados
 
         $I->haveFixtures([
             'reservas' => ReservaFixture::class,

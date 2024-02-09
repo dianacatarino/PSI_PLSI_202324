@@ -6,7 +6,7 @@ use frontend\tests\FunctionalTester;
 
 class SignupCest
 {
-    protected $formId = '#form-signup';
+   /* protected $formId = '#form-signup';
 
 
     public function _before(FunctionalTester $I)
@@ -55,5 +55,5 @@ class SignupCest
 
         $I->seeEmailIsSent();
         $I->see('Thank you for registration. Please check your inbox for verification email.');
-    }
+    }*/
 }

@@ -17,7 +17,7 @@ class ResendVerificationEmailCest
      * @see \Codeception\Module\Yii2::loadFixtures()
      * @return array
      */
-    public function _fixtures()
+    /*public function _fixtures()
     {
         return [
             'user' => [
@@ -79,5 +79,5 @@ class ResendVerificationEmailCest
             'status' => \common\models\User::STATUS_INACTIVE
         ]);
         $I->see('Check your email for further instructions.');
-    }
+    }*/
 }

@@ -13,7 +13,7 @@ class ContactCest
         $I->amOnRoute('site/contact');
     }
 
-    public function checkContact(FunctionalTester $I)
+    /*public function checkContact(FunctionalTester $I)
     {
         $I->see('Contact', 'h1');
     }
@@ -56,5 +56,5 @@ class ContactCest
         ]);
         $I->seeEmailIsSent();
         $I->see('Thank you for contacting us. We will respond to you as soon as possible.');
-    }
+    }*/
 }

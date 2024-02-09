@@ -5,7 +5,6 @@ namespace frontend\controllers;
 use backend\models\Empresa;
 use common\models\Fatura;
 use common\models\Linhasfatura;
-use common\models\Prestacao;
 use common\models\Reserva;
 use Mpdf\Mpdf;
 use Yii;

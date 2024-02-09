@@ -119,7 +119,7 @@ class SiteController extends Controller
             // Obter o perfil associado ao usuário
             $profile = Profile::findOne(['user_id' => Yii::$app->user->id]); // Substitua 'user_id' pelo campo correto de relacionamento
 
-            // Verificar se o usuário tem uma das roles permitidas (admin, funcionario, fornecedor) com base no perfil
+            // Verificar se o user tem uma das roles permitidas (admin, funcionario, fornecedor) com base no perfil
             if ($profile && in_array($profile->getRole(), ['admin', 'funcionario', 'fornecedor'])) {
                 return $this->goBack();
             } else {

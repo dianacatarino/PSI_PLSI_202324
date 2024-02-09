@@ -54,14 +54,8 @@ return [
             'enablePrettyUrl' => false,
             'showScriptName' => false,
             'rules' => [
-                'admin' => 'admin/site/index',
-                'admin/<action>' => 'admin/site/<action>',
+                'login' => 'site/login',
 
-                'funcionario' => 'funcionario/site/index',
-                'funcionario/<action>' => 'funcionario/site/<action>',
-
-                'fornecedor' => 'fornecedor/site/index',
-                'fornecedor/<action>' => 'fornecedor/site/<action>',
              ],
         ],
     ],

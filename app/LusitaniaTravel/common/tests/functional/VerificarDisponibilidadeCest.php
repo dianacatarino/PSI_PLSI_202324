@@ -2,7 +2,9 @@
 
 namespace common\tests\functional;
 
+use backend\tests\FunctionalTester;
 use common\fixtures\ReservaFixture;
+use frontend\tests\AcceptanceTester;
 
 class VerificarDisponibilidadeCest{
 
@@ -14,7 +16,7 @@ class VerificarDisponibilidadeCest{
         ];
     }
 
-    public function _before(\FunctionalTester $I){
+    public function _before(FunctionalTester $I){
 
         $I->amOnPage('/backend/reservas/create');
     }
@@ -120,7 +122,7 @@ class VerificarDisponibilidadeCest{
         $I->see('Falha na verificação.', '.alert-danger');
     }
 
-    public function _after(\FunctionalTester $I){ //Serve para reverter todas as alteracoes depois dos testes serem executados
+    public function _after(FunctionalTester $I){ //Serve para reverter todas as alteracoes depois dos testes serem executados
 
         $I->haveFixtures([
             'reservas' => ReservaFixture::class
