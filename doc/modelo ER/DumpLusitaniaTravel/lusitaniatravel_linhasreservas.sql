@@ -32,7 +32,7 @@ CREATE TABLE `linhasreservas` (
   PRIMARY KEY (`id`),
   KEY `fk_linhasreservas_reservas` (`reservas_id`),
   CONSTRAINT `fk_linhasreservas_reservas` FOREIGN KEY (`reservas_id`) REFERENCES `reservas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `linhasreservas` (
 
 LOCK TABLES `linhasreservas` WRITE;
 /*!40000 ALTER TABLE `linhasreservas` DISABLE KEYS */;
-INSERT INTO `linhasreservas` VALUES (1,'Quarto Duplo',3,2,89.00,1),(2,'Quarto Duplo',6,2,58.33,5),(3,'Quarto Duplo',6,2,58.33,5),(4,'Quarto Familiar',3,4,46.67,6),(6,'Quarto Duplo',7,2,100.00,7),(7,'Quarto Triplo',7,3,100.00,7),(8,'Quarto Individual',7,1,100.00,7),(10,'Quarto Duplo',4,2,25.00,8),(11,'Quarto Duplo',4,2,25.00,8),(12,'Quarto Individual',4,1,25.00,8),(28,'Quarto Duplo',8,1,222.50,30),(29,'Quarto Triplo',5,2,100.00,33),(30,'Quarto Triplo',5,2,100.00,33),(33,'Quarto Duplo',3,1,100.00,35),(37,'Quarto Familiar',4,4,675.00,39);
+INSERT INTO `linhasreservas` VALUES (1,'Quarto Duplo',3,2,89.00,1),(2,'Quarto Duplo',6,2,58.33,5),(3,'Quarto Duplo',6,2,58.33,5),(4,'Quarto Familiar',3,4,46.67,6),(6,'Quarto Duplo',7,2,100.00,7),(7,'Quarto Triplo',7,3,100.00,7),(8,'Quarto Individual',7,1,100.00,7),(10,'Quarto Duplo',4,2,25.00,8),(11,'Quarto Duplo',4,2,25.00,8),(12,'Quarto Individual',4,1,25.00,8),(28,'Quarto Duplo',8,1,222.50,30),(29,'Quarto Triplo',5,2,100.00,33),(30,'Quarto Triplo',5,2,100.00,33),(33,'Quarto Duplo',3,1,100.00,35),(37,'Quarto Familiar',4,4,675.00,39),(38,'Quarto Duplo',4,2,111.25,48),(39,'Quarto Triplo',3,2,463.33,47),(40,'Quarto Duplo',3,2,118.67,44),(41,'Quarto Individual',2,1,312.50,49),(42,'Quarto Duplo',2,2,412.50,50),(43,'Quarto Duplo',3,3,333.33,53);
 /*!40000 ALTER TABLE `linhasreservas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-01 19:12:32
+-- Dump completed on 2024-02-10  9:21:40

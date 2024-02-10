@@ -34,7 +34,7 @@ CREATE TABLE `comentarios` (
   KEY `fk_comentarios_fornecedor` (`fornecedor_id`),
   CONSTRAINT `fk_comentarios_cliente` FOREIGN KEY (`cliente_id`) REFERENCES `user` (`id`),
   CONSTRAINT `fk_comentarios_fornecedor` FOREIGN KEY (`fornecedor_id`) REFERENCES `fornecedores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `comentarios` (
 
 LOCK TABLES `comentarios` WRITE;
 /*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-INSERT INTO `comentarios` VALUES (1,'Espaço Acolhedor','ola','2023-12-12',46,1),(2,'Preços Acessíveis','Os preços são muito acessíveis ','2024-01-08',44,1),(3,'Ola','ola','2023-12-19',44,2);
+INSERT INTO `comentarios` VALUES (1,'Espaço Acolhedor','ola','2023-12-12',46,1),(2,'Preços Acessíveis','Os preços são muito acessíveis ','2024-01-08',44,1),(3,'Ola','ola','2023-12-19',44,2),(4,'Gostei','Gostei só retirando a parte de não ter pequeno-almoço','2024-02-07',47,2),(5,'Bom!','Gostei','2024-02-09',59,1),(6,'Adorei!','Bom','2024-02-09',59,2);
 /*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-01 19:12:31
+-- Dump completed on 2024-02-10  9:21:40

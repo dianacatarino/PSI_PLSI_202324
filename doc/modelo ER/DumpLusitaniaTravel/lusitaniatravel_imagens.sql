@@ -38,7 +38,7 @@ CREATE TABLE `imagens` (
 
 LOCK TABLES `imagens` WRITE;
 /*!40000 ALTER TABLE `imagens` DISABLE KEYS */;
-INSERT INTO `imagens` VALUES (2,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',1),(6,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(7,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',8),(8,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',2),(9,'/LusitaniaTravel/common/public/img/piscina_74190-2104.png',9),(11,'/LusitaniaTravel/common/public/img/hotel-928937_640.jpg',3),(12,'/LusitaniaTravel/common/public/img/hotel-room-1505455_640.jpg',4),(13,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',11),(14,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',12),(15,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',1),(16,'/LusitaniaTravel/common/public/img/xenia-alojamento-local-apartment-coimbra-photo-2.jpeg',13);
+INSERT INTO `imagens` VALUES (2,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',1),(6,'/LusitaniaTravel/common/public/img/travel-1677347_1280.jpg',8),(7,'/LusitaniaTravel/common/public/img/hotel-7540353_1280.webp',8),(8,'/LusitaniaTravel/common/public/img/design-3588214_640.jpg',2),(9,'/LusitaniaTravel/common/public/img/pexels-photo-338504.jpeg',9),(11,'/LusitaniaTravel/common/public/img/hotel-928937_640.jpg',3),(12,'/LusitaniaTravel/common/public/img/hotel-room-1505455_640.jpg',4),(13,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',11),(15,'/LusitaniaTravel/common/public/img/33374609-uma-hotel-quarto-com-dois-camas-e-uma-visao-do-a-cidade-gerado-por-ia-gratis-foto.jpg',1),(16,'/LusitaniaTravel/common/public/img/xenia-alojamento-local-apartment-coimbra-photo-2.jpeg',13);
 /*!40000 ALTER TABLE `imagens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-01 19:12:32
+-- Dump completed on 2024-02-10  9:21:40
