@@ -1,4 +1,6 @@
 <?php
+
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 
 $this->title = 'Gestão de Faturas';
@@ -104,6 +106,18 @@ $this->title = 'Gestão de Faturas';
                 <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer clearfix">
+            <nav aria-label="Page navigation">
+                <?= LinkPager::widget([
+                    'pagination' => $pagination,
+                    'options' => ['class' => 'pagination justify-content-end'],
+                    'linkContainerOptions' => ['class' => 'page-item'],
+                    'linkOptions' => ['class' => 'page-link'],
+                    'prevPageLabel' => '<span aria-hidden="true">&laquo;</span><span class="sr-only">Anterior</span>',
+                    'nextPageLabel' => '<span aria-hidden="true">&raquo;</span><span class="sr-only">Próxima</span>',
+                ]); ?>
+            </nav>
         </div>
     </div>
 </section>

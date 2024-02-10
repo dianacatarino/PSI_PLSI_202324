@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Comentario;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -42,10 +43,19 @@ class ComentariosController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        $query = Comentario::find();
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'defaultPageSize' => 10, // ou o número desejado de itens por página
+        ]);
+        $comentarios = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        $comentarios = Comentario::find()->all();
-
-        return $this->render('index', ['comentarios' => $comentarios]);
+        return $this->render('index', [
+            'comentarios' => $comentarios,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function actionShow($id)

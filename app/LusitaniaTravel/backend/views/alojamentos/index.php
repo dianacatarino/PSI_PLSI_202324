@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\bootstrap5\LinkPager;
 
 $this->title = 'Gestão dos Alojamentos';
 ?>
@@ -15,11 +16,11 @@ $this->title = 'Gestão dos Alojamentos';
 </section>
 
 <?php if(Yii::$app->user->identity->profile->role === 'fornecedor'): ?>
-<div class="col-sm-6">
-    <p>
-        <?= Html::a('Criar novo Alojamento', ['alojamentos/create'], ['class' => 'btn btn-info']) ?>
-    </p>
-</div>
+    <div class="col-sm-6">
+        <p>
+            <?= Html::a('Criar novo Alojamento', ['alojamentos/create'], ['class' => 'btn btn-info']) ?>
+        </p>
+    </div>
 <?php endif; ?>
 
 <section class="content">
@@ -80,6 +81,18 @@ $this->title = 'Gestão dos Alojamentos';
                 <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer clearfix">
+            <nav aria-label="Page navigation">
+                <?= LinkPager::widget([
+                    'pagination' => $pagination,
+                    'options' => ['class' => 'pagination justify-content-end'],
+                    'linkContainerOptions' => ['class' => 'page-item'],
+                    'linkOptions' => ['class' => 'page-link'],
+                    'prevPageLabel' => '<span aria-hidden="true">&laquo;</span><span class="sr-only">Anterior</span>',
+                    'nextPageLabel' => '<span aria-hidden="true">&raquo;</span><span class="sr-only">Próxima</span>',
+                ]); ?>
+            </nav>
         </div>
     </div>
 </section>

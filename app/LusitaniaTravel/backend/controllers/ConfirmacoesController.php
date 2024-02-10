@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Confirmacao;
 use common\models\Reserva;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -43,10 +44,19 @@ class ConfirmacoesController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        // Lógica para exibir uma lista de confirmações
-        $confirmacoes = Confirmacao::find()->all();
+        $query = Confirmacao::find();
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'defaultPageSize' => 10, // ou o número desejado de itens por página
+        ]);
+        $confirmacoes = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        return $this->render('index', ['confirmacoes' => $confirmacoes]);
+        return $this->render('index', [
+            'confirmacoes' => $confirmacoes,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function actionCreate()

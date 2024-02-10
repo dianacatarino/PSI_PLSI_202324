@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Profile;
 use common\models\User;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -43,9 +44,19 @@ class UserController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $users = User::find()->all();
+        $query = User::find();
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'defaultPageSize' => 10, // ou o número desejado de itens por página
+        ]);
+        $users = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        return $this->render('index', ['users' => $users]);
+        return $this->render('index', [
+            'users' => $users,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function actionCreate()

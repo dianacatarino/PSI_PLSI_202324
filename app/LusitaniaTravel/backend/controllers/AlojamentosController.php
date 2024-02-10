@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Fornecedor;
 use common\models\Imagem;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -44,9 +45,24 @@ class AlojamentosController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $fornecedores = Fornecedor::find()->with('imagens')->all();
+        // Consulta para contar o total de fornecedores
+        $countQuery = Fornecedor::find()->with('imagens');
 
-        return $this->render('index', ['fornecedores' => $fornecedores]);
+        // Configurar a paginação com base no total de fornecedores
+        $pagination = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 10, // Defina o número de fornecedores por página aqui
+        ]);
+
+        // Consulta para obter os fornecedores com base na paginação
+        $fornecedores = $countQuery->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'fornecedores' => $fornecedores,
+            'pagination' => $pagination,
+        ]);
     }
 
     private function enviarImagens($model)

@@ -190,7 +190,7 @@ switch ($userRole) {
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->profile->role === 'admin'): ?>
+                    <?php if (!Yii::$app->user->isGuest): ?>
                         <li class="nav-item">
                             <a href="<?= Url::to(['site/index']) ?>" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>

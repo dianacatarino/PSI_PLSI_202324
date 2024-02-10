@@ -10,6 +10,7 @@ use common\models\Linhasreserva;
 use DateTime;
 use frontend\models\Carrinho;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -48,11 +49,25 @@ class ReservasController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $reservas = Reserva::find()->with('linhasreservas')->all();
+        // Consulta para contar o total de reservas
+        $countQuery = Reserva::find()->with('linhasreservas');
 
-        return $this->render('index', ['reservas' => $reservas]);
+        // Configurar a paginação com base no total de reservas
+        $pagination = new Pagination([
+            'totalCount' => $countQuery->count(),
+            'pageSize' => 10, // Defina o número de reservas por página aqui
+        ]);
+
+        // Consulta para obter as reservas com base na paginação
+        $reservas = $countQuery->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'reservas' => $reservas,
+            'pagination' => $pagination,
+        ]);
     }
-
     public function actionCreate()
     {
         $reserva = new Reserva();

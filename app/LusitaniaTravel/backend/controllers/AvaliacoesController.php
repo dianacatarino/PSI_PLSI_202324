@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Avaliacao;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -42,9 +43,19 @@ class AvaliacoesController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $avaliacoes = Avaliacao::find()->all();
+        $query = Avaliacao::find();
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'defaultPageSize' => 10, // ou o número desejado de itens por página
+        ]);
+        $avaliacoes = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        return $this->render('index', ['avaliacoes' => $avaliacoes]);
+        return $this->render('index', [
+            'avaliacoes' => $avaliacoes,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function actionShow($id)

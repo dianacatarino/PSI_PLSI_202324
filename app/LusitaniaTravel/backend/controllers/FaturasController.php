@@ -10,6 +10,7 @@ use common\models\Linhasreserva;
 use common\models\Reserva;
 use Mpdf\Mpdf;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -49,9 +50,19 @@ class FaturasController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        $faturas = Fatura::find()->with('linhasfaturas')->all();
+        $query = Fatura::find()->with('linhasfaturas');
+        $pagination = new Pagination([
+            'totalCount' => $query->count(),
+            'defaultPageSize' => 10, // ou o número desejado de itens por página
+        ]);
+        $faturas = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
 
-        return $this->render('index', ['faturas' => $faturas]);
+        return $this->render('index', [
+            'faturas' => $faturas,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function actionCreate()
