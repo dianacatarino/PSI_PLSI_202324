@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\validators\DateValidator;
 
 /**
  * This is the model class for table "reservas".
@@ -47,6 +48,9 @@ class Reserva extends \yii\db\ActiveRecord
             [['numeroquartos', 'numeroclientes', 'cliente_id', 'funcionario_id', 'fornecedor_id'], 'integer'],
             [['numeroquartos'], 'compare', 'compareAttribute' => 'numeroclientes', 'operator' => '<=', 'type' => 'integer', 'message' => 'Número de quartos não pode ser superior ao número de clientes'],
             [['valor'], 'number'],
+            [['checkin', 'checkout'], 'date', 'format' => 'php:Y-m-d'],
+            [['checkin'], 'compare', 'compareAttribute' => 'checkout', 'operator' => '<', 'type' => 'date', 'message' => 'A data de checkin deve ser anterior à data de checkout'],
+            [['checkout'], 'compare', 'compareAttribute' => 'checkin', 'operator' => '>', 'type' => 'date', 'message' => 'A data de checkout deve ser posterior à data de checkin'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['cliente_id' => 'id']],
             [['fornecedor_id'], 'exist', 'skipOnError' => true, 'targetClass' => Fornecedor::class, 'targetAttribute' => ['fornecedor_id' => 'id']],
             [['funcionario_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['funcionario_id' => 'id']],
